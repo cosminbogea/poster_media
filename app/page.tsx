@@ -1,19 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import InteractiveLines from "@/components/interactive-lines";
 
 export default function Home() {
-  const [blackMood, setBlackMood] = useState(true);
-
   return (
-    <main className="relative h-screen w-full overflow-hidden">
+    <main className="relative h-screen w-full overflow-hidden bg-[#c1465c]">
       {/* Interactive Lines Background */}
       <div className="absolute inset-0 z-0">
-        <InteractiveLines
-          lineColor="rgb(186, 186, 186)"
-          backgroundColor="#1a1a1a"
-        />
+        <InteractiveLines lineColor="#ebebeb" />
       </div>
       {/* Navigation - centered vertically */}
       <nav className="absolute top-1/2 left-0 right-0 -translate-y-1/2 px-4 md:px-8 z-10">
@@ -21,7 +15,7 @@ export default function Home() {
           <li>
             <a
               href="#"
-              className="text-xs md:text-sm font-medium tracking-wider text-[#c94b4b] hover:opacity-80 transition-opacity"
+              className="text-xs md:text-base lg:text-lg font-medium tracking-wider text-black hover:opacity-80 transition-opacity"
             >
               POSTER MEDIA
             </a>
@@ -29,42 +23,26 @@ export default function Home() {
           <li>
             <a
               href="#"
-              className="text-xs md:text-sm font-medium tracking-wider text-[#c94b4b] hover:opacity-80 transition-opacity"
+              className="text-xs md:text-base lg:text-lg font-medium tracking-wider text-black hover:opacity-80 transition-opacity"
             >
-              VIDEO
+              WORKS
             </a>
           </li>
           <li>
             <a
               href="#"
-              className="text-xs md:text-sm font-medium tracking-wider text-[#c94b4b] hover:opacity-80 transition-opacity"
-            >
-              FOTO
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="text-xs md:text-sm font-medium tracking-wider text-[#c94b4b] hover:opacity-80 transition-opacity"
-            >
-              OVERVIEW
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="text-xs md:text-sm font-medium tracking-wider text-[#c94b4b] hover:opacity-80 transition-opacity"
+              className="text-xs md:text-base lg:text-lg font-medium tracking-wider text-black hover:opacity-80 transition-opacity"
             >
               ABOUT
             </a>
           </li>
           <li>
-            <button
-              onClick={() => setBlackMood(!blackMood)}
-              className="text-xs md:text-sm font-medium tracking-wider text-[#c94b4b] hover:opacity-80 transition-opacity"
+            <a
+              href="#"
+              className="text-xs md:text-base lg:text-lg font-medium tracking-wider text-black hover:opacity-80 transition-opacity"
             >
-              BLACK MOOD: {blackMood ? "ON" : "OFF"}
-            </button>
+              CONTACT US
+            </a>
           </li>
         </ul>
       </nav>

@@ -40,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${playfair.variable} font-sans antialiased`}>
+      <body className={`${inter.className} ${playfair.variable} font-sans antialiased`} style={{ backgroundColor: "#bf6276" }}>
         {children}
         <Analytics />
       </body>

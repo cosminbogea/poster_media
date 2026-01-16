@@ -123,5 +123,9 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-color: #c1465c !important;
+  }
+  html {
+    background-color: #c1465c !important;
   }
 }
