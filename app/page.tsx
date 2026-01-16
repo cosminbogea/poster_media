@@ -1,15 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { PosterLogo } from "@/components/poster-logo"
+import { useState } from "react";
+import { PosterLogo } from "@/components/poster-logo";
+import InteractiveLines from "@/components/interactive-lines";
 
 export default function Home() {
-  const [blackMood, setBlackMood] = useState(true)
+  const [blackMood, setBlackMood] = useState(true);
 
   return (
-    <main className="relative h-screen w-full overflow-hidden bg-[#1a1a1a]">
+    <main className="relative h-screen w-full overflow-hidden">
+      {/* Interactive Lines Background */}
+      <div className="absolute inset-0 z-0">
+        <InteractiveLines lineColor="#00ffcc" backgroundColor="#1a1a1a" />
+      </div>
       {/* Navigation - centered vertically */}
-      <nav className="absolute top-1/2 left-0 right-0 -translate-y-1/2 px-4 md:px-8">
+      <nav className="absolute top-1/2 left-0 right-0 -translate-y-1/2 px-4 md:px-8 z-10">
         <ul className="flex flex-wrap items-center justify-between gap-4 md:gap-8">
           <li>
             <a
@@ -63,9 +68,9 @@ export default function Home() {
       </nav>
 
       {/* Logo - bottom left corner */}
-      <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8">
+      <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 z-10">
         <PosterLogo className="w-[300px] md:w-[500px] h-auto text-[#2a2a2a]" />
       </div>
     </main>
-  )
+  );
 }
