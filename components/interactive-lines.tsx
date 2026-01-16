@@ -1,9 +1,9 @@
-"use client"; // Required for Next.js 13+ (App Router)
+"use client";
 
 import React, { useRef, useEffect } from "react";
 
 const InteractiveLines = ({
-  lineColor = "#00ffcc",
+  lineColor = "rgb(186, 186, 186)",
   backgroundColor = "#050505",
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -16,12 +16,12 @@ const InteractiveLines = ({
     if (!ctx) return;
 
     let animationFrameId: number;
-    let particles: Particle[] = [];
+    let lines: Line[] = [];
     let isAnimating = true;
     let width = 0;
     let height = 0;
 
-    // Detect mobile device - check dynamically
+    // Detect mobile device
     const isMobileDevice = () => {
       return (
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -30,203 +30,140 @@ const InteractiveLines = ({
       );
     };
 
-    // CONFIGURATION - Different settings for mobile vs desktop
+    // Configuration
     const getConfig = () => {
       const mobile = isMobileDevice();
       return {
-        particleCount: mobile ? 120 : 400,
-        connectionDistance: mobile ? 100 : 120,
-        lineWidth: 0.5,
-        particleRadius: 1,
-        mouseRadius: 150,
-        mouseForce: 0.15,
-        friction: 0.92,
-        speed: 0.3,
+        spacing: mobile ? 30 : 20, // Distance between lines
+        lineLength: mobile ? 20 : 25, // Length of each line
+        lineWidth: 1,
+        mouseRadius: 120,
+        mouseForce: 0.2,
+        returnSpeed: 0.08,
       };
     };
 
     let CONFIG = getConfig();
-
     const mouse = { x: null as number | null, y: null as number | null };
 
-    // --- PARTICLE CLASS ---
-    class Particle {
+    // Line class
+    class Line {
       x: number;
       y: number;
-      vx: number;
-      vy: number;
-      radius: number;
+      baseX: number;
+      baseY: number;
 
       constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
-        this.vx = (Math.random() - 0.5) * CONFIG.speed;
-        this.vy = (Math.random() - 0.5) * CONFIG.speed;
-        this.radius = CONFIG.particleRadius;
+        this.baseX = x;
+        this.baseY = y;
       }
 
       update() {
-        // Mouse interaction - particles repel from cursor
         if (mouse.x !== null && mouse.y !== null) {
           const dx = this.x - mouse.x;
           const dy = this.y - mouse.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < CONFIG.mouseRadius && distance > 0) {
-            // Stronger repulsion force - particles move away from cursor
+            // Calculate force - stronger when closer
             const force = (CONFIG.mouseRadius - distance) / CONFIG.mouseRadius;
             const angle = Math.atan2(dy, dx);
-            // Add velocity away from mouse
-            this.vx += Math.cos(angle) * force * CONFIG.mouseForce;
-            this.vy += Math.sin(angle) * force * CONFIG.mouseForce;
+
+            // Move line away from mouse
+            this.x += Math.cos(angle) * force * CONFIG.mouseForce * 10;
+            this.y += Math.sin(angle) * force * CONFIG.mouseForce * 10;
+          } else {
+            // Return to base position
+            const dx = this.baseX - this.x;
+            const dy = this.baseY - this.y;
+            this.x += dx * CONFIG.returnSpeed;
+            this.y += dy * CONFIG.returnSpeed;
           }
-        }
-
-        // Update position
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // Apply friction
-        this.vx *= CONFIG.friction;
-        this.vy *= CONFIG.friction;
-
-        // Boundary collision with wrap-around
-        if (this.x < 0) {
-          this.x = width;
-        } else if (this.x > width) {
-          this.x = 0;
-        }
-        if (this.y < 0) {
-          this.y = height;
-        } else if (this.y > height) {
-          this.y = 0;
+        } else {
+          // Return to base position when mouse leaves
+          const dx = this.baseX - this.x;
+          const dy = this.baseY - this.y;
+          this.x += dx * CONFIG.returnSpeed;
+          this.y += dy * CONFIG.returnSpeed;
         }
       }
 
       draw() {
         if (!ctx) return;
-        ctx.fillStyle = lineColor;
+
+        // Draw diagonal line at 45 degrees
+        const halfLength = CONFIG.lineLength / 2;
+        const angle = Math.PI / 4; // 45 degrees
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = CONFIG.lineWidth;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.moveTo(
+          this.x + Math.cos(angle) * halfLength,
+          this.y + Math.sin(angle) * halfLength
+        );
+        ctx.lineTo(
+          this.x - Math.cos(angle) * halfLength,
+          this.y - Math.sin(angle) * halfLength
+        );
+        ctx.stroke();
       }
     }
 
-    // --- INITIALIZATION ---
+    // Setup canvas
     const setupCanvas = () => {
       if (!canvas) return;
 
       const rect = canvas.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
 
-      // Store CSS dimensions
       width = rect.width;
       height = rect.height;
 
-      // Set actual canvas size accounting for device pixel ratio
       canvas.width = width * dpr;
       canvas.height = height * dpr;
 
-      // Reset transform and scale context
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     };
 
-    const initParticles = () => {
-      // Update config based on current screen size
+    // Initialize lines
+    const initLines = () => {
       CONFIG = getConfig();
-      particles = [];
+      lines = [];
 
-      // Create a dense grid of particles for more lines
-      const spacing = Math.sqrt((width * height) / CONFIG.particleCount);
-      const cols = Math.ceil(width / spacing);
-
-      for (let i = 0; i < CONFIG.particleCount; i++) {
-        // Mix grid and random positioning for natural look
-        if (i < CONFIG.particleCount * 0.7) {
-          const col = (i % cols) * spacing;
-          const row = Math.floor(i / cols) * spacing;
-          particles.push(
-            new Particle(
-              col + (Math.random() - 0.5) * spacing * 0.5,
-              row + (Math.random() - 0.5) * spacing * 0.5
-            )
-          );
-        } else {
-          particles.push(
-            new Particle(Math.random() * width, Math.random() * height)
-          );
+      // Create grid of lines covering the entire screen
+      for (let y = CONFIG.spacing; y < height; y += CONFIG.spacing) {
+        for (let x = CONFIG.spacing; x < width; x += CONFIG.spacing) {
+          lines.push(new Line(x, y));
         }
       }
     };
 
-    // --- DRAW CONNECTIONS ---
-    const drawConnections = () => {
-      if (!ctx) return;
-
-      // Convert hex color to RGB
-      const hexToRgb = (hex: string) => {
-        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result
-          ? {
-              r: parseInt(result[1], 16),
-              g: parseInt(result[2], 16),
-              b: parseInt(result[3], 16),
-            }
-          : { r: 0, g: 255, b: 204 };
-      };
-
-      const rgb = hexToRgb(lineColor);
-
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < CONFIG.connectionDistance) {
-            const opacity = 1 - distance / CONFIG.connectionDistance;
-            ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
-            ctx.lineWidth = CONFIG.lineWidth;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-    };
-
-    // --- ANIMATION LOOP ---
+    // Animation loop
     const animate = () => {
       if (!isAnimating || !canvas) return;
 
       ctx.clearRect(0, 0, width, height);
 
-      // Update particles
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-      }
-
-      // Draw connections
-      drawConnections();
-
-      // Draw particles
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].draw();
+      // Update and draw lines
+      for (let i = 0; i < lines.length; i++) {
+        lines[i].update();
+        lines[i].draw();
       }
 
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    // --- EVENT LISTENERS ---
+    // Event handlers
     let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         if (!canvas) return;
         setupCanvas();
-        initParticles();
+        initLines();
       }, 100);
     };
 
@@ -244,7 +181,7 @@ const InteractiveLines = ({
 
     const handleTouchMove = (e: TouchEvent) => {
       if (!canvas) return;
-      e.preventDefault(); // Prevent scrolling
+      e.preventDefault();
       const rect = canvas.getBoundingClientRect();
       const touch = e.touches[0];
       if (touch) {
@@ -260,7 +197,7 @@ const InteractiveLines = ({
 
     // Initialize
     setupCanvas();
-    initParticles();
+    initLines();
     animate();
 
     // Add event listeners
@@ -271,7 +208,7 @@ const InteractiveLines = ({
     canvas.addEventListener("touchend", handleTouchEnd);
     canvas.addEventListener("touchcancel", handleTouchEnd);
 
-    // --- CLEANUP ---
+    // Cleanup
     return () => {
       isAnimating = false;
       clearTimeout(resizeTimeout);
@@ -285,7 +222,7 @@ const InteractiveLines = ({
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [lineColor]); // Re-run if color changes
+  }, [lineColor, backgroundColor]);
 
   return (
     <canvas
