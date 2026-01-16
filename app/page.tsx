@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { PosterLogo } from "@/components/poster-logo";
 import InteractiveLines from "@/components/interactive-lines";
 
 export default function Home() {
@@ -69,11 +68,6 @@ export default function Home() {
           </li>
         </ul>
       </nav>
-
-      {/* Logo - bottom left corner */}
-      <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 z-10">
-        <PosterLogo className="w-[300px] md:w-[500px] h-auto text-[#2a2a2a]" />
-      </div>
     </main>
   );
 }

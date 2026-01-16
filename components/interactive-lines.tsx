@@ -21,6 +21,76 @@ const InteractiveLines = ({
     let width = 0;
     let height = 0;
 
+    // SVG logo data extracted from poster-logo.tsx
+    // Each entry: [x, y, lineHeight] in SVG coordinates (viewBox: 0 0 1622.65 614.73)
+    const logoData: Array<[number, number, number]> = [
+      // P
+      [11.4, 0, 603.06],
+      [51.4, 0, 603.06],
+      [131.39, 261.88, 71.69],
+      [131.39, 0, 74.67],
+      [91.39, 0, 74.67],
+      [91.39, 261.88, 71.69],
+      [171.39, 0, 322.17],
+      [211.38, 42.07, 249.85],
+      // O
+      [291.76, 42.07, 524.77],
+      [331.75, 11.55, 585.81],
+      [371.75, 0, 74.8],
+      [371.75, 551.23, 63.5],
+      [411.75, 0, 74.8],
+      [411.75, 551.23, 63.5],
+      [451.74, 11.55, 585.81],
+      [491.74, 42.07, 524.77],
+      // S
+      [571.36, 366.82, 199.27],
+      [571.35, 0, 277.86],
+      [611.36, 377.81, 218.8],
+      [611.36, 0, 285.07],
+      [731.35, 300.66, 295.95],
+      [731.35, 0, 198.94],
+      [771.35, 43.03, 183.94],
+      [771.35, 336.3, 207.28],
+      [651.36, 0, 73.92],
+      [651.36, 272.53, 61.04],
+      [651.36, 551.47, 63.26],
+      [691.35, 0, 73.88],
+      [691.35, 272.53, 61.04],
+      [691.35, 551.47, 63.26],
+      // T
+      [851.32, 0, 74.67],
+      [891.32, 0, 74.67],
+      [931.31, 0, 603.06],
+      [971.31, 0, 603.06],
+      [1011.3, 0, 74.67],
+      [1051.3, 0, 74.67],
+      // E
+      [1131.29, 0, 603.06],
+      [1171.29, 0, 603.06],
+      [1251.28, 261.88, 71.69],
+      [1251.28, 551.35, 63.11],
+      [1251.28, 0, 74.67],
+      [1211.29, 261.88, 71.69],
+      [1211.29, 551.35, 63.11],
+      [1211.29, 0, 74.67],
+      [1291.28, 261.88, 71.69],
+      [1291.28, 551.35, 63.11],
+      [1291.28, 0, 74.67],
+      [1331.27, 261.88, 71.69],
+      [1331.27, 551.35, 63.11],
+      [1331.27, 0, 74.67],
+      // R
+      [1411.27, 0, 603.06],
+      [1451.26, 0, 603.06],
+      [1531.25, 261.88, 71.69],
+      [1531.25, 0, 74.67],
+      [1491.26, 261.88, 71.69],
+      [1491.26, 0, 74.67],
+      [1571.25, 0, 603.06],
+      [1611.25, 42.55, 235.41],
+      [1611.25, 336.31, 278.15],
+    ];
+
     // Detect mobile device
     const isMobileDevice = () => {
       return (
@@ -34,30 +104,33 @@ const InteractiveLines = ({
     const getConfig = () => {
       const mobile = isMobileDevice();
       return {
-        spacing: mobile ? 30 : 20, // Distance between lines
-        lineLength: mobile ? 20 : 25, // Length of each line
-        lineWidth: 1,
+        lineWidth: 11.4, // Width of each vertical line (matches SVG)
         mouseRadius: 120,
         mouseForce: 0.2,
         returnSpeed: 0.08,
+        logoScale: mobile ? 0.3 : 0.5, // Scale factor for logo
       };
     };
 
     let CONFIG = getConfig();
     const mouse = { x: null as number | null, y: null as number | null };
 
-    // Line class
+    // Line class - represents a vertical line segment
     class Line {
       x: number;
       y: number;
       baseX: number;
       baseY: number;
+      lineHeight: number;
+      baseLineHeight: number;
 
-      constructor(x: number, y: number) {
+      constructor(x: number, y: number, lineHeight: number) {
         this.x = x;
         this.y = y;
         this.baseX = x;
         this.baseY = y;
+        this.lineHeight = lineHeight;
+        this.baseLineHeight = lineHeight;
       }
 
       update() {
@@ -93,20 +166,12 @@ const InteractiveLines = ({
       draw() {
         if (!ctx) return;
 
-        // Draw diagonal line at 45 degrees
-        const halfLength = CONFIG.lineLength / 2;
-        const angle = Math.PI / 4; // 45 degrees
+        // Draw vertical line (matching SVG style)
         ctx.strokeStyle = lineColor;
         ctx.lineWidth = CONFIG.lineWidth;
         ctx.beginPath();
-        ctx.moveTo(
-          this.x + Math.cos(angle) * halfLength,
-          this.y + Math.sin(angle) * halfLength
-        );
-        ctx.lineTo(
-          this.x - Math.cos(angle) * halfLength,
-          this.y - Math.sin(angle) * halfLength
-        );
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x, this.y + this.lineHeight);
         ctx.stroke();
       }
     }
@@ -128,17 +193,25 @@ const InteractiveLines = ({
       ctx.scale(dpr, dpr);
     };
 
-    // Initialize lines
+    // Initialize lines from logo data
     const initLines = () => {
       CONFIG = getConfig();
       lines = [];
 
-      // Create grid of lines covering the entire screen
-      for (let y = CONFIG.spacing; y < height; y += CONFIG.spacing) {
-        for (let x = CONFIG.spacing; x < width; x += CONFIG.spacing) {
-          lines.push(new Line(x, y));
-        }
-      }
+      // SVG viewBox height
+      const svgHeight = 614.73;
+
+      // Logo position (bottom left, matching page.tsx)
+      const logoX = 32; // 32px from left (matches md:left-8)
+      const logoY = height - svgHeight * CONFIG.logoScale - 32; // 32px from bottom
+
+      // Create lines from logo data
+      logoData.forEach(([svgX, svgY, svgHeight]) => {
+        const x = logoX + svgX * CONFIG.logoScale;
+        const y = logoY + svgY * CONFIG.logoScale;
+        const lineHeight = svgHeight * CONFIG.logoScale;
+        lines.push(new Line(x, y, lineHeight));
+      });
     };
 
     // Animation loop
