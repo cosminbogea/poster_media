@@ -7,7 +7,7 @@ export default function Home() {
     <main className="relative h-screen w-full overflow-hidden bg-[#c1465c]">
       {/* Interactive Lines Background */}
       <div className="absolute inset-0 z-0">
-        <InteractiveLines lineColor="#ebebeb" />
+        <InteractiveLines />
       </div>
       {/* Navigation - centered vertically */}
       <nav className="absolute top-1/2 left-0 right-0 -translate-y-1/2 px-4 md:px-8 z-10">
