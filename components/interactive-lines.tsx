@@ -94,6 +94,30 @@ const InteractiveLines = ({
       [1611.25, 324.91, 278.15],
     ];
 
+    // Mobile logo data - only P and R letters (R shifted to be next to P)
+    // viewBox width: ~502.65 (P + gap + R)
+    const mobileLogoData: Array<[number, number, number]> = [
+      // P letter (same as full logo)
+      [11.4, 11.4, 591.66],
+      [51.4, 11.4, 591.66],
+      [91.39, 11.4, 63.26],
+      [91.39, 261.88, 60.29],
+      [131.39, 11.4, 63.26],
+      [131.39, 261.88, 60.29],
+      [171.39, 11.4, 310.77],
+      [211.38, 53.47, 227.05],
+      // R letter (shifted by -1120 to position after P)
+      [291.27, 11.4, 591.66],
+      [331.26, 11.4, 591.66],
+      [371.26, 11.4, 63.26],
+      [371.26, 261.88, 60.29],
+      [411.25, 11.4, 63.26],
+      [411.25, 261.88, 60.29],
+      [451.25, 11.4, 591.66],
+      [491.25, 53.95, 212.52],
+      [491.25, 324.91, 278.15],
+    ];
+
     // Background pattern data from bg_pattern.svg (viewBox: 1920 x 1080)
     const patternData: Array<[number, number, number]> = [
       [39.21, 200.46, 688.77],
@@ -231,7 +255,9 @@ const InteractiveLines = ({
         // Easing function for smoother transition
         const eased = easeInOutCubic(progress);
 
-        this.baseX = lerp(this.logoX, this.patternX, eased);
+        // Keep X position fixed at logo position - no horizontal movement allowed
+        this.baseX = this.logoX;
+        // Only animate vertical position (up/down) and height
         this.baseY = lerp(this.logoY, this.patternY, eased);
         this.baseLineHeight = lerp(this.logoHeight, this.patternHeight, eased);
       }
@@ -291,12 +317,17 @@ const InteractiveLines = ({
       draw() {
         if (!ctx) return;
         ctx.fillStyle = currentLineColor;
-        ctx.fillRect(
+        ctx.beginPath();
+        // Use half the line width as border radius for pill-shaped ends
+        const radius = CONFIG.lineWidth / 2;
+        ctx.roundRect(
           this.x - CONFIG.lineWidth / 2,
           this.y,
           CONFIG.lineWidth,
-          this.lineHeight
+          this.lineHeight,
+          radius
         );
+        ctx.fill();
       }
     }
 
@@ -333,8 +364,11 @@ const InteractiveLines = ({
 
       const mobile = isMobile();
 
-      // Logo SVG dimensions
-      const logoSvgWidth = 1622.65;
+      // Use different logo data for mobile (PR only) vs desktop (POSTER)
+      const activeLogoData = mobile ? mobileLogoData : logoData;
+
+      // Logo SVG dimensions - different for mobile (PR) vs desktop (POSTER)
+      const logoSvgWidth = mobile ? 502.65 : 1622.65;
       const logoSvgHeight = 614.73;
 
       // Pattern SVG dimensions
@@ -374,12 +408,12 @@ const InteractiveLines = ({
       }
 
       // Create lines - match logo and pattern by index
-      const maxLines = Math.max(logoData.length, patternData.length);
+      const maxLines = Math.max(activeLogoData.length, patternData.length);
 
       for (let i = 0; i < maxLines; i++) {
         // Get logo data (wrap if fewer logo lines)
-        const logoIdx = i % logoData.length;
-        const [logoSvgX, logoSvgY, logoSvgH] = logoData[logoIdx];
+        const logoIdx = i % activeLogoData.length;
+        const [logoSvgX, logoSvgY, logoSvgH] = activeLogoData[logoIdx];
         const logoX = logoOffsetX + logoSvgX * logoScale;
         const logoY = logoOffsetY + logoSvgY * logoScale;
         const logoH = logoSvgH * logoScale;
@@ -502,10 +536,10 @@ const InteractiveLines = ({
     initLines();
     animate();
 
-    // Auto-trigger transition after 3 seconds if no interaction
+    // Auto-trigger transition after 15 seconds if no interaction
     autoTransitionTimer = setTimeout(() => {
       triggerTransition();
-    }, 3000);
+    }, 15000);
 
     // Add event listeners
     window.addEventListener("resize", handleResize);
