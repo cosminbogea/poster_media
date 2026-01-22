@@ -4,7 +4,7 @@ import InteractiveLines from "@/components/interactive-lines";
 
 export default function Home() {
   return (
-    <main className="relative h-screen w-full overflow-hidden bg-[#c1465c]">
+    <main className="relative h-screen w-full overflow-hidden bg-[#cc405b]">
       {/* Interactive Lines Background */}
       <div className="absolute inset-0 z-0">
         <InteractiveLines />

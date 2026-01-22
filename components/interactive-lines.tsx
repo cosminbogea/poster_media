@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from "react";
 
 const InteractiveLines = ({
   lineColor = "rgba(210, 120, 140, 0.85)", // brighter #bf6276 with opacity
-  backgroundColor = "#c1465c",
+  backgroundColor = "#cc405b",
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
