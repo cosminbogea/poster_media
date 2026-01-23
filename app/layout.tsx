@@ -6,9 +6,9 @@ import "./globals.css";
 // --- 1. Configure INTER ---
 const inter = localFont({
   src: [
-    { path: "./fonts/inter/Inter-Thin.ttf", weight: "100", style: "normal" },
+    { path: "./fonts/Inter/Inter-Thin.ttf", weight: "100", style: "normal" },
     {
-      path: "./fonts/inter/Inter-ExtraLight.ttf",
+      path: "./fonts/Inter/Inter-ExtraLight.ttf",
       weight: "200",
       style: "normal",
     },
