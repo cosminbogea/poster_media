@@ -12,21 +12,21 @@ const inter = localFont({
       weight: "200",
       style: "normal",
     },
-    { path: "./fonts/inter/Inter-Light.ttf", weight: "300", style: "normal" },
-    { path: "./fonts/inter/Inter-Regular.ttf", weight: "400", style: "normal" },
-    { path: "./fonts/inter/Inter-Medium.ttf", weight: "500", style: "normal" },
+    { path: "./fonts/Inter/Inter-Light.ttf", weight: "300", style: "normal" },
+    { path: "./fonts/Inter/Inter-Regular.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/Inter/Inter-Medium.ttf", weight: "500", style: "normal" },
     {
-      path: "./fonts/inter/Inter-SemiBold.ttf",
+      path: "./fonts/Inter/Inter-SemiBold.ttf",
       weight: "600",
       style: "normal",
     },
-    { path: "./fonts/inter/Inter-Bold.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/Inter/Inter-Bold.ttf", weight: "700", style: "normal" },
     {
-      path: "./fonts/inter/Inter-ExtraBold.ttf",
+      path: "./fonts/Inter/Inter-ExtraBold.ttf",
       weight: "800",
       style: "normal",
     },
-    { path: "./fonts/inter/Inter-Black.ttf", weight: "900", style: "normal" },
+    { path: "./fonts/Inter/Inter-Black.ttf", weight: "900", style: "normal" },
   ],
   variable: "--font-inter", // This creates a CSS variable named var(--font-inter)
 });
@@ -34,23 +34,23 @@ const inter = localFont({
 // --- 2. Configure ERBAUM ---
 const erbaum = localFont({
   src: [
-    { path: "./fonts/erbaum/Erbaum-Thin.ttf", weight: "100", style: "normal" },
-    { path: "./fonts/erbaum/Erbaum-Light.ttf", weight: "300", style: "normal" },
+    { path: "./fonts/Erbaum/Erbaum-Thin.ttf", weight: "100", style: "normal" },
+    { path: "./fonts/Erbaum/Erbaum-Light.ttf", weight: "300", style: "normal" },
     // "Book" is usually slightly lighter than Regular.
     // We map it to 350 so you can use it distinctly if needed.
-    { path: "./fonts/erbaum/Erbaum-Book.ttf", weight: "350", style: "normal" },
+    { path: "./fonts/Erbaum/Erbaum-Book.ttf", weight: "350", style: "normal" },
     {
-      path: "./fonts/erbaum/Erbaum-Regular.ttf",
+      path: "./fonts/Erbaum/Erbaum-Regular.ttf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "./fonts/erbaum/Erbaum-Medium.ttf",
+      path: "./fonts/Erbaum/Erbaum-Medium.ttf",
       weight: "500",
       style: "normal",
     },
-    { path: "./fonts/erbaum/Erbaum-Bold.ttf", weight: "700", style: "normal" },
-    { path: "./fonts/erbaum/Erbaum-Black.ttf", weight: "900", style: "normal" },
+    { path: "./fonts/Erbaum/Erbaum-Bold.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/Erbaum/Erbaum-Black.ttf", weight: "900", style: "normal" },
   ],
   variable: "--font-erbaum", // This creates var(--font-erbaum)
 });
