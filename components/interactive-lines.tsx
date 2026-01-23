@@ -231,7 +231,7 @@ const InteractiveLines = ({
         logoHeight: number,
         patternX: number,
         patternY: number,
-        patternHeight: number
+        patternHeight: number,
       ) {
         this.logoX = logoX;
         this.logoY = logoY;
@@ -285,7 +285,7 @@ const InteractiveLines = ({
           if (distance < CONFIG.mouseRadius && distance > 0) {
             const force = Math.pow(
               (CONFIG.mouseRadius - distance) / CONFIG.mouseRadius,
-              0.7
+              0.7,
             );
 
             const lineCenter = lineTop + this.lineHeight / 2;
@@ -301,7 +301,7 @@ const InteractiveLines = ({
             // Clamp to max displacement
             targetDisplaceY = Math.max(
               -CONFIG.maxDisplacement,
-              Math.min(CONFIG.maxDisplacement, targetDisplaceY)
+              Math.min(CONFIG.maxDisplacement, targetDisplaceY),
             );
             this.displaceY = targetDisplaceY;
           } else if (mouseMoved) {
@@ -325,7 +325,7 @@ const InteractiveLines = ({
           this.y,
           CONFIG.lineWidth,
           this.lineHeight,
-          radius
+          radius,
         );
         ctx.fill();
       }
@@ -375,21 +375,26 @@ const InteractiveLines = ({
       const patternSvgWidth = 1920;
       const patternSvgHeight = 1080;
 
-      // Calculate logo scale (centered, fit to screen with padding)
-      // On mobile, make logo smaller and centered
-      const logoPaddingX = mobile ? 0.95 : 0.85;
+      // Calculate logo scale
+      // Desktop: fill full width and ~60% height (non-uniform scaling)
+      // Mobile: keep smaller and centered
+      const logoPaddingX = mobile ? 0.95 : 0.98;
       const logoPaddingY = mobile ? 0.4 : 0.7;
       const logoScaleX = (width * logoPaddingX) / logoSvgWidth;
       const logoScaleY = (height * logoPaddingY) / logoSvgHeight;
-      const logoScale = Math.min(logoScaleX, logoScaleY);
-      const logoOffsetX = (width - logoSvgWidth * logoScale) / 2;
-      const logoOffsetY = (height - logoSvgHeight * logoScale) / 2;
+      const logoScale = mobile ? Math.min(logoScaleX, logoScaleY) : 1;
+      const logoOffsetX = mobile
+        ? (width - logoSvgWidth * logoScale) / 2
+        : (width - logoSvgWidth * logoScaleX) / 2;
+      const logoOffsetY = mobile
+        ? (height - logoSvgHeight * logoScale) / 2
+        : height * ((1 - logoPaddingX) / 2);
 
       // Calculate pattern scale
       // On mobile (portrait), fit pattern within screen and distribute evenly
       const patternScaleX = width / patternSvgWidth;
       const patternScaleY = height / patternSvgHeight;
-      
+
       let patternScale: number;
       let patternOffsetX: number;
       let patternOffsetY: number;
@@ -414,14 +419,14 @@ const InteractiveLines = ({
         // Get logo data (wrap if fewer logo lines)
         const logoIdx = i % activeLogoData.length;
         const [logoSvgX, logoSvgY, logoSvgH] = activeLogoData[logoIdx];
-        const logoX = logoOffsetX + logoSvgX * logoScale;
-        const logoY = logoOffsetY + logoSvgY * logoScale;
-        const logoH = logoSvgH * logoScale;
+        const logoX = logoOffsetX + logoSvgX * (mobile ? logoScale : logoScaleX);
+        const logoY = logoOffsetY + logoSvgY * (mobile ? logoScale : logoScaleY);
+        const logoH = logoSvgH * (mobile ? logoScale : logoScaleY);
 
         // Get pattern data (wrap if fewer pattern lines)
         const patternIdx = i % patternData.length;
         const [patternSvgX, patternSvgY, patternSvgH] = patternData[patternIdx];
-        
+
         let patternX: number;
         let patternY: number;
         let patternH: number;
@@ -447,7 +452,10 @@ const InteractiveLines = ({
 
       // Update transition progress
       if (hasInteracted && transitionProgress < 1) {
-        transitionProgress = Math.min(1, transitionProgress + CONFIG.transitionSpeed);
+        transitionProgress = Math.min(
+          1,
+          transitionProgress + CONFIG.transitionSpeed,
+        );
       }
 
       // Fill background

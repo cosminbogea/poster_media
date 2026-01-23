@@ -1,51 +1,72 @@
 "use client";
 
+import { Footer } from "@/components/footer";
 import InteractiveLines from "@/components/interactive-lines";
+import { ThemeProvider, useTheme } from "@/components/theme-context";
 
-export default function Home() {
+function HomeContent() {
+  const { colors } = useTheme();
+
   return (
-    <main className="relative h-screen w-full overflow-hidden bg-[#cc405b]">
+    <main
+      className="relative h-screen w-full overflow-hidden transition-colors duration-500"
+      style={{ backgroundColor: colors.background }}
+    >
       {/* Interactive Lines Background */}
       <div className="absolute inset-0 z-0">
-        <InteractiveLines />
+        <InteractiveLines
+          lineColor={colors.lineColor}
+          backgroundColor={colors.background}
+        />
       </div>
-      {/* Navigation - centered vertically */}
-      <nav className="absolute top-1/2 left-0 right-0 -translate-y-1/2 px-4 md:px-8 z-10">
-        <ul className="flex flex-wrap items-center justify-between gap-4 md:gap-8">
-          <li>
+      {/* Navigation - positioned at 35% height */}
+      <nav className="absolute top-[35%] left-0 right-0 px-4 md:px-8 z-10">
+        <div className="flex items-center">
+          {/* POSTER MEDIA - left aligned */}
+          <a
+            href="#"
+            className="text-xs md:text-base lg:text-lg font-bold hover:opacity-80 transition-opacity"
+            style={{ color: colors.textColor }}
+          >
+            POSTER MEDIA
+          </a>
+
+          {/* WORKS, ABOUT, CONTACT US - starting from center with equal spacing */}
+          <div className="absolute left-1/2 right-4 md:right-8 flex justify-between">
             <a
               href="#"
-              className="text-xs md:text-base lg:text-lg font-medium tracking-wider text-black hover:opacity-80 transition-opacity"
-            >
-              POSTER MEDIA
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="text-xs md:text-base lg:text-lg font-medium tracking-wider text-black hover:opacity-80 transition-opacity"
+              className="text-xs md:text-base lg:text-lg font-bold hover:opacity-80 transition-opacity"
+              style={{ color: colors.textColor }}
             >
               WORKS
             </a>
-          </li>
-          <li>
             <a
               href="#"
-              className="text-xs md:text-base lg:text-lg font-medium tracking-wider text-black hover:opacity-80 transition-opacity"
+              className="text-xs md:text-base lg:text-lg font-bold hover:opacity-80 transition-opacity"
+              style={{ color: colors.textColor }}
             >
               ABOUT
             </a>
-          </li>
-          <li>
             <a
               href="#"
-              className="text-xs md:text-base lg:text-lg font-medium tracking-wider text-black hover:opacity-80 transition-opacity"
+              className="text-xs md:text-base lg:text-lg font-bold hover:opacity-80 transition-opacity"
+              style={{ color: colors.textColor }}
             >
               CONTACT US
             </a>
-          </li>
-        </ul>
+          </div>
+        </div>
       </nav>
+
+      <Footer />
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <ThemeProvider>
+      <HomeContent />
+    </ThemeProvider>
   );
 }

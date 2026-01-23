@@ -1,18 +1,64 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter, Playfair_Display } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
+import type React from "react";
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] })
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-})
+// --- 1. Configure INTER ---
+const inter = localFont({
+  src: [
+    { path: "./fonts/inter/Inter-Thin.ttf", weight: "100", style: "normal" },
+    {
+      path: "./fonts/inter/Inter-ExtraLight.ttf",
+      weight: "200",
+      style: "normal",
+    },
+    { path: "./fonts/inter/Inter-Light.ttf", weight: "300", style: "normal" },
+    { path: "./fonts/inter/Inter-Regular.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/inter/Inter-Medium.ttf", weight: "500", style: "normal" },
+    {
+      path: "./fonts/inter/Inter-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    { path: "./fonts/inter/Inter-Bold.ttf", weight: "700", style: "normal" },
+    {
+      path: "./fonts/inter/Inter-ExtraBold.ttf",
+      weight: "800",
+      style: "normal",
+    },
+    { path: "./fonts/inter/Inter-Black.ttf", weight: "900", style: "normal" },
+  ],
+  variable: "--font-inter", // This creates a CSS variable named var(--font-inter)
+});
+
+// --- 2. Configure ERBAUM ---
+const erbaum = localFont({
+  src: [
+    { path: "./fonts/erbaum/Erbaum-Thin.ttf", weight: "100", style: "normal" },
+    { path: "./fonts/erbaum/Erbaum-Light.ttf", weight: "300", style: "normal" },
+    // "Book" is usually slightly lighter than Regular.
+    // We map it to 350 so you can use it distinctly if needed.
+    { path: "./fonts/erbaum/Erbaum-Book.ttf", weight: "350", style: "normal" },
+    {
+      path: "./fonts/erbaum/Erbaum-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/erbaum/Erbaum-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    { path: "./fonts/erbaum/Erbaum-Bold.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/erbaum/Erbaum-Black.ttf", weight: "900", style: "normal" },
+  ],
+  variable: "--font-erbaum", // This creates var(--font-erbaum)
+});
 
 export const metadata: Metadata = {
   title: "POSTER Photography",
-  description: "Professional photography services - Capturing moments that tell stories",
+  description:
+    "Professional photography services - Capturing moments that tell stories",
   generator: "v0.app",
   icons: {
     icon: [
@@ -31,19 +77,21 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-icon.png",
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${playfair.variable} font-sans antialiased`} style={{ backgroundColor: "#bf6276" }}>
+      <body
+        className={`${inter.variable} ${erbaum.variable} font-sans tracking-tight`}
+        style={{ backgroundColor: "#bf6276" }}
+      >
         {children}
-        <Analytics />
       </body>
     </html>
-  )
+  );
 }
