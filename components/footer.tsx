@@ -22,8 +22,8 @@ export function Footer() {
             <br />
             e protetti dal diritto d&apos;autore e proprieta intellettuale. E
             vietato copiare, riprodurre, redistribuire
-            <br />o pubblicare qualsiasi materiale senza autorizzazione esplicita
-            dell&apos;autore.
+            <br />o pubblicare qualsiasi materiale senza autorizzazione
+            esplicita dell&apos;autore.
           </p>
           <div
             className="flex items-center gap-6 text-[8px] md:text-[9px] font-bold shrink-0"
