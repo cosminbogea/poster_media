@@ -17,12 +17,12 @@ const themeColors: Record<ThemeType, ThemeColors> = {
     textColor: "rgba(0, 0, 0, 0.8)",
   },
   black: {
-    background: "#1a1a1a",
+    background: "#282828",
     lineColor: "rgba(60, 60, 60, 0.85)",
     textColor: "rgba(255, 255, 255, 0.8)",
   },
   white: {
-    background: "#f5f5f5",
+    background: "#F3F2F3",
     lineColor: "rgba(200, 200, 200, 0.85)",
     textColor: "rgba(0, 0, 0, 0.8)",
   },

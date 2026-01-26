@@ -188,7 +188,7 @@ const InteractiveLines = ({
     const getConfig = () => {
       const mobile = isMobile();
       return {
-        lineWidth: mobile ? 6 : 10,
+        lineWidth: mobile ? 12 : 18,
         mouseRadius: mobile ? 120 : 200,
         mouseForce: mobile ? 0.3 : 0.4,
         returnSpeed: 0.12,
