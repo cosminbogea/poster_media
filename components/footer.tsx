@@ -31,7 +31,7 @@ export function Footer() {
             className="text-[8px] md:text-[9px] font-bold shrink-0 self-end"
             style={{ color: colors.textColor }}
           >
-            COPYRIGHT ©️2026 - ALL RIGHTS RESERVED.
+            COPYRIGHT © 2026 - ALL RIGHTS RESERVED.
           </span>
           {/* Element 3: Theme Switcher */}
           <div className="self-end">
