@@ -1,125 +1,108 @@
-"use client"
+"use client";
 
-import type React from "react"
+import { useState, useEffect } from "react";
+import { useTheme } from "@/components/theme-context";
 
-import { useState } from "react"
-import { Instagram, Mail, Phone } from "lucide-react"
+interface NavPositions {
+  posterMedia: number;
+  works: number;
+  about: number;
+}
 
 export function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
+  const { colors } = useTheme();
+  const [navPositions, setNavPositions] = useState<NavPositions | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-  }
+  const lineWidth = 16;
+  const lineCenter = lineWidth / 2;
+  const containerPadding = 32;
+
+  useEffect(() => {
+    const measurePositions = () => {
+      const posterMediaEl = document.querySelector('[data-nav="poster-media"]');
+      const worksEl = document.querySelector('[data-nav="works"]');
+      const aboutEl = document.querySelector('[data-nav="about"]');
+
+      if (posterMediaEl && worksEl && aboutEl) {
+        setNavPositions({
+          posterMedia:
+            posterMediaEl.getBoundingClientRect().left - containerPadding,
+          works: worksEl.getBoundingClientRect().left - containerPadding,
+          about: aboutEl.getBoundingClientRect().left - containerPadding,
+        });
+      }
+    };
+
+    measurePositions();
+    window.addEventListener("resize", measurePositions);
+    return () => window.removeEventListener("resize", measurePositions);
+  }, []);
+
+  const sections = [
+    {
+      title: "CONTACT",
+      left: navPositions?.posterMedia ?? 0,
+      text: ["Get in touch with us"],
+    },
+    {
+      title: "EMAIL",
+      left: navPositions?.works ?? 0,
+      text: ["jacopo@poster-media.com"],
+    },
+    {
+      title: "PHONE",
+      left: navPositions?.about ?? 0,
+      text: ["+39 3311425252"],
+    },
+  ];
 
   return (
-    <section id="contact" className="py-24 px-6 bg-secondary">
-      <div className="container mx-auto max-w-4xl">
-        <p className="text-sm uppercase tracking-widest text-muted-foreground text-center mb-4">Contact</p>
-        <h2 className="text-3xl md:text-4xl font-serif text-center mb-4 text-balance">
-          Let&apos;s create something beautiful together
-        </h2>
-        <p className="text-muted-foreground text-center mb-12 max-w-xl mx-auto">
-          Ready to start your project? Get in touch and let&apos;s discuss how we can bring your vision to life.
-        </p>
+    <div className="h-[calc(100vh-6rem-2rem)] relative">
+      {sections.map((section) => (
+        <div
+          key={section.title}
+          className="absolute"
+          style={{
+            left: section.left,
+            top: "30%",
+            bottom: 0,
+          }}
+        >
+          {/* Vertical line */}
+          <div
+            className="absolute left-0 rounded-full"
+            style={{
+              backgroundColor: colors.lineColor,
+              width: `${lineWidth}px`,
+              top: 0,
+              bottom: 0,
+            }}
+          />
 
-        <div className="grid md:grid-cols-2 gap-12">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm uppercase tracking-widest mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-3 bg-background border border-input focus:border-primary focus:outline-none transition-colors"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm uppercase tracking-widest mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-3 bg-background border border-input focus:border-primary focus:outline-none transition-colors"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="message" className="block text-sm uppercase tracking-widest mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                rows={5}
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full px-4 py-3 bg-background border border-input focus:border-primary focus:outline-none transition-colors resize-none"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full px-8 py-3 bg-primary text-primary-foreground text-sm uppercase tracking-widest hover:bg-primary/90 transition-colors"
+          {/* Content */}
+          <div
+            className="relative z-10"
+            style={{ marginLeft: `${lineCenter}px` }}
+          >
+            <h2
+              className="text-sm uppercase font-erbaum font-light pt-8"
+              style={{ color: colors.textColor }}
             >
-              Send Message
-            </button>
-          </form>
+              {section.title}
+            </h2>
 
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-lg font-serif mb-4">Get in Touch</h3>
-              <div className="space-y-4">
-                <a
-                  href="mailto:hello@poster.com"
-                  className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Mail className="w-5 h-5" />
-                  <span>hello@poster.com</span>
-                </a>
-                <a
-                  href="tel:+1234567890"
-                  className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Phone className="w-5 h-5" />
-                  <span>+1 (234) 567-890</span>
-                </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Instagram className="w-5 h-5" />
-                  <span>@poster.photo</span>
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-serif mb-4">Studio Location</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                123 Creative Avenue
-                <br />
-                New York, NY 10001
-                <br />
-                United States
+            {section.text.map((text, i) => (
+              <p
+                key={i}
+                className="text-xs font-bold leading-tight max-w-xs"
+                style={{ color: colors.textColor }}
+              >
+                {text}
               </p>
-            </div>
+            ))}
           </div>
         </div>
-      </div>
-    </section>
-  )
+      ))}
+    </div>
+  );
 }

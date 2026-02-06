@@ -2,6 +2,7 @@ import type React from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-context";
 
 // --- 1. Configure INTER ---
 const inter = localFont({
@@ -90,7 +91,7 @@ export default function RootLayout({
         className={`${inter.variable} ${erbaum.variable} font-sans tracking-tight`}
         style={{ backgroundColor: "#bf6276" }}
       >
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

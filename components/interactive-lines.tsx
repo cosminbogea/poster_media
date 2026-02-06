@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
+import { useTheme } from "./theme-context";
 
-const InteractiveLines = ({
-  lineColor = "rgba(210, 120, 140, 0.85)", // brighter #bf6276 with opacity
-  backgroundColor = "#cc405b",
-}) => {
+const InteractiveLines = () => {
+  const { colors } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -201,8 +200,8 @@ const InteractiveLines = ({
     const mouse = { x: null as number | null, y: null as number | null };
     const prevMouse = { x: null as number | null, y: null as number | null };
 
-    const currentLineColor = lineColor;
-    const currentBackgroundColor = backgroundColor;
+    const currentLineColor = colors.lineColor;
+    const currentBackgroundColor = colors.background;
 
     // Line class with morphing capability
     class Line {
@@ -574,7 +573,7 @@ const InteractiveLines = ({
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [lineColor, backgroundColor]);
+  }, [colors.lineColor, colors.background]);
 
   return (
     <canvas
@@ -583,7 +582,7 @@ const InteractiveLines = ({
         display: "block",
         width: "100%",
         height: "100%",
-        backgroundColor: backgroundColor,
+        backgroundColor: colors.background,
       }}
     />
   );
