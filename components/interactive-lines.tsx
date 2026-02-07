@@ -482,6 +482,25 @@ const InteractiveLines = () => {
       }
     };
 
+    // Check if mouse/touch is near any line
+    const checkLineProximity = () => {
+      if (mouse.x === null || mouse.y === null || hasInteracted) return;
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const lineTop = line.baseY + line.displaceY;
+        const lineBottom = lineTop + line.lineHeight;
+        const closestY = Math.max(lineTop, Math.min(mouse.y, lineBottom));
+        const dx = line.x - mouse.x;
+        const dy = closestY - mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const touchRadius = CONFIG.lineWidth * 2;
+        if (distance < touchRadius) {
+          triggerTransition();
+          return;
+        }
+      }
+    };
+
     // Event handlers
     let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
@@ -502,7 +521,7 @@ const InteractiveLines = () => {
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
-      triggerTransition();
+      checkLineProximity();
     };
 
     const handleMouseLeave = () => {
@@ -518,7 +537,7 @@ const InteractiveLines = () => {
       if (touch) {
         mouse.x = touch.clientX - rect.left;
         mouse.y = touch.clientY - rect.top;
-        triggerTransition();
+        checkLineProximity();
       }
     };
 
@@ -529,7 +548,7 @@ const InteractiveLines = () => {
       if (touch) {
         mouse.x = touch.clientX - rect.left;
         mouse.y = touch.clientY - rect.top;
-        triggerTransition();
+        checkLineProximity();
       }
     };
 

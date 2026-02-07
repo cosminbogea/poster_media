@@ -47,7 +47,7 @@ export function Navigation({
           href="/"
           data-nav="poster-media"
           className="text-xs font-bold hover:opacity-80 transition-opacity"
-          style={{ color: variant === "homepage" ? colors.textColor : colors.lineColor }}
+          style={{ color: variant === "homepage" ? colors.textColor : "#d8d8d8" }}
         >
           POSTER MEDIA
         </Link>
@@ -60,7 +60,7 @@ export function Navigation({
               : link.href === "/works" ? isWorksSection : isActive(link.href);
             const linkColor = variant === "homepage"
               ? colors.textColor
-              : isLinkActive ? colors.textColor : colors.lineColor;
+              : isLinkActive ? colors.textColor : "#d8d8d8";
 
             // For WORKS link, show MOODBOARD next to it when in works section
             if (link.href === "/works" && isWorksSection && variant !== "homepage") {
@@ -70,14 +70,14 @@ export function Navigation({
                     onClick={onViewToggle}
                     data-nav="works"
                     className="text-xs font-bold hover:opacity-80 transition-opacity"
-                    style={{ color: isWorksView ? colors.textColor : colors.lineColor }}
+                    style={{ color: isWorksView ? colors.textColor : "#d8d8d8" }}
                   >
                     WORKS
                   </button>
                   <button
                     onClick={onViewToggle}
                     className="text-xs font-bold hover:opacity-80 transition-opacity"
-                    style={{ color: !isWorksView ? colors.textColor : colors.lineColor }}
+                    style={{ color: !isWorksView ? colors.textColor : "#d8d8d8" }}
                   >
                     MOODBOARD
                   </button>
