@@ -47,20 +47,20 @@ export function Navigation({
           href="/"
           data-nav="poster-media"
           className="text-xs font-bold hover:opacity-80 transition-opacity"
-          style={{ color: variant === "homepage" ? colors.textColor : "#d8d8d8" }}
+          style={{ color: variant === "homepage" ? colors.textColor : colors.inactiveNavColor }}
         >
           POSTER MEDIA
         </Link>
 
         {/* WORKS, ABOUT, CONTACT US - starting from center with equal spacing */}
-        <div className="absolute left-1/2 right-4 md:right-8 flex justify-between">
+        <div className="absolute left-1/2 right-4 md:right-8 grid grid-cols-3">
           {navLinks.map((link) => {
             const isLinkActive = variant === "homepage"
               ? false
               : link.href === "/works" ? isWorksSection : isActive(link.href);
             const linkColor = variant === "homepage"
               ? colors.textColor
-              : isLinkActive ? colors.textColor : "#d8d8d8";
+              : isLinkActive ? colors.textColor : colors.inactiveNavColor;
 
             // For WORKS link, show MOODBOARD next to it when in works section
             if (link.href === "/works" && isWorksSection && variant !== "homepage") {
@@ -70,14 +70,14 @@ export function Navigation({
                     onClick={onViewToggle}
                     data-nav="works"
                     className="text-xs font-bold hover:opacity-80 transition-opacity"
-                    style={{ color: isWorksView ? colors.textColor : "#d8d8d8" }}
+                    style={{ color: isWorksView ? colors.textColor : colors.inactiveNavColor }}
                   >
                     WORKS
                   </button>
                   <button
                     onClick={onViewToggle}
                     className="text-xs font-bold hover:opacity-80 transition-opacity"
-                    style={{ color: !isWorksView ? colors.textColor : "#d8d8d8" }}
+                    style={{ color: !isWorksView ? colors.textColor : colors.inactiveNavColor }}
                   >
                     MOODBOARD
                   </button>

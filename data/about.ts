@@ -12,6 +12,6 @@ export const aboutData: AboutData[] = [
     title: "CONTATTI",
     text: ["jacopo@poster-media.com", "+39 3311425252"],
     bottomTitle: "CREDITS",
-    bottomText: ["Graphic design: Alex Giuliano", "Developer: Cosmin"],
+    bottomText: ["Graphic design: Alex Giuliano", "Developer: Cosmin Bogea"],
   },
 ];

@@ -114,7 +114,7 @@ export function About() {
   };
 
   return (
-    <div ref={containerRef} className="h-[calc(100vh-6rem-2rem)] relative">
+    <div ref={containerRef} className="h-[calc(100vh-6rem-4rem)] relative">
       {aboutData.map((section, sectionIndex) => {
         const hasBottomSection = section.bottomTitle && section.bottomText;
 
