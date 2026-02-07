@@ -46,14 +46,14 @@ export function Navigation({
         <Link
           href="/"
           data-nav="poster-media"
-          className="text-xs font-bold hover:opacity-80 transition-opacity"
+          className="text-xs font-bold hover:opacity-80 transition-opacity leading-none"
           style={{ color: variant === "homepage" ? colors.textColor : colors.inactiveNavColor }}
         >
           POSTER MEDIA
         </Link>
 
         {/* WORKS, ABOUT, CONTACT US - starting from center with equal spacing */}
-        <div className="absolute left-1/2 right-4 md:right-8 grid grid-cols-3">
+        <div className="absolute left-1/2 right-4 md:right-8 flex items-center justify-between">
           {navLinks.map((link) => {
             const isLinkActive = variant === "homepage"
               ? false
@@ -65,18 +65,18 @@ export function Navigation({
             // For WORKS link, show MOODBOARD next to it when in works section
             if (link.href === "/works" && isWorksSection && variant !== "homepage") {
               return (
-                <div key={link.href} className="flex gap-4">
+                <div key={link.href} className="relative flex items-center">
                   <button
                     onClick={onViewToggle}
                     data-nav="works"
-                    className="text-xs font-bold hover:opacity-80 transition-opacity"
+                    className="text-xs font-bold hover:opacity-80 transition-opacity leading-none"
                     style={{ color: isWorksView ? colors.textColor : colors.inactiveNavColor }}
                   >
                     WORKS
                   </button>
                   <button
                     onClick={onViewToggle}
-                    className="text-xs font-bold hover:opacity-80 transition-opacity"
+                    className="absolute top-1/2 -translate-y-1/2 left-[calc(100%+1rem)] text-xs font-bold hover:opacity-80 transition-opacity whitespace-nowrap leading-none"
                     style={{ color: !isWorksView ? colors.textColor : colors.inactiveNavColor }}
                   >
                     MOODBOARD
@@ -90,7 +90,7 @@ export function Navigation({
                 key={link.href}
                 href={link.href}
                 data-nav={link.href.replace("/", "")}
-                className="text-xs font-bold hover:opacity-80 transition-opacity"
+                className="text-xs font-bold hover:opacity-80 transition-opacity leading-none"
                 style={{ color: linkColor }}
               >
                 {link.label}
