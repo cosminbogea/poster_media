@@ -13,8 +13,8 @@ interface ThemeColors {
 
 const themeColors: Record<ThemeType, ThemeColors> = {
   main: {
-    background: "#cc405b",
-    lineColor: "#d64c70",
+    background: "#efdea3",
+    lineColor: "#eee3b6",
     textColor: "rgba(0, 0, 0, 0.8)",
     inactiveNavColor: "#9c9b9b",
   },
@@ -41,7 +41,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<ThemeType>("main");
+  const [theme, setTheme] = useState<ThemeType>("black");
 
   useEffect(() => {
     document.body.style.backgroundColor = themeColors[theme].background;

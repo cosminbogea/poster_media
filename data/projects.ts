@@ -2,7 +2,7 @@ import { Project } from "@/types/project";
 
 export const projects: Project[] = [
   {
-    slug: "san-marino-wedding",
+    slug: "puma-san-san-gear",
     title: "PUMA x SAN SAN GEAR",
     subtitle: "FULL THROTTLE",
     description:
@@ -10,9 +10,9 @@ export const projects: Project[] = [
     date: "Ottobre 2025",
     location: "San Marino",
     image: {
-      src: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&h=800&fit=crop",
-      alt: "San Marino Wedding - Elena & Marco",
-      width: "30",
+      src: "/image_1.jpg",
+      alt: "Puma x San San Gear - Full Throttle",
+      width: "100",
     },
   },
   {
@@ -20,17 +20,17 @@ export const projects: Project[] = [
     title: "RIMINI FASHION WEEK",
     subtitle: "Summer Collection 2025",
     description:
-      "Documentazione completa della settimana della moda di Rimini, con focus sulle nuove collezioni estive. Un progetto che ha coinvolto backstage, sfilate e ritratti dei designer emergenti della riviera romagnola.",
+      "Documentazione completa della settimana della moda di Rimini, con focus sulle nuove collezioni estive e i designer emergenti della riviera romagnola.",
     date: "Giugno 2025",
     location: "Rimini, Italia",
     image: {
-      src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=800&fit=crop",
+      src: "/image_2.jpg",
       alt: "Rimini Fashion Week",
-      width: "50",
+      width: "30",
     },
   },
   {
-    slug: "corporate-brand",
+    slug: "luxe-hotels",
     title: "BRAND IDENTITY",
     subtitle: "Luxe Hotels Group",
     description:
@@ -38,9 +38,65 @@ export const projects: Project[] = [
     date: "Marzo 2025",
     location: "Milano, Italia",
     image: {
-      src: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&h=800&fit=crop",
+      src: "/image_3.jpg",
       alt: "Luxe Hotels Brand Identity",
-      width: "100",
+      width: "30",
+    },
+  },
+  {
+    slug: "adidas-streetwear",
+    title: "ADIDAS ORIGINALS",
+    subtitle: "Street Culture",
+    description:
+      "Campagna fotografica per il lancio della nuova linea streetwear. Shooting urbano tra le strade di Bologna con modelli e artisti locali.",
+    date: "Settembre 2025",
+    location: "Bologna, Italia",
+    image: {
+      src: "/iamge_4.jpg",
+      alt: "Adidas Originals Street Culture",
+      width: "30",
+    },
+  },
+  {
+    slug: "venice-editorial",
+    title: "VENICE EDITORIAL",
+    subtitle: "Acqua Alta",
+    description:
+      "Servizio editoriale realizzato durante l'acqua alta a Venezia. Un racconto visivo che unisce moda e architettura in uno scenario unico al mondo.",
+    date: "Novembre 2025",
+    location: "Venezia, Italia",
+    image: {
+      src: "/image_5.jpg",
+      alt: "Venice Editorial - Acqua Alta",
+      width: "30",
+    },
+  },
+  {
+    slug: "ferrari-racing",
+    title: "FERRARI CHALLENGE",
+    subtitle: "Monza Circuit",
+    description:
+      "Copertura fotografica completa del Ferrari Challenge al circuito di Monza. Dalle prove libere alla cerimonia di premiazione, catturando la velocità e l'emozione della competizione.",
+    date: "Luglio 2025",
+    location: "Monza, Italia",
+    image: {
+      src: "/image_6.jpg",
+      alt: "Ferrari Challenge Monza",
+      width: "30",
+    },
+  },
+  {
+    slug: "dolce-vita-campaign",
+    title: "LA DOLCE VITA",
+    subtitle: "Resort Collection",
+    description:
+      "Campagna pubblicitaria per una collezione resort ispirata alla dolce vita italiana. Ambientata sulla costiera amalfitana con riprese al tramonto tra Positano e Ravello.",
+    date: "Maggio 2025",
+    location: "Costiera Amalfitana, Italia",
+    image: {
+      src: "/image_7.jpg",
+      alt: "La Dolce Vita Resort Collection",
+      width: "30",
     },
   },
 ];

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Project } from "@/types/project";
 import { AnimatedWorkImage } from "./AnimatedWorkImage";
@@ -14,10 +15,26 @@ const imageWidthMap = {
 
 interface WorksLayoutProps {
   projects: Project[];
+  scrollToSlug?: string | null;
+  onScrollComplete?: () => void;
 }
 
-export function WorksLayout({ projects }: WorksLayoutProps) {
+export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksLayoutProps) {
   const { colors } = useTheme();
+
+  // When switching from moodboard, jump directly to the clicked project (no visible scroll)
+  useEffect(() => {
+    if (!scrollToSlug) return;
+
+    // Use requestAnimationFrame to ensure DOM is painted before scrolling
+    requestAnimationFrame(() => {
+      const element = document.getElementById(scrollToSlug);
+      if (element) {
+        element.scrollIntoView({ behavior: "instant", block: "center" });
+      }
+      onScrollComplete?.();
+    });
+  }, [scrollToSlug, onScrollComplete]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -25,7 +42,7 @@ export function WorksLayout({ projects }: WorksLayoutProps) {
         const imageWidthClass = imageWidthMap[project.image.width];
 
         return (
-          <div key={project.slug} className="flex h-[50vh]">
+          <div key={project.slug} id={project.slug} className="flex h-[50vh]">
             {/* Left: 50% of viewport, content aligned to right side, bottom-aligned with image */}
             <motion.div
               className="w-1/2 flex justify-end items-end pr-20"

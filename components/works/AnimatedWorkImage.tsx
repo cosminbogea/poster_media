@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { ImageWidth } from "@/types/project";
 
 interface AnimatedWorkImageProps {
@@ -16,15 +15,10 @@ export function AnimatedWorkImage({
   src,
   alt,
   width,
-  slug,
   className = "",
 }: AnimatedWorkImageProps) {
   return (
-    <motion.div
-      layoutId={`image-${slug}`}
-      className={`relative bg-gray-200 ${className}`}
-      transition={{ duration: 0.6, ease: "easeInOut" }}
-    >
+    <div className={`relative bg-gray-200 ${className}`}>
       <Image
         src={src}
         alt={alt}
@@ -38,6 +32,6 @@ export function AnimatedWorkImage({
             : "15vw"
         }
       />
-    </motion.div>
+    </div>
   );
 }

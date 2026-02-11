@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import { useCallback, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Navigation } from "@/components/navigation/Navigation";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { WorksLayout } from "@/components/works/WorksLayout";
@@ -12,8 +12,18 @@ import { useTheme } from "@/components/theme-context";
 export default function WorksPage() {
   const { colors } = useTheme();
   const [isWorksView, setIsWorksView] = useState(true);
+  const [scrollToSlug, setScrollToSlug] = useState<string | null>(null);
 
   const toggleView = () => setIsWorksView((prev) => !prev);
+
+  const handleMoodboardImageClick = (slug: string) => {
+    setScrollToSlug(slug);
+    setIsWorksView(true);
+  };
+
+  const handleScrollComplete = useCallback(() => {
+    setScrollToSlug(null);
+  }, []);
 
   return (
     <div
@@ -26,31 +36,29 @@ export default function WorksPage() {
         onViewToggle={toggleView}
       />
       <main className="pt-24 pb-8">
-        <LayoutGroup>
-          <AnimatePresence mode="wait">
-            {isWorksView ? (
-              <motion.div
-                key="works"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <WorksLayout projects={projects} />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="moodboard"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <MoodboardLayout projects={projects} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </LayoutGroup>
+        <AnimatePresence mode="wait">
+          {isWorksView ? (
+            <motion.div
+              key="works"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <WorksLayout projects={projects} scrollToSlug={scrollToSlug} onScrollComplete={handleScrollComplete} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="moodboard"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <MoodboardLayout projects={projects} onImageClick={handleMoodboardImageClick} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* ThemeSwitcher - same position as homepage footer */}
