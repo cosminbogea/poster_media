@@ -7,7 +7,7 @@ export function Footer() {
   const { colors } = useTheme();
 
   return (
-    <footer className="absolute bottom-3 left-0 right-0 px-4 md:px-8 z-10">
+    <footer className="absolute bottom-3 left-0 right-0 hidden md:block px-4 md:px-8 z-10">
       <div className="flex">
         {/* Empty left half */}
         <div className="hidden md:block w-1/2" />

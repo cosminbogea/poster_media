@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { MobileTopBar } from "@/components/navigation/MobileTopBar";
 import { Navigation } from "@/components/navigation/Navigation";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { WorksLayout } from "@/components/works/WorksLayout";
@@ -30,12 +31,16 @@ export default function WorksPage() {
       className="min-h-screen transition-colors duration-500"
       style={{ backgroundColor: colors.background }}
     >
+      <MobileTopBar
+        isWorksView={isWorksView}
+        onWorksViewChange={setIsWorksView}
+      />
       <Navigation
         variant="subpage"
         isWorksView={isWorksView}
         onViewToggle={toggleView}
       />
-      <main className="pt-24 pb-8">
+      <main className="pt-4 md:pt-24 pb-8">
         <AnimatePresence mode="wait">
           {isWorksView ? (
             <motion.div
@@ -62,7 +67,7 @@ export default function WorksPage() {
       </main>
 
       {/* ThemeSwitcher - same position as homepage footer */}
-      <div className="fixed bottom-3 right-4 md:right-8 z-50">
+      <div className="fixed bottom-3 right-4 md:right-8 z-50 hidden md:block">
         <ThemeSwitcher />
       </div>
     </div>

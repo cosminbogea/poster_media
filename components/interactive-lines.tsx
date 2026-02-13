@@ -93,30 +93,6 @@ const InteractiveLines = () => {
       [1611.25, 324.91, 278.15],
     ];
 
-    // Mobile logo data - only P and R letters (R shifted to be next to P)
-    // viewBox width: ~502.65 (P + gap + R)
-    const mobileLogoData: Array<[number, number, number]> = [
-      // P letter (same as full logo)
-      [11.4, 11.4, 591.66],
-      [51.4, 11.4, 591.66],
-      [91.39, 11.4, 63.26],
-      [91.39, 261.88, 60.29],
-      [131.39, 11.4, 63.26],
-      [131.39, 261.88, 60.29],
-      [171.39, 11.4, 310.77],
-      [211.38, 53.47, 227.05],
-      // R letter (shifted by -1120 to position after P)
-      [291.27, 11.4, 591.66],
-      [331.26, 11.4, 591.66],
-      [371.26, 11.4, 63.26],
-      [371.26, 261.88, 60.29],
-      [411.25, 11.4, 63.26],
-      [411.25, 261.88, 60.29],
-      [451.25, 11.4, 591.66],
-      [491.25, 53.95, 212.52],
-      [491.25, 324.91, 278.15],
-    ];
-
     // Background pattern data from bg_pattern.svg (viewBox: 1920 x 1080)
     const patternData: Array<[number, number, number]> = [
       [39.21, 200.46, 688.77],
@@ -180,6 +156,32 @@ const InteractiveLines = () => {
       [820.13, 976.83, 72.58],
     ];
 
+    // Mobile start shape extracted from public/logo.svg
+    // Format: [x, y, height] in logo.svg (1920 x 1080) space
+    const mobileStartData: Array<[number, number, number]> = [
+      [1027.88, 514.26, 63.8],
+      [1062.83, 506.04, 80.25],
+      [1062.83, 668.79, 41.71],
+      [1062.83, 381.86, 41.64],
+      [1097.74, 502.24, 87.84],
+      [1097.74, 625.53, 107.76],
+      [1097.74, 359.07, 107.72],
+      [1132.68, 387.02, 318.33],
+      [1167.63, 414.96, 262.41],
+      [1202.54, 323.29, 446.15],
+      [1237.49, 307.05, 478.29],
+      [1272.4, 322.92, 446.22],
+      [1307.34, 415, 262.44],
+      [1342.25, 387.09, 318.29],
+      [1377.2, 625.58, 107.75],
+      [1377.2, 359.11, 107.79],
+      [1377.2, 502.32, 87.84],
+      [1412.15, 668.9, 41.64],
+      [1412.15, 381.9, 41.71],
+      [1412.15, 506.11, 80.25],
+      [1447.06, 514.26, 63.8],
+    ];
+
     // Detect mobile/portrait mode
     const isMobile = () => width < 768 || height > width;
 
@@ -223,6 +225,7 @@ const InteractiveLines = () => {
       baseLineHeight: number;
       // Mouse displacement
       displaceY: number;
+      allowHorizontalMorph: boolean;
 
       constructor(
         logoX: number,
@@ -231,6 +234,7 @@ const InteractiveLines = () => {
         patternX: number,
         patternY: number,
         patternHeight: number,
+        allowHorizontalMorph = false,
       ) {
         this.logoX = logoX;
         this.logoY = logoY;
@@ -247,6 +251,7 @@ const InteractiveLines = () => {
         this.baseY = logoY;
         this.baseLineHeight = logoHeight;
         this.displaceY = 0;
+        this.allowHorizontalMorph = allowHorizontalMorph;
       }
 
       // Update base position based on transition progress
@@ -254,8 +259,9 @@ const InteractiveLines = () => {
         // Easing function for smoother transition
         const eased = easeInOutCubic(progress);
 
-        // Keep X position fixed at logo position - no horizontal movement allowed
-        this.baseX = this.logoX;
+        this.baseX = this.allowHorizontalMorph
+          ? lerp(this.logoX, this.patternX, eased)
+          : this.logoX;
         // Only animate vertical position (up/down) and height
         this.baseY = lerp(this.logoY, this.patternY, eased);
         this.baseLineHeight = lerp(this.logoHeight, this.patternHeight, eased);
@@ -363,11 +369,8 @@ const InteractiveLines = () => {
 
       const mobile = isMobile();
 
-      // Use different logo data for mobile (PR only) vs desktop (POSTER)
-      const activeLogoData = mobile ? mobileLogoData : logoData;
-
-      // Logo SVG dimensions - different for mobile (PR) vs desktop (POSTER)
-      const logoSvgWidth = mobile ? 502.65 : 1622.65;
+      // Logo SVG dimensions
+      const logoSvgWidth = 1622.65;
       const logoSvgHeight = 614.73;
 
       // Pattern SVG dimensions
@@ -398,48 +401,76 @@ const InteractiveLines = () => {
       let patternOffsetX: number;
       let patternOffsetY: number;
 
+      // Fill screen with pattern target (same behavior as desktop)
+      patternScale = Math.max(patternScaleX, patternScaleY);
+      patternOffsetX = (width - patternSvgWidth * patternScale) / 2;
+      patternOffsetY = (height - patternSvgHeight * patternScale) / 2;
+
       if (mobile) {
-        // On mobile, scale to fit width and stretch vertically to fill height
-        patternScale = patternScaleX;
-        patternOffsetX = 0;
-        // Center vertically with some padding
-        patternOffsetY = (height - patternSvgHeight * patternScaleY) / 2;
-      } else {
-        // On desktop, fill screen
-        patternScale = Math.max(patternScaleX, patternScaleY);
-        patternOffsetX = (width - patternSvgWidth * patternScale) / 2;
-        patternOffsetY = (height - patternSvgHeight * patternScale) / 2;
+        const startMinX = Math.min(...mobileStartData.map((line) => line[0]));
+        const startMaxX = Math.max(...mobileStartData.map((line) => line[0]));
+        const startMinY = Math.min(...mobileStartData.map((line) => line[1]));
+        const startMaxY = Math.max(
+          ...mobileStartData.map((line) => line[1] + line[2]),
+        );
+        const mobileStartWidth = startMaxX - startMinX;
+        const mobileStartHeight = startMaxY - startMinY;
+
+        const startScale = Math.min(
+          (width * 0.82) / mobileStartWidth,
+          (height * 0.58) / mobileStartHeight,
+        );
+        const startOffsetX = (width - mobileStartWidth * startScale) / 2;
+        const startOffsetY = (height - mobileStartHeight * startScale) / 2;
+
+        const maxLines = Math.max(mobileStartData.length, patternData.length);
+
+        for (let i = 0; i < maxLines; i++) {
+          const [startSvgX, startSvgY, startSvgH] =
+            mobileStartData[i % mobileStartData.length];
+          const startX = startOffsetX + (startSvgX - startMinX) * startScale;
+          const startY = startOffsetY + (startSvgY - startMinY) * startScale;
+          const startH = startSvgH * startScale;
+
+          const [patternSvgX, patternSvgY, patternSvgH] =
+            patternData[i % patternData.length];
+          const patternX = patternOffsetX + patternSvgX * patternScale;
+          const patternY = patternOffsetY + patternSvgY * patternScale;
+          const patternH = patternSvgH * patternScale;
+
+          lines.push(
+            new Line(
+              startX,
+              startY,
+              startH,
+              patternX,
+              patternY,
+              patternH,
+              false,
+            ),
+          );
+        }
+        return;
       }
 
       // Create lines - match logo and pattern by index
-      const maxLines = Math.max(activeLogoData.length, patternData.length);
+      const maxLines = Math.max(logoData.length, patternData.length);
 
       for (let i = 0; i < maxLines; i++) {
         // Get logo data (wrap if fewer logo lines)
-        const logoIdx = i % activeLogoData.length;
-        const [logoSvgX, logoSvgY, logoSvgH] = activeLogoData[logoIdx];
-        const logoX = logoOffsetX + logoSvgX * (mobile ? logoScale : logoScaleX);
-        const logoY = logoOffsetY + logoSvgY * (mobile ? logoScale : logoScaleY);
-        const logoH = logoSvgH * (mobile ? logoScale : logoScaleY);
+        const logoIdx = i % logoData.length;
+        const [logoSvgX, logoSvgY, logoSvgH] = logoData[logoIdx];
+        const logoX = logoOffsetX + logoSvgX * logoScaleX;
+        const logoY = logoOffsetY + logoSvgY * logoScaleY;
+        const logoH = logoSvgH * logoScaleY;
 
         // Get pattern data (wrap if fewer pattern lines)
         const patternIdx = i % patternData.length;
         const [patternSvgX, patternSvgY, patternSvgH] = patternData[patternIdx];
 
-        let patternX: number;
-        let patternY: number;
-        let patternH: number;
-
-        if (mobile) {
-          // On mobile, scale X to fit width, but stretch Y to fill height
-          patternX = patternSvgX * patternScaleX;
-          patternY = patternSvgY * patternScaleY;
-          patternH = patternSvgH * patternScaleY;
-        } else {
-          patternX = patternOffsetX + patternSvgX * patternScale;
-          patternY = patternOffsetY + patternSvgY * patternScale;
-          patternH = patternSvgH * patternScale;
-        }
+        const patternX = patternOffsetX + patternSvgX * patternScale;
+        const patternY = patternOffsetY + patternSvgY * patternScale;
+        const patternH = patternSvgH * patternScale;
 
         lines.push(new Line(logoX, logoY, logoH, patternX, patternY, patternH));
       }

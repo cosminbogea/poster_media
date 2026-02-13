@@ -10,20 +10,20 @@ interface WorkDetailProps {
 }
 
 // Image width as percentage of the right column
-const imageWidthMap = {
-  "30": "w-[30%]",
-  "50": "w-[50%]",
-  "100": "w-full",
+const desktopImageWidthMap = {
+  "30": "md:w-[30%]",
+  "50": "md:w-[50%]",
+  "100": "md:w-full",
 };
 
 export function WorkDetail({ project }: WorkDetailProps) {
   const { colors } = useTheme();
-  const imageWidthClass = imageWidthMap[project.image.width];
+  const desktopImageWidthClass = desktopImageWidthMap[project.image.width];
 
   return (
-    <div className="flex h-[50vh]">
+    <div className="flex flex-col gap-4 md:h-[50vh] md:flex-row">
       {/* Left: 50% of viewport, content aligned to right side, bottom-aligned with image */}
-      <div className="w-1/2 flex justify-end items-end pr-24">
+      <div className="order-2 md:order-1 md:w-1/2 md:flex md:justify-end md:items-end md:pr-24">
         {/* Text container - auto width based on content, text left-aligned inside */}
         <div className="text-left">
           {/* Title with vertical accent line */}
@@ -35,14 +35,14 @@ export function WorkDetail({ project }: WorkDetailProps) {
             />
             <div>
               <h2
-                className="text-md font-erbaum font-light leading-none"
+                className="text-sm md:text-md font-erbaum font-light leading-none"
                 style={{ color: colors.textColor }}
               >
                 {project.title}
               </h2>
               {project.subtitle && (
                 <p
-                  className="text-md font-erbaum font-light leading-none"
+                  className="text-sm md:text-md font-erbaum font-light leading-none"
                   style={{ color: colors.textColor }}
                 >
                   &quot;{project.subtitle}&quot;
@@ -53,7 +53,7 @@ export function WorkDetail({ project }: WorkDetailProps) {
 
           {/* Description */}
           <p
-            className="text-xs font-bold leading-tight max-w-xs mt-8 opacity-85"
+            className="text-[11px] md:text-xs font-bold leading-tight max-w-xs mt-8 opacity-85"
             style={{ color: colors.textColor }}
           >
             {project.description}
@@ -67,8 +67,8 @@ export function WorkDetail({ project }: WorkDetailProps) {
       </div>
 
       {/* Right: Image area - exactly 50% of viewport, with right padding matching gap */}
-      <div className="w-1/2 h-full pr-8">
-        <div className={`${imageWidthClass} h-full`}>
+      <div className="order-1 md:order-2 w-full md:w-1/2 h-[58vh] md:h-full md:pr-8">
+        <div className={`w-full ${desktopImageWidthClass} h-full`}>
           <WorkImage
             src={project.image.src}
             alt={project.image.alt}

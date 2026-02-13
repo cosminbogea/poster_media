@@ -10,15 +10,34 @@ interface NavPositions {
   about: number;
 }
 
+interface MobileLinePositions {
+  works: number;
+  about: number;
+}
+
 export function About() {
   const { colors } = useTheme();
   const [navPositions, setNavPositions] = useState<NavPositions | null>(null);
+  const [mobileLinePositions, setMobileLinePositions] =
+    useState<MobileLinePositions>({ works: 0, about: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const mobileContainerRef = useRef<HTMLDivElement>(null);
   const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const lineWidth = 16;
   const lineCenter = lineWidth / 2;
   const containerPadding = 32; // px-8
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+
+    updateIsMobile();
+    mediaQuery.addEventListener("change", updateIsMobile);
+
+    return () => mediaQuery.removeEventListener("change", updateIsMobile);
+  }, []);
 
   // Interactive line displacement effect
   useEffect(() => {
@@ -86,6 +105,8 @@ export function About() {
   }, []);
 
   useEffect(() => {
+    if (isMobile) return;
+
     const measurePositions = () => {
       const posterMediaEl = document.querySelector('[data-nav="poster-media"]');
       const worksEl = document.querySelector('[data-nav="works"]');
@@ -104,7 +125,34 @@ export function About() {
     measurePositions();
     window.addEventListener("resize", measurePositions);
     return () => window.removeEventListener("resize", measurePositions);
-  }, []);
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const measureMobileLinePositions = () => {
+      const containerEl = mobileContainerRef.current;
+      const worksEl = document.querySelector('header nav a[href="/works"]');
+      const aboutEl = document.querySelector('header nav a[href="/about"]');
+
+      if (!containerEl || !worksEl || !aboutEl) return;
+
+      const containerRect = containerEl.getBoundingClientRect();
+      const worksRect = worksEl.getBoundingClientRect();
+      const aboutRect = aboutEl.getBoundingClientRect();
+
+      const maxLeft = containerRect.width - lineWidth;
+      const nextWorks = Math.min(Math.max(worksRect.left - containerRect.left, 0), maxLeft);
+      const nextAbout = Math.min(Math.max(aboutRect.left - containerRect.left, 0), maxLeft);
+
+      setMobileLinePositions({ works: nextWorks, about: nextAbout });
+    };
+
+    measureMobileLinePositions();
+    window.addEventListener("resize", measureMobileLinePositions);
+
+    return () => window.removeEventListener("resize", measureMobileLinePositions);
+  }, [isMobile]);
 
   // Map nav positions to section titles
   const positionMap: Record<string, number> = {
@@ -113,50 +161,87 @@ export function About() {
     CONTATTI: navPositions?.about ?? 0,
   };
 
-  return (
-    <div ref={containerRef} className="h-[calc(100vh-6rem-4rem)] relative">
-      {aboutData.map((section, sectionIndex) => {
-        const hasBottomSection = section.bottomTitle && section.bottomText;
+  const aboutSection = aboutData[0];
+  const socialSection = aboutData[1];
+  const contactsSection = aboutData[2];
+  const mobileBottomInset = "1.5rem";
+  const mobileSecondaryLineTop = "43%";
 
-        return (
+  return (
+    <>
+      <div
+        ref={mobileContainerRef}
+        className="relative h-[calc(100svh-8rem)] overflow-hidden md:hidden"
+      >
+        <section
+          className="relative h-full"
+          style={{
+            paddingLeft: `${mobileLinePositions.works + lineCenter + 16}px`,
+          }}
+        >
           <div
-            key={section.title}
-            className="absolute"
+            className="absolute rounded-full"
             style={{
-              left: positionMap[section.title],
-              top: "15%",
-              bottom: 0,
+              left: mobileLinePositions.works,
+              top: "3rem",
+              bottom: mobileBottomInset,
+              width: `${lineWidth}px`,
+              backgroundColor: colors.lineColor,
+            }}
+          />
+
+          <div className="pt-12">
+            <h2
+              className="font-erbaum font-light text-2xl uppercase leading-none"
+              style={{ color: colors.textColor }}
+            >
+              {aboutSection.title}
+            </h2>
+
+            {aboutSection.text.map((text, index) => (
+              <p
+                key={index}
+                className="mt-2 pr-4 text-[0.625rem] font-bold leading-tight"
+                style={{ color: colors.textColor }}
+              >
+                {text}
+              </p>
+            ))}
+          </div>
+        </section>
+
+        <section className="absolute inset-0">
+          <div
+            className="absolute rounded-full"
+            style={{
+              left: mobileLinePositions.about,
+              top: mobileSecondaryLineTop,
+              bottom: mobileBottomInset,
+              width: `${lineWidth}px`,
+              backgroundColor: colors.lineColor,
+            }}
+          />
+
+          <div
+            className="absolute right-0"
+            style={{
+              left: `${mobileLinePositions.about + lineCenter + 16}px`,
+              top: mobileSecondaryLineTop,
+              bottom: mobileBottomInset,
             }}
           >
-            {/* Vertical line */}
-            <div
-              ref={(el) => { lineRefs.current[sectionIndex] = el; }}
-              className="absolute left-0 rounded-full"
-              style={{
-                backgroundColor: colors.lineColor,
-                width: `${lineWidth}px`,
-                top: 0,
-                bottom: 0,
-              }}
-            />
-
-            {/* Content */}
-            <div
-              className={`relative z-10 ${hasBottomSection ? "h-full flex flex-col" : ""}`}
-              style={{ marginLeft: `${lineCenter}px` }}
-            >
+            <div className="flex h-full flex-col justify-between pr-4">
               <div>
                 <h2
-                  className="text-sm uppercase font-erbaum font-light pt-8"
+                  className="font-erbaum font-light text-2xl uppercase leading-none"
                   style={{ color: colors.textColor }}
                 >
-                  {section.title}
+                  {socialSection.title}
                 </h2>
-
-                {section.text.map((text, i) => (
+                {socialSection.text.map((text, index) => (
                   <p
-                    key={i}
-                    className="text-xs font-bold leading-tight max-w-xs"
+                    key={index}
+                    className="text-[0.625rem] font-bold leading-tight"
                     style={{ color: colors.textColor }}
                   >
                     {text}
@@ -164,30 +249,125 @@ export function About() {
                 ))}
               </div>
 
-              {/* Bottom section (e.g., CREDITS) */}
-              {section.bottomTitle && section.bottomText && (
-                <div className="mt-auto pb-8">
-                  <h2
-                    className="text-sm uppercase font-erbaum font-light mb-1"
+              <div>
+                <h2
+                  className="font-erbaum font-light text-2xl uppercase leading-none"
+                  style={{ color: colors.textColor }}
+                >
+                  {contactsSection.title}
+                </h2>
+                {contactsSection.text.map((text, index) => (
+                  <p
+                    key={index}
+                    className="text-[0.625rem] font-bold leading-tight"
                     style={{ color: colors.textColor }}
                   >
-                    {section.bottomTitle}
+                    {text}
+                  </p>
+                ))}
+              </div>
+
+              {contactsSection.bottomTitle && contactsSection.bottomText ? (
+                <div>
+                  <h2
+                    className="font-erbaum font-light text-2xl uppercase leading-none"
+                    style={{ color: colors.textColor }}
+                  >
+                    {contactsSection.bottomTitle}
                   </h2>
-                  {section.bottomText.map((text, i) => (
+                  {contactsSection.bottomText.map((text, index) => (
                     <p
-                      key={i}
-                      className="text-xs font-bold leading-tight"
+                      key={index}
+                      className="text-[0.625rem] font-bold leading-tight"
                       style={{ color: colors.textColor }}
                     >
                       {text}
                     </p>
                   ))}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
-        );
-      })}
-    </div>
+        </section>
+      </div>
+
+      <div ref={containerRef} className="relative hidden h-[calc(100vh-6rem-4rem)] md:block">
+        {aboutData.map((section, sectionIndex) => {
+          const hasBottomSection = section.bottomTitle && section.bottomText;
+
+          return (
+            <div
+              key={section.title}
+              className="absolute"
+              style={{
+                left: positionMap[section.title],
+                top: "15%",
+                bottom: 0,
+              }}
+            >
+              {/* Vertical line */}
+              <div
+                ref={(el) => {
+                  lineRefs.current[sectionIndex] = el;
+                }}
+                className="absolute left-0 rounded-full"
+                style={{
+                  backgroundColor: colors.lineColor,
+                  width: `${lineWidth}px`,
+                  top: 0,
+                  bottom: 0,
+                }}
+              />
+
+              {/* Content */}
+              <div
+                className={`relative z-10 ${hasBottomSection ? "h-full flex flex-col" : ""}`}
+                style={{ marginLeft: `${lineCenter}px` }}
+              >
+                <div>
+                  <h2
+                    className="text-sm uppercase font-erbaum font-light pt-8"
+                    style={{ color: colors.textColor }}
+                  >
+                    {section.title}
+                  </h2>
+
+                  {section.text.map((text, i) => (
+                    <p
+                      key={i}
+                      className="text-xs font-bold leading-tight max-w-xs"
+                      style={{ color: colors.textColor }}
+                    >
+                      {text}
+                    </p>
+                  ))}
+                </div>
+
+                {/* Bottom section (e.g., CREDITS) */}
+                {section.bottomTitle && section.bottomText && (
+                  <div className="mt-auto pb-8">
+                    <h2
+                      className="text-sm uppercase font-erbaum font-light mb-1"
+                      style={{ color: colors.textColor }}
+                    >
+                      {section.bottomTitle}
+                    </h2>
+                    {section.bottomText.map((text, i) => (
+                      <p
+                        key={i}
+                        className="text-xs font-bold leading-tight"
+                        style={{ color: colors.textColor }}
+                      >
+                        {text}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }

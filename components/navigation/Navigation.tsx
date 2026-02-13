@@ -34,13 +34,22 @@ export function Navigation({
     variant === "homepage"
       ? "absolute top-[35%] left-0 right-0"
       : "fixed top-0 left-0 right-0 py-6";
+  const navStyle =
+    variant === "homepage"
+      ? undefined
+      : {
+          backgroundColor: colors.background,
+        };
 
   // Check if a link is active (current page)
   const isActive = (href: string) => pathname === href;
   const isWorksSection = pathname.startsWith("/works");
 
   return (
-    <nav className={`${positionClasses} px-4 md:px-8 z-50`}>
+    <nav
+      className={`${positionClasses} hidden md:block px-4 md:px-8 z-50`}
+      style={navStyle}
+    >
       <div className="flex items-center">
         {/* POSTER MEDIA - left aligned */}
         <Link

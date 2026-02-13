@@ -7,10 +7,10 @@ import { AnimatedWorkImage } from "./AnimatedWorkImage";
 import { WorkMeta } from "./WorkMeta";
 import { useTheme } from "@/components/theme-context";
 
-const imageWidthMap = {
-  "30": "w-[30%]",
-  "50": "w-[50%]",
-  "100": "w-full",
+const desktopImageWidthMap = {
+  "30": "md:w-[30%]",
+  "50": "md:w-[50%]",
+  "100": "md:w-full",
 };
 
 interface WorksLayoutProps {
@@ -37,40 +37,89 @@ export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksL
   }, [scrollToSlug, onScrollComplete]);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-10 md:gap-8">
       {projects.map((project) => {
-        const imageWidthClass = imageWidthMap[project.image.width];
+        const desktopImageWidthClass = desktopImageWidthMap[project.image.width];
 
         return (
-          <div key={project.slug} id={project.slug} className="flex h-[50vh]">
+          <div
+            key={project.slug}
+            id={project.slug}
+            className="grid min-h-[calc(100svh-8rem)] grid-rows-[1fr_auto] gap-3 px-4 md:flex md:min-h-0 md:px-0 md:h-[50vh] md:flex-row"
+          >
             {/* Left: 50% of viewport, content aligned to right side, bottom-aligned with image */}
             <motion.div
-              className="w-1/2 flex justify-end items-end pr-20"
+              className="order-2 md:order-1 md:w-1/2 md:flex md:justify-end md:items-end md:pr-20"
               initial={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
+              <div className="w-full md:hidden text-left">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start gap-2 min-w-0">
+                    <div
+                      className="w-[3px] rounded-full shrink-0"
+                      style={{
+                        height: "2.1em",
+                        backgroundColor: colors.textColor,
+                      }}
+                    />
+                    <div className="min-w-0">
+                      <h2
+                        className="text-sm font-erbaum font-light leading-none"
+                        style={{ color: colors.textColor }}
+                      >
+                        {project.title}
+                      </h2>
+                      {project.subtitle && (
+                        <p
+                          className="text-sm font-erbaum font-light leading-none"
+                          style={{ color: colors.textColor }}
+                        >
+                          &quot;{project.subtitle}&quot;
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div
+                    className="flex flex-col items-end text-[11px] font-bold leading-tight shrink-0"
+                    style={{ color: colors.textColor }}
+                  >
+                    <span>{project.date}</span>
+                    <span>{project.location}</span>
+                  </div>
+                </div>
+
+                <p
+                  className="mx-auto mt-3 max-w-[92%] text-[11px] font-bold leading-tight text-left opacity-85"
+                  style={{ color: colors.textColor }}
+                >
+                  {project.description}
+                </p>
+              </div>
+
               {/* Text container - auto width based on content, text left-aligned inside */}
-              <div className="text-left">
+              <div className="hidden md:block text-left">
                 {/* Title with vertical accent line */}
                 <div className="relative">
                   {/* Line - positioned to the left of text */}
                   <div
-                    className="absolute w-[3px] -left-4 rounded-full"
+                    className="absolute w-[3px] -left-3 md:-left-4 rounded-full"
                     style={{
-                      height: "4.5em",
+                      height: "4.2em",
                       backgroundColor: colors.textColor,
                     }}
                   />
                   <h2
-                    className="text-md font-erbaum font-light leading-none"
+                    className="text-sm md:text-md font-erbaum font-light leading-none"
                     style={{ color: colors.textColor }}
                   >
                     {project.title}
                   </h2>
                   {project.subtitle && (
                     <p
-                      className="text-md font-erbaum font-light leading-none"
+                      className="text-sm md:text-md font-erbaum font-light leading-none"
                       style={{ color: colors.textColor }}
                     >
                       &quot;{project.subtitle}&quot;
@@ -80,7 +129,7 @@ export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksL
 
                 {/* Description */}
                 <p
-                  className="text-xs font-bold leading-tight max-w-xs mt-14 opacity-85"
+                  className="text-[11px] md:text-xs font-bold leading-tight max-w-xs mt-8 md:mt-14 opacity-85"
                   style={{ color: colors.textColor }}
                 >
                   {project.description}
@@ -94,8 +143,8 @@ export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksL
             </motion.div>
 
             {/* Right: Image area - exactly 50% of viewport */}
-            <div className="w-1/2 h-full pr-8">
-              <div className={`${imageWidthClass} h-full`}>
+            <div className="order-1 md:order-2 w-full md:w-1/2 h-full min-h-[18rem] md:h-full md:pr-8">
+              <div className={`w-full ${desktopImageWidthClass} h-full`}>
                 <AnimatedWorkImage
                   src={project.image.src}
                   alt={project.image.alt}
