@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <main
-      className="relative h-screen w-full overflow-hidden transition-colors duration-500"
+      className="relative h-[100svh] w-full overflow-hidden transition-colors duration-500"
       style={{ backgroundColor: colors.background }}
     >
       <MobileTopBar showLinks={false} />
@@ -50,7 +50,7 @@ export default function Home() {
 
       <div
         className="absolute inset-x-0 z-20 px-4 md:hidden"
-        style={{ bottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+        style={{ bottom: "max(1.75rem, env(safe-area-inset-bottom))" }}
       >
         <p
           className="text-[7px] leading-tight font-bold"
