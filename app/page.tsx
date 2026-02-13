@@ -48,7 +48,10 @@ export default function Home() {
         </div>
       </nav>
 
-      <div className="absolute inset-x-0 bottom-4 z-20 px-4 md:hidden">
+      <div
+        className="absolute inset-x-0 z-20 px-4 md:hidden"
+        style={{ bottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+      >
         <p
           className="text-[7px] leading-tight font-bold"
           style={{ color: colors.textColor }}

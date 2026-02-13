@@ -21,6 +21,7 @@ export function About() {
   const [mobileLinePositions, setMobileLinePositions] =
     useState<MobileLinePositions>({ works: 0, about: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [isShortMobile, setIsShortMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const mobileContainerRef = useRef<HTMLDivElement>(null);
   const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -32,11 +33,17 @@ export function About() {
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
     const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+    const updateShortMobile = () => setIsShortMobile(window.innerHeight <= 760);
 
     updateIsMobile();
+    updateShortMobile();
     mediaQuery.addEventListener("change", updateIsMobile);
+    window.addEventListener("resize", updateShortMobile);
 
-    return () => mediaQuery.removeEventListener("change", updateIsMobile);
+    return () => {
+      mediaQuery.removeEventListener("change", updateIsMobile);
+      window.removeEventListener("resize", updateShortMobile);
+    };
   }, []);
 
   // Interactive line displacement effect
@@ -164,8 +171,14 @@ export function About() {
   const aboutSection = aboutData[0];
   const socialSection = aboutData[1];
   const contactsSection = aboutData[2];
-  const mobileBottomInset = "1.5rem";
+  const mobileBottomInset = "max(1.5rem, env(safe-area-inset-bottom))";
   const mobileSecondaryLineTop = "43%";
+  const mobileTitleClass = isShortMobile
+    ? "font-erbaum font-light text-[1.55rem] uppercase leading-none"
+    : "font-erbaum font-light text-2xl uppercase leading-none";
+  const mobileBodyClass = isShortMobile
+    ? "text-[0.57rem] font-bold leading-tight"
+    : "text-[0.625rem] font-bold leading-tight";
 
   return (
     <>
@@ -192,7 +205,7 @@ export function About() {
 
           <div className="pt-12">
             <h2
-              className="font-erbaum font-light text-2xl uppercase leading-none"
+              className={mobileTitleClass}
               style={{ color: colors.textColor }}
             >
               {aboutSection.title}
@@ -201,7 +214,7 @@ export function About() {
             {aboutSection.text.map((text, index) => (
               <p
                 key={index}
-                className="mt-2 pr-4 text-[0.625rem] font-bold leading-tight"
+                className={`mt-2 pr-3 ${mobileBodyClass}`}
                 style={{ color: colors.textColor }}
               >
                 {text}
@@ -230,10 +243,10 @@ export function About() {
               bottom: mobileBottomInset,
             }}
           >
-            <div className="flex h-full flex-col justify-between pr-4">
+            <div className="flex h-full flex-col justify-between pr-3">
               <div>
                 <h2
-                  className="font-erbaum font-light text-2xl uppercase leading-none"
+                  className={mobileTitleClass}
                   style={{ color: colors.textColor }}
                 >
                   {socialSection.title}
@@ -241,7 +254,7 @@ export function About() {
                 {socialSection.text.map((text, index) => (
                   <p
                     key={index}
-                    className="text-[0.625rem] font-bold leading-tight"
+                    className={mobileBodyClass}
                     style={{ color: colors.textColor }}
                   >
                     {text}
@@ -251,7 +264,7 @@ export function About() {
 
               <div>
                 <h2
-                  className="font-erbaum font-light text-2xl uppercase leading-none"
+                  className={mobileTitleClass}
                   style={{ color: colors.textColor }}
                 >
                   {contactsSection.title}
@@ -259,7 +272,7 @@ export function About() {
                 {contactsSection.text.map((text, index) => (
                   <p
                     key={index}
-                    className="text-[0.625rem] font-bold leading-tight"
+                    className={mobileBodyClass}
                     style={{ color: colors.textColor }}
                   >
                     {text}
@@ -270,7 +283,7 @@ export function About() {
               {contactsSection.bottomTitle && contactsSection.bottomText ? (
                 <div>
                   <h2
-                    className="font-erbaum font-light text-2xl uppercase leading-none"
+                    className={mobileTitleClass}
                     style={{ color: colors.textColor }}
                   >
                     {contactsSection.bottomTitle}
@@ -278,7 +291,7 @@ export function About() {
                   {contactsSection.bottomText.map((text, index) => (
                     <p
                       key={index}
-                      className="text-[0.625rem] font-bold leading-tight"
+                      className={mobileBodyClass}
                       style={{ color: colors.textColor }}
                     >
                       {text}

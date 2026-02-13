@@ -25,10 +25,10 @@ export function MobileTopBar({
 
   return (
     <header
-      className="sticky top-0 z-50 px-4 pt-4 pb-3 md:hidden"
+      className="sticky top-0 z-50 px-4 pb-3 md:hidden"
       style={{ backgroundColor: colors.background }}
     >
-      <div className="space-y-4">
+      <div className="space-y-4 pt-4" style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}>
         <div className="flex items-center justify-between">
           <Link
             href="/"

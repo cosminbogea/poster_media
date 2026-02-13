@@ -20,7 +20,12 @@ export function PageLayout({ children }: PageLayoutProps) {
     >
       <MobileTopBar />
       <Navigation variant="subpage" />
-      <main className="pt-4 pb-16 px-4 md:px-8">{children}</main>
+      <main
+        className="pt-4 px-4 md:px-8"
+        style={{ paddingBottom: "max(4rem, env(safe-area-inset-bottom))" }}
+      >
+        {children}
+      </main>
 
       {/* ThemeSwitcher - same position as homepage footer */}
       <div className="fixed bottom-3 right-4 md:right-8 z-50 hidden md:block">
