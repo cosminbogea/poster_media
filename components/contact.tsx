@@ -171,7 +171,7 @@ export function Contact() {
         <div className="flex justify-center">
           <button
             type="submit"
-            className=" text-md uppercase tracking-wider underline underline-offset-4 bg-transparent border-none cursor-pointer hover:opacity-70 transition-opacity"
+            className="text-md uppercase tracking-wider underline underline-offset-8 decoration-[1px] md:underline-offset-4 bg-transparent border-none cursor-pointer hover:opacity-70 transition-opacity"
             style={{ color: colors.textColor }}
           >
             INVIA MESSAGGIO

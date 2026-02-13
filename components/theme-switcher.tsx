@@ -12,7 +12,7 @@ export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="flex items-center gap-1.5 md:gap-2">
+    <div className="flex items-center gap-2 md:gap-2">
       {themes.map(({ type, color, contourColor }) => (
         <button
           key={type}
@@ -22,7 +22,7 @@ export function ThemeSwitcher() {
         >
           {/* Single vertical line per theme */}
           <span
-            className="block w-[6px] h-5 md:w-[7px] md:h-6 lg:w-[9px] lg:h-7 rounded-full"
+            className="block h-[1.45rem] w-[0.44rem] rounded-full md:h-6 md:w-[7px] lg:h-7 lg:w-[9px]"
             style={{
               backgroundColor: color,
               boxShadow: theme === type ? `0 0 0 1.5px ${contourColor}` : "none",
