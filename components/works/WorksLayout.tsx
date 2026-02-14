@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Project } from "@/types/project";
 import { AnimatedWorkImage } from "./AnimatedWorkImage";
@@ -21,6 +21,20 @@ interface WorksLayoutProps {
 
 export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksLayoutProps) {
   const { colors } = useTheme();
+  const [isShortMobile, setIsShortMobile] = useState(false);
+
+  useEffect(() => {
+    const updateShortMobileState = () => setIsShortMobile(window.innerHeight <= 760);
+
+    updateShortMobileState();
+    window.addEventListener("resize", updateShortMobileState);
+
+    return () => window.removeEventListener("resize", updateShortMobileState);
+  }, []);
+
+  const mobileBodyClass = isShortMobile
+    ? "text-[0.57rem] font-bold leading-tight"
+    : "text-[0.625rem] font-bold leading-tight";
 
   // When switching from moodboard, jump directly to the clicked project (no visible scroll)
   useEffect(() => {
@@ -83,7 +97,7 @@ export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksL
                   </div>
 
                   <div
-                    className="flex flex-col items-end text-[11px] font-bold leading-tight shrink-0"
+                    className={`flex shrink-0 flex-col items-end ${mobileBodyClass}`}
                     style={{ color: colors.textColor }}
                   >
                     <span>{project.date}</span>
@@ -92,7 +106,7 @@ export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksL
                 </div>
 
                 <p
-                  className="mx-auto mt-3 max-w-[92%] text-[11px] font-bold leading-tight text-left opacity-85"
+                  className={`mx-auto mt-3 max-w-[92%] text-left opacity-85 ${mobileBodyClass}`}
                   style={{ color: colors.textColor }}
                 >
                   {project.description}

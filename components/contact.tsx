@@ -98,7 +98,9 @@ export function Contact() {
     };
   }, []);
 
-  const mobileSubtitleClass = isShortMobile ? "text-[0.57rem]" : "text-[0.625rem]";
+  const mobileSubtitleClass = isShortMobile
+    ? "text-[0.57rem] font-bold leading-tight"
+    : "text-[0.625rem] font-bold leading-tight";
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -115,7 +117,7 @@ export function Contact() {
         </h1>
 
         <p
-          className={`mt-3 max-w-lg text-center ${mobileSubtitleClass} leading-tight font-bold md:text-[0.95rem] md:leading-normal md:font-normal lg:text-base 2xl:text-md`}
+          className={`mt-3 max-w-lg text-center ${mobileSubtitleClass} md:text-[0.95rem] md:leading-normal md:font-normal lg:text-base 2xl:text-md`}
           style={{ color: colors.textColor }}
         >
           Hai una domanda, una proposta o vuoi conoscerci meglio?
