@@ -33,7 +33,7 @@ export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksL
   }, []);
 
   const mobileBodyClass = isShortMobile
-    ? "text-[0.57rem] font-bold leading-tight"
+    ? "text-[0.625rem] font-bold leading-tight"
     : "text-[0.625rem] font-bold leading-tight";
 
   // When switching from moodboard, jump directly to the clicked project (no visible scroll)

@@ -99,7 +99,7 @@ export function Contact() {
   }, []);
 
   const mobileSubtitleClass = isShortMobile
-    ? "text-[0.57rem] font-bold leading-tight"
+    ? "text-[0.625rem] font-bold leading-tight"
     : "text-[0.625rem] font-bold leading-tight";
 
   const handleSubmit = (e: FormEvent) => {

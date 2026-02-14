@@ -28,6 +28,7 @@ export function About() {
 
   const lineWidth = isMobile ? 12 : 16;
   const lineCenter = lineWidth / 2;
+  const lineTextOffset = lineCenter + 16;
   const containerPadding = 32; // px-8
 
   useEffect(() => {
@@ -149,8 +150,14 @@ export function About() {
       const aboutRect = aboutEl.getBoundingClientRect();
 
       const maxLeft = containerRect.width - lineWidth;
-      const nextWorks = Math.min(Math.max(worksRect.left - containerRect.left, 0), maxLeft);
-      const nextAbout = Math.min(Math.max(aboutRect.left - containerRect.left, 0), maxLeft);
+      const nextWorks = Math.min(
+        Math.max(worksRect.left - containerRect.left, 0),
+        maxLeft,
+      );
+      const nextAbout = Math.min(
+        Math.max(aboutRect.left - containerRect.left, 0),
+        maxLeft,
+      );
 
       setMobileLinePositions({ works: nextWorks, about: nextAbout });
     };
@@ -158,7 +165,8 @@ export function About() {
     measureMobileLinePositions();
     window.addEventListener("resize", measureMobileLinePositions);
 
-    return () => window.removeEventListener("resize", measureMobileLinePositions);
+    return () =>
+      window.removeEventListener("resize", measureMobileLinePositions);
   }, [isMobile]);
 
   // Map nav positions to section titles
@@ -177,10 +185,13 @@ export function About() {
     ? "font-erbaum font-light text-[1.02rem] uppercase leading-none"
     : "font-erbaum font-light text-[1.16rem] uppercase leading-none";
   const mobileBodyClass = isShortMobile
-    ? "text-[0.57rem] font-bold leading-tight"
+    ? "text-[0.625rem] font-bold leading-tight"
     : "text-[0.625rem] font-bold leading-tight";
 
-  const getMobileLinkHref = (sectionTitle: string, text: string): string | null => {
+  const getSectionLinkHref = (
+    sectionTitle: string,
+    text: string,
+  ): string | null => {
     const value = text.trim();
 
     if (sectionTitle === "SOCIAL") {
@@ -204,12 +215,12 @@ export function About() {
         ref={mobileContainerRef}
         className="relative h-[calc(100svh-8rem)] overflow-hidden md:hidden"
       >
-        <section
-          className="relative h-full"
-          style={{
-            paddingLeft: `${mobileLinePositions.works + lineCenter + 16}px`,
-          }}
-        >
+          <section
+            className="relative h-full"
+            style={{
+              paddingLeft: `${mobileLinePositions.works + lineTextOffset}px`,
+            }}
+          >
           <div
             className="absolute rounded-full"
             style={{
@@ -230,13 +241,13 @@ export function About() {
             </h2>
 
             {aboutSection.text.map((text, index) => (
-                <p
-                  key={index}
-                  className={`mt-1 pr-3 ${mobileBodyClass}`}
-                  style={{ color: colors.textColor }}
-                >
-                  {text}
-                </p>
+              <p
+                key={index}
+                className={`mt-1 pr-3 ${mobileBodyClass}`}
+                style={{ color: colors.textColor }}
+              >
+                {text}
+              </p>
             ))}
           </div>
         </section>
@@ -256,7 +267,7 @@ export function About() {
           <div
             className="absolute right-0"
             style={{
-              left: `${mobileLinePositions.about + lineCenter + 16}px`,
+              left: `${mobileLinePositions.about + lineTextOffset}px`,
               top: mobileSecondaryLineTop,
               bottom: mobileBottomInset,
             }}
@@ -271,7 +282,7 @@ export function About() {
                 </h2>
                 <div className="mt-1 flex flex-col gap-1.5">
                   {socialSection.text.map((text, index) => {
-                    const href = getMobileLinkHref(socialSection.title, text);
+                     const href = getSectionLinkHref(socialSection.title, text);
 
                     if (!href) {
                       return (
@@ -310,7 +321,7 @@ export function About() {
                 </h2>
                 <div className="mt-1 flex flex-col gap-1.5">
                   {contactsSection.text.map((text, index) => {
-                    const href = getMobileLinkHref(contactsSection.title, text);
+                     const href = getSectionLinkHref(contactsSection.title, text);
 
                     if (!href) {
                       return (
@@ -328,7 +339,7 @@ export function About() {
                       <a
                         key={index}
                         href={href}
-                        className={`${mobileBodyClass} inline-block py-0.5 underline underline-offset-2`}
+                        className={`${mobileBodyClass} block py-0.5`}
                         style={{ color: colors.textColor }}
                       >
                         {text}
@@ -364,7 +375,7 @@ export function About() {
         </section>
       </div>
 
-      <div ref={containerRef} className="relative hidden h-[calc(100vh-6rem-4rem)] md:block">
+      <div ref={containerRef} className="relative hidden h-[95vh] md:block ">
         {aboutData.map((section, sectionIndex) => {
           const hasBottomSection = section.bottomTitle && section.bottomText;
 
@@ -374,7 +385,7 @@ export function About() {
               className="absolute"
               style={{
                 left: positionMap[section.title],
-                top: "15%",
+                top: "20%",
                 bottom: 0,
               }}
             >
@@ -395,7 +406,7 @@ export function About() {
               {/* Content */}
               <div
                 className={`relative z-10 ${hasBottomSection ? "h-full flex flex-col" : ""}`}
-                style={{ marginLeft: `${lineCenter}px` }}
+                style={{ marginLeft: `${lineTextOffset}px` }}
               >
                 <div>
                   <h2
@@ -405,15 +416,67 @@ export function About() {
                     {section.title}
                   </h2>
 
-                  {section.text.map((text, i) => (
-                    <p
-                      key={i}
-                      className="text-xs font-bold leading-tight max-w-xs"
-                      style={{ color: colors.textColor }}
-                    >
-                      {text}
-                    </p>
-                  ))}
+                  {section.title === "SOCIAL" ? (
+                    <div className="mt-1 flex flex-col gap-1.5">
+                      {section.text.map((text, i) => {
+                        const href = getSectionLinkHref(section.title, text);
+
+                        if (!href) {
+                          return (
+                            <p
+                              key={i}
+                              className="text-xs font-bold leading-tight max-w-xs"
+                              style={{ color: colors.textColor }}
+                            >
+                              {text}
+                            </p>
+                          );
+                        }
+
+                        return (
+                          <a
+                            key={i}
+                            href={href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-block py-0.5 text-xs font-bold leading-tight underline underline-offset-2"
+                            style={{ color: colors.textColor }}
+                          >
+                            {text}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    section.text.map((text, i) => {
+                      const href = getSectionLinkHref(section.title, text);
+                      const isDesktopPhoneInContacts =
+                        section.title === "CONTATTI" && href?.startsWith("tel:");
+
+                      if (!href || isDesktopPhoneInContacts) {
+                        return (
+                          <p
+                            key={i}
+                            className="text-xs font-bold leading-tight max-w-xs"
+                            style={{ color: colors.textColor }}
+                          >
+                            {text}
+                          </p>
+                        );
+                      }
+
+                      return (
+                        <a
+                          key={i}
+                          href={href}
+                          className="block py-0.5 text-xs font-bold leading-tight"
+                          style={{ color: colors.textColor }}
+                        >
+                          {text}
+                        </a>
+                      );
+                    })
+                  )}
                 </div>
 
                 {/* Bottom section (e.g., CREDITS) */}
