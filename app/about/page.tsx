@@ -5,7 +5,7 @@ import { About } from "@/components/about";
 
 export default function AboutPage() {
   return (
-    <PageLayout>
+    <PageLayout lockViewport>
       <About />
     </PageLayout>
   );

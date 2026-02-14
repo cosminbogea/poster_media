@@ -215,12 +215,12 @@ export function About() {
         ref={mobileContainerRef}
         className="relative h-[calc(100svh-8rem)] overflow-hidden md:hidden"
       >
-          <section
-            className="relative h-full"
-            style={{
-              paddingLeft: `${mobileLinePositions.works + lineTextOffset}px`,
-            }}
-          >
+        <section
+          className="relative h-full"
+          style={{
+            paddingLeft: `${mobileLinePositions.works + lineTextOffset}px`,
+          }}
+        >
           <div
             className="absolute rounded-full"
             style={{
@@ -282,7 +282,7 @@ export function About() {
                 </h2>
                 <div className="mt-1 flex flex-col gap-1.5">
                   {socialSection.text.map((text, index) => {
-                     const href = getSectionLinkHref(socialSection.title, text);
+                    const href = getSectionLinkHref(socialSection.title, text);
 
                     if (!href) {
                       return (
@@ -321,7 +321,10 @@ export function About() {
                 </h2>
                 <div className="mt-1 flex flex-col gap-1.5">
                   {contactsSection.text.map((text, index) => {
-                     const href = getSectionLinkHref(contactsSection.title, text);
+                    const href = getSectionLinkHref(
+                      contactsSection.title,
+                      text,
+                    );
 
                     if (!href) {
                       return (
@@ -375,7 +378,10 @@ export function About() {
         </section>
       </div>
 
-      <div ref={containerRef} className="relative hidden h-[95vh] md:block ">
+      <div
+        ref={containerRef}
+        className="relative hidden h-[calc(100vh-2rem)] md:block "
+      >
         {aboutData.map((section, sectionIndex) => {
           const hasBottomSection = section.bottomTitle && section.bottomText;
 
@@ -451,7 +457,8 @@ export function About() {
                     section.text.map((text, i) => {
                       const href = getSectionLinkHref(section.title, text);
                       const isDesktopPhoneInContacts =
-                        section.title === "CONTATTI" && href?.startsWith("tel:");
+                        section.title === "CONTATTI" &&
+                        href?.startsWith("tel:");
 
                       if (!href || isDesktopPhoneInContacts) {
                         return (

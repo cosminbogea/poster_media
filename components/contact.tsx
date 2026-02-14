@@ -18,8 +18,6 @@ function FormField({
   lineColor: string;
   isMobile: boolean;
 }) {
-  const [hasValue, setHasValue] = useState(false);
-
   const barStyle = "absolute top-0 bottom-0 w-[3px] rounded-sm";
 
   const inputClasses =
@@ -34,11 +32,7 @@ function FormField({
     <div
       className="relative"
       style={{
-        backgroundColor: isMobile
-          ? lineColor
-          : hasValue
-            ? "transparent"
-            : lineColor,
+        backgroundColor: lineColor,
       }}
     >
       {!isMobile ? (
@@ -60,7 +54,6 @@ function FormField({
           rows={1}
           className={`${inputClasses} py-5 px-6 resize-none`}
           style={inputStyle}
-          onChange={(e) => setHasValue(e.target.value.length > 0)}
         />
       ) : (
         <input
@@ -68,7 +61,6 @@ function FormField({
           placeholder={placeholder}
           className={`${inputClasses} py-5 px-6`}
           style={inputStyle}
-          onChange={(e) => setHasValue(e.target.value.length > 0)}
         />
       )}
     </div>
