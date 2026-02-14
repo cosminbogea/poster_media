@@ -81,7 +81,7 @@ export default function WorksPage() {
         onViewToggle={toggleView}
       />
       <main className="pt-4 md:pt-24 pb-8">
-        <AnimatePresence mode="sync">
+        <AnimatePresence mode="wait">
           {isWorksView ? (
             <motion.div
               key="works"
