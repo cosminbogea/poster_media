@@ -26,7 +26,7 @@ export function About() {
   const mobileContainerRef = useRef<HTMLDivElement>(null);
   const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const lineWidth = 16;
+  const lineWidth = isMobile ? 12 : 16;
   const lineCenter = lineWidth / 2;
   const containerPadding = 32; // px-8
 
@@ -174,11 +174,29 @@ export function About() {
   const mobileBottomInset = "max(1.5rem, env(safe-area-inset-bottom))";
   const mobileSecondaryLineTop = "43%";
   const mobileTitleClass = isShortMobile
-    ? "font-erbaum font-light text-[1.55rem] uppercase leading-none"
-    : "font-erbaum font-light text-2xl uppercase leading-none";
+    ? "font-erbaum font-light text-[1.02rem] uppercase leading-none"
+    : "font-erbaum font-light text-[1.16rem] uppercase leading-none";
   const mobileBodyClass = isShortMobile
     ? "text-[0.57rem] font-bold leading-tight"
     : "text-[0.625rem] font-bold leading-tight";
+
+  const getMobileLinkHref = (sectionTitle: string, text: string): string | null => {
+    const value = text.trim();
+
+    if (sectionTitle === "SOCIAL") {
+      const lowerValue = value.toLowerCase();
+      if (lowerValue === "instagram") return "https://www.instagram.com";
+      if (lowerValue === "linkedin") return "https://www.linkedin.com";
+      if (lowerValue === "vimeo") return "https://www.vimeo.com";
+    }
+
+    if (sectionTitle === "CONTATTI") {
+      if (value.includes("@")) return `mailto:${value}`;
+      if (value.includes("+")) return `tel:${value.replace(/\s+/g, "")}`;
+    }
+
+    return null;
+  };
 
   return (
     <>
@@ -212,13 +230,13 @@ export function About() {
             </h2>
 
             {aboutSection.text.map((text, index) => (
-              <p
-                key={index}
-                className={`mt-2 pr-3 ${mobileBodyClass}`}
-                style={{ color: colors.textColor }}
-              >
-                {text}
-              </p>
+                <p
+                  key={index}
+                  className={`mt-1 pr-3 ${mobileBodyClass}`}
+                  style={{ color: colors.textColor }}
+                >
+                  {text}
+                </p>
             ))}
           </div>
         </section>
@@ -251,15 +269,36 @@ export function About() {
                 >
                   {socialSection.title}
                 </h2>
-                {socialSection.text.map((text, index) => (
-                  <p
-                    key={index}
-                    className={mobileBodyClass}
-                    style={{ color: colors.textColor }}
-                  >
-                    {text}
-                  </p>
-                ))}
+                <div className="mt-1 flex flex-col gap-1.5">
+                  {socialSection.text.map((text, index) => {
+                    const href = getMobileLinkHref(socialSection.title, text);
+
+                    if (!href) {
+                      return (
+                        <p
+                          key={index}
+                          className={mobileBodyClass}
+                          style={{ color: colors.textColor }}
+                        >
+                          {text}
+                        </p>
+                      );
+                    }
+
+                    return (
+                      <a
+                        key={index}
+                        href={href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`${mobileBodyClass} inline-block py-0.5 underline underline-offset-2`}
+                        style={{ color: colors.textColor }}
+                      >
+                        {text}
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
 
               <div>
@@ -269,15 +308,34 @@ export function About() {
                 >
                   {contactsSection.title}
                 </h2>
-                {contactsSection.text.map((text, index) => (
-                  <p
-                    key={index}
-                    className={mobileBodyClass}
-                    style={{ color: colors.textColor }}
-                  >
-                    {text}
-                  </p>
-                ))}
+                <div className="mt-1 flex flex-col gap-1.5">
+                  {contactsSection.text.map((text, index) => {
+                    const href = getMobileLinkHref(contactsSection.title, text);
+
+                    if (!href) {
+                      return (
+                        <p
+                          key={index}
+                          className={mobileBodyClass}
+                          style={{ color: colors.textColor }}
+                        >
+                          {text}
+                        </p>
+                      );
+                    }
+
+                    return (
+                      <a
+                        key={index}
+                        href={href}
+                        className={`${mobileBodyClass} inline-block py-0.5 underline underline-offset-2`}
+                        style={{ color: colors.textColor }}
+                      >
+                        {text}
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
 
               {contactsSection.bottomTitle && contactsSection.bottomText ? (
@@ -288,15 +346,17 @@ export function About() {
                   >
                     {contactsSection.bottomTitle}
                   </h2>
-                  {contactsSection.bottomText.map((text, index) => (
-                    <p
-                      key={index}
-                      className={mobileBodyClass}
-                      style={{ color: colors.textColor }}
-                    >
-                      {text}
-                    </p>
-                  ))}
+                  <div className="mt-1 flex flex-col gap-1.5">
+                    {contactsSection.bottomText.map((text, index) => (
+                      <p
+                        key={index}
+                        className={mobileBodyClass}
+                        style={{ color: colors.textColor }}
+                      >
+                        {text}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               ) : null}
             </div>

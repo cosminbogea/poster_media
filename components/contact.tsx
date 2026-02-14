@@ -78,23 +78,34 @@ function FormField({
 export function Contact() {
   const { colors } = useTheme();
   const [isMobile, setIsMobile] = useState(false);
+  const [isShortMobile, setIsShortMobile] = useState(false);
   const fieldTextColor = colors.background;
   const placeholderColor = fieldTextColor;
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
     const updateMobileState = () => setIsMobile(mediaQuery.matches);
+    const updateShortMobileState = () => setIsShortMobile(window.innerHeight <= 760);
+
     updateMobileState();
+    updateShortMobileState();
     mediaQuery.addEventListener("change", updateMobileState);
-    return () => mediaQuery.removeEventListener("change", updateMobileState);
+    window.addEventListener("resize", updateShortMobileState);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateMobileState);
+      window.removeEventListener("resize", updateShortMobileState);
+    };
   }, []);
+
+  const mobileSubtitleClass = isShortMobile ? "text-[0.57rem]" : "text-[0.625rem]";
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100svh-8rem)] md:h-[calc(100vh-6rem-2rem)] px-4 md:px-8 pt-2 md:pt-0 gap-y-10 md:gap-y-24">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100svh-8rem)] md:min-h-[calc(100vh-2rem)] px-4 md:px-8 pt-2 md:pt-0 gap-y-10 md:gap-y-24">
       <div className="flex flex-col items-center">
         <h1
           className="font-erbaum font-light text-2xl md:text-3xl lg:text-4xl uppercase text-center"
@@ -104,7 +115,7 @@ export function Contact() {
         </h1>
 
         <p
-          className="mt-3 max-w-lg text-center text-[0.625rem] leading-tight font-bold md:text-md md:leading-normal md:font-normal"
+          className={`mt-3 max-w-lg text-center ${mobileSubtitleClass} leading-tight font-bold md:text-[0.95rem] md:leading-normal md:font-normal lg:text-base 2xl:text-md`}
           style={{ color: colors.textColor }}
         >
           Hai una domanda, una proposta o vuoi conoscerci meglio?

@@ -5,7 +5,7 @@
 
 /* Updated to dark theme matching the screenshot */
 :root {
-  --backgroud: #cc405b;
+  --background: #282828;
   --foreground: oklch(0.98 0.005 260);
   --card: oklch(0.16 0.005 260);
   --card-foreground: oklch(0.98 0.005 260);

@@ -89,7 +89,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${inter.variable} ${erbaum.variable} font-sans tracking-tight`}
-        style={{ backgroundColor: "#cc405b" }}
+        style={{ backgroundColor: "#282828" }}
       >
         <ThemeProvider>{children}</ThemeProvider>
       </body>
