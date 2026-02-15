@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-export type ThemeType = "main" | "black" | "white";
+export type ThemeType = "black" | "white";
 
 interface ThemeColors {
   background: string;
@@ -12,12 +12,6 @@ interface ThemeColors {
 }
 
 const themeColors: Record<ThemeType, ThemeColors> = {
-  main: {
-    background: "#efdea3",
-    lineColor: "#eee3b6",
-    textColor: "rgba(0, 0, 0, 0.8)",
-    inactiveNavColor: "#9c9b9b",
-  },
   black: {
     background: "#282828",
     lineColor: "#353535",

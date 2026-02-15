@@ -3,9 +3,8 @@
 import { useTheme, ThemeType } from "./theme-context";
 
 const themes: { type: ThemeType; color: string; contourColor: string }[] = [
-  { type: "main", color: "#efdea3", contourColor: "#282828" },   // beige → black contour
-  { type: "black", color: "#282828", contourColor: "#F3F2F3" },  // black → white contour
-  { type: "white", color: "#F3F2F3", contourColor: "#282828" },  // white → black contour
+  { type: "black", color: "#282828", contourColor: "#F3F2F3" },
+  { type: "white", color: "#F3F2F3", contourColor: "#282828" },
 ];
 
 export function ThemeSwitcher() {

@@ -9,6 +9,7 @@ function FormField({
   fieldTextColor,
   placeholderColor,
   lineColor,
+  desktopFieldBackgroundColor,
   isMobile,
 }: {
   placeholder: string;
@@ -16,6 +17,7 @@ function FormField({
   fieldTextColor: string;
   placeholderColor: string;
   lineColor: string;
+  desktopFieldBackgroundColor: string;
   isMobile: boolean;
 }) {
   const barStyle = "absolute top-0 bottom-0 w-[3px] rounded-sm";
@@ -32,7 +34,7 @@ function FormField({
     <div
       className="relative"
       style={{
-        backgroundColor: lineColor,
+        backgroundColor: isMobile ? lineColor : desktopFieldBackgroundColor,
       }}
     >
       {!isMobile ? (
@@ -68,11 +70,20 @@ function FormField({
 }
 
 export function Contact() {
-  const { colors } = useTheme();
+  const { colors, theme } = useTheme();
   const [isMobile, setIsMobile] = useState(false);
   const [isShortMobile, setIsShortMobile] = useState(false);
-  const fieldTextColor = colors.background;
+  const desktopFieldTextColor =
+    theme === "white"
+      ? "rgba(0, 0, 0, 0.9)"
+      : theme === "black"
+        ? "rgba(255, 255, 255, 0.95)"
+        : colors.background;
+  const mobileFieldTextColor = colors.background;
+  const fieldTextColor = isMobile ? mobileFieldTextColor : desktopFieldTextColor;
   const placeholderColor = fieldTextColor;
+  const desktopFieldBackgroundColor =
+    theme === "black" ? colors.lineColor : colors.inactiveNavColor;
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -129,6 +140,7 @@ export function Contact() {
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
               lineColor={colors.textColor}
+              desktopFieldBackgroundColor={desktopFieldBackgroundColor}
               isMobile={isMobile}
             />
           </div>
@@ -138,6 +150,7 @@ export function Contact() {
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
               lineColor={colors.textColor}
+              desktopFieldBackgroundColor={desktopFieldBackgroundColor}
               isMobile={isMobile}
             />
           </div>
@@ -147,6 +160,7 @@ export function Contact() {
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
               lineColor={colors.textColor}
+              desktopFieldBackgroundColor={desktopFieldBackgroundColor}
               isMobile={isMobile}
             />
           </div>
@@ -157,6 +171,7 @@ export function Contact() {
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
               lineColor={colors.textColor}
+              desktopFieldBackgroundColor={desktopFieldBackgroundColor}
               isMobile={isMobile}
             />
           </div>
@@ -167,6 +182,7 @@ export function Contact() {
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
               lineColor={colors.textColor}
+              desktopFieldBackgroundColor={desktopFieldBackgroundColor}
               isMobile={isMobile}
             />
           </div>
