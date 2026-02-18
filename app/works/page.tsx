@@ -18,17 +18,9 @@ export default function WorksPage() {
   const [scrollToSlug, setScrollToSlug] = useState<string | null>(null);
   const [activeProjectSlug, setActiveProjectSlug] = useState<string | null>(null);
   const worksScrollYRef = useRef(0);
-  const pendingScrollActionRef = useRef<"top" | "restore" | null>(null);
   const activeProject = activeProjectSlug ? getProjectBySlug(activeProjectSlug) ?? null : null;
 
-  const handleExitComplete = useCallback(() => {
-    if (pendingScrollActionRef.current === "top") {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    } else if (pendingScrollActionRef.current === "restore") {
-      window.scrollTo({ top: worksScrollYRef.current, left: 0, behavior: "auto" });
-    }
-    pendingScrollActionRef.current = null;
-  }, []);
+  const showWorks = isWorksView && !activeProject;
 
   useEffect(() => {
     const uniqueImageSources = Array.from(new Set(projects.map((project) => project.image.src)));
@@ -72,9 +64,7 @@ export default function WorksPage() {
 
   const toggleView = () => {
     if (activeProjectSlug) {
-      pendingScrollActionRef.current = "restore";
-      setActiveProjectSlug(null);
-      setIsWorksView(true);
+      handleProjectBack();
       return;
     }
 
@@ -85,8 +75,7 @@ export default function WorksPage() {
     setIsWorksView(isWorks);
 
     if (activeProjectSlug) {
-      pendingScrollActionRef.current = "restore";
-      setActiveProjectSlug(null);
+      handleProjectBack();
     }
   };
 
@@ -98,15 +87,23 @@ export default function WorksPage() {
 
   const handleProjectOpen = (slug: string) => {
     worksScrollYRef.current = window.scrollY;
-    pendingScrollActionRef.current = "top";
     setScrollToSlug(null);
-    setIsWorksView(true);
     setActiveProjectSlug(slug);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
   };
 
   const handleProjectBack = () => {
-    pendingScrollActionRef.current = "restore";
+    const savedY = worksScrollYRef.current;
     setActiveProjectSlug(null);
+    // Double rAF: first frame lets layout reflow after works becomes position:relative again,
+    // second frame restores scroll position
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.scrollTo(0, savedY);
+      });
+    });
   };
 
   const handleScrollComplete = useCallback(() => {
@@ -136,35 +133,52 @@ export default function WorksPage() {
         showWorksSecondaryToggle={!activeProject}
       />
       <main className="pt-4 md:pt-24 pb-8">
-        <AnimatePresence mode="wait" initial={false} onExitComplete={handleExitComplete}>
-          {isWorksView ? (
-            activeProject ? (
-              <motion.div
-                key={`project-${activeProject.slug}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={pageTransition}
-              >
-                <ProjectSubsectionLayout project={activeProject} onBack={handleProjectBack} />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="works"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={pageTransition}
-              >
-                <WorksLayout
-                  projects={projects}
-                  scrollToSlug={scrollToSlug}
-                  onScrollComplete={handleScrollComplete}
-                  onProjectClick={handleProjectOpen}
-                />
-              </motion.div>
-            )
-          ) : (
+        {/* Works list — always mounted when isWorksView, hidden when project is open */}
+        {isWorksView && (
+          <motion.div
+            animate={{ opacity: showWorks ? 1 : 0 }}
+            transition={pageTransition}
+            style={
+              showWorks
+                ? {}
+                : {
+                    position: "fixed",
+                    visibility: "hidden",
+                    pointerEvents: "none",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                  }
+            }
+          >
+            <WorksLayout
+              projects={projects}
+              scrollToSlug={scrollToSlug}
+              onScrollComplete={handleScrollComplete}
+              onProjectClick={handleProjectOpen}
+              isActive={showWorks}
+            />
+          </motion.div>
+        )}
+
+        {/* Project detail — mounts/unmounts via AnimatePresence */}
+        <AnimatePresence mode="wait">
+          {activeProject && (
+            <motion.div
+              key={`project-${activeProject.slug}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={pageTransition}
+            >
+              <ProjectSubsectionLayout project={activeProject} onBack={handleProjectBack} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Moodboard — separate AnimatePresence */}
+        <AnimatePresence mode="wait">
+          {!isWorksView && (
             <motion.div
               key="moodboard"
               initial={{ opacity: 0 }}

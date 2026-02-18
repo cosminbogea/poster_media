@@ -1,7 +1,6 @@
 "use client";
 
 import { type KeyboardEvent, useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { Project } from "@/types/project";
 import { AnimatedWorkImage } from "./AnimatedWorkImage";
 import { WorkMeta } from "./WorkMeta";
@@ -18,6 +17,7 @@ interface WorksLayoutProps {
   scrollToSlug?: string | null;
   onScrollComplete?: () => void;
   onProjectClick?: (slug: string) => void;
+  isActive?: boolean;
 }
 
 export function WorksLayout({
@@ -25,6 +25,7 @@ export function WorksLayout({
   scrollToSlug,
   onScrollComplete,
   onProjectClick,
+  isActive = true,
 }: WorksLayoutProps) {
   const { colors } = useTheme();
   const [isShortMobile, setIsShortMobile] = useState(false);
@@ -44,7 +45,7 @@ export function WorksLayout({
 
   // When switching from moodboard, jump directly to the clicked project (no visible scroll)
   useEffect(() => {
-    if (!scrollToSlug) return;
+    if (!scrollToSlug || !isActive) return;
 
     // Use requestAnimationFrame to ensure DOM is painted before scrolling
     requestAnimationFrame(() => {
@@ -54,7 +55,7 @@ export function WorksLayout({
       }
       onScrollComplete?.();
     });
-  }, [scrollToSlug, onScrollComplete]);
+  }, [scrollToSlug, isActive, onScrollComplete]);
 
   return (
     <div className="flex flex-col gap-10 md:gap-8">
@@ -91,11 +92,8 @@ export function WorksLayout({
             className="grid min-h-[calc(100svh-8rem)] grid-rows-[1fr_auto] gap-3 px-4 md:flex md:min-h-0 md:px-0 md:h-[50vh] md:flex-row"
           >
             {/* Left: 50% of viewport, content aligned to right side, bottom-aligned with image */}
-            <motion.div
+            <div
               className="order-2 md:order-1 md:w-1/2 md:flex md:justify-end md:items-end md:pr-20"
-              initial={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
             >
               <div
                 className={`w-full md:hidden text-left ${isClickable ? "cursor-pointer" : ""}`}
@@ -190,7 +188,7 @@ export function WorksLayout({
                 </div>
               </div>
 
-            </motion.div>
+            </div>
 
             {/* Right: Image area - exactly 50% of viewport */}
             <div
