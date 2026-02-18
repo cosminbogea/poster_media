@@ -21,7 +21,10 @@ const InteractiveLines = () => {
     let height = 0;
     let transitionProgress = 0; // 0 = logo, 1 = pattern
     let hasInteracted = false;
+    let isTransitionQueued = false;
     let autoTransitionTimer: NodeJS.Timeout | null = null;
+    let interactionTransitionTimer: NodeJS.Timeout | null = null;
+    const InteractionTransitionDelayMs = 2000;
 
     // Logo data extracted from poster-logo.svg (viewBox: 1622.65 x 614.73)
     // Format: [x, y, height]
@@ -507,10 +510,19 @@ const InteractiveLines = () => {
     };
 
     // Start transition
-    const triggerTransition = () => {
-      if (!hasInteracted) {
-        hasInteracted = true;
+    const triggerTransition = (withDelay = true) => {
+      if (hasInteracted || isTransitionQueued) return;
+
+      if (withDelay) {
+        isTransitionQueued = true;
+        interactionTransitionTimer = setTimeout(() => {
+          isTransitionQueued = false;
+          hasInteracted = true;
+        }, InteractionTransitionDelayMs);
+        return;
       }
+
+      hasInteracted = true;
     };
 
     // Check if mouse/touch is near any line
@@ -595,7 +607,7 @@ const InteractiveLines = () => {
 
     // Auto-trigger transition after 15 seconds if no interaction
     autoTransitionTimer = setTimeout(() => {
-      triggerTransition();
+      triggerTransition(false);
     }, 15000);
 
     // Add event listeners
@@ -612,6 +624,7 @@ const InteractiveLines = () => {
       isAnimating = false;
       clearTimeout(resizeTimeout);
       if (autoTransitionTimer) clearTimeout(autoTransitionTimer);
+      if (interactionTransitionTimer) clearTimeout(interactionTransitionTimer);
       window.removeEventListener("resize", handleResize);
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
