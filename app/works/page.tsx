@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { MobileTopBar } from "@/components/navigation/MobileTopBar";
 import { Navigation } from "@/components/navigation/Navigation";
@@ -44,6 +44,14 @@ export default function WorksPage() {
       window.clearTimeout(timeoutId);
     };
   }, [activeProjectSlug, isWorksView]);
+
+  useLayoutEffect(() => {
+    if (!activeProjectSlug) {
+      return;
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [activeProjectSlug]);
 
   useEffect(() => {
     const uniqueImageSources = Array.from(new Set(projects.map((project) => project.image.src)));
@@ -114,7 +122,6 @@ export default function WorksPage() {
   const handleProjectOpen = (slug: string) => {
     worksScrollYRef.current = window.scrollY;
     shouldRestoreWorksScrollRef.current = false;
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     setScrollToSlug(null);
     setIsWorksView(true);
     setActiveProjectSlug(slug);
@@ -132,8 +139,8 @@ export default function WorksPage() {
   const pageTransition = shouldReduceMotion
     ? { duration: 0 }
     : {
-        duration: 0.34,
-        ease: [0.22, 1, 0.36, 1] as const,
+        duration: 0.24,
+        ease: [0.25, 0.1, 0.25, 1] as const,
       };
 
   return (
@@ -152,27 +159,25 @@ export default function WorksPage() {
         showWorksSecondaryToggle={!activeProject}
       />
       <main className="pt-4 md:pt-24 pb-8">
-        <AnimatePresence mode="wait" initial={false}>
+        <AnimatePresence mode="sync" initial={false}>
           {isWorksView ? (
             activeProject ? (
               <motion.div
                 key={`project-${activeProject.slug}`}
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -6 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={pageTransition}
-                className="will-change-transform"
               >
                 <ProjectSubsectionLayout project={activeProject} onBack={handleProjectBack} />
               </motion.div>
             ) : (
               <motion.div
                 key="works"
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -6 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={pageTransition}
-                className="will-change-transform"
               >
                 <WorksLayout
                   projects={projects}
@@ -185,11 +190,10 @@ export default function WorksPage() {
           ) : (
             <motion.div
               key="moodboard"
-              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -6 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={pageTransition}
-              className="will-change-transform"
             >
               <MoodboardLayout projects={projects} onImageClick={handleMoodboardImageClick} />
             </motion.div>
