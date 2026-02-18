@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { type KeyboardEvent, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Project } from "@/types/project";
 import { AnimatedWorkImage } from "./AnimatedWorkImage";
@@ -17,9 +17,15 @@ interface WorksLayoutProps {
   projects: Project[];
   scrollToSlug?: string | null;
   onScrollComplete?: () => void;
+  onProjectClick?: (slug: string) => void;
 }
 
-export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksLayoutProps) {
+export function WorksLayout({
+  projects,
+  scrollToSlug,
+  onScrollComplete,
+  onProjectClick,
+}: WorksLayoutProps) {
   const { colors } = useTheme();
   const [isShortMobile, setIsShortMobile] = useState(false);
 
@@ -54,12 +60,30 @@ export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksL
     <div className="flex flex-col gap-10 md:gap-8">
       {projects.map((project) => {
         const imageRepeatCount = imageRepeatCountMap[project.image.width];
+        const isClickable = typeof onProjectClick === "function";
+
+        const handleProjectOpen = () => {
+          onProjectClick?.(project.slug);
+        };
+
+        const handleProjectKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+          if (!isClickable) return;
+          if (event.key !== "Enter" && event.key !== " ") return;
+
+          event.preventDefault();
+          handleProjectOpen();
+        };
 
         return (
           <div
             key={project.slug}
             id={project.slug}
-            className="grid min-h-[calc(100svh-8rem)] grid-rows-[1fr_auto] gap-3 px-4 md:flex md:min-h-0 md:px-0 md:h-[50vh] md:flex-row"
+            className={`grid min-h-[calc(100svh-8rem)] grid-rows-[1fr_auto] gap-3 px-4 md:flex md:min-h-0 md:px-0 md:h-[50vh] md:flex-row ${isClickable ? "cursor-pointer" : ""}`}
+            onClick={isClickable ? handleProjectOpen : undefined}
+            onKeyDown={handleProjectKeyDown}
+            role={isClickable ? "button" : undefined}
+            tabIndex={isClickable ? 0 : undefined}
+            aria-label={isClickable ? `Open ${project.title}` : undefined}
           >
             {/* Left: 50% of viewport, content aligned to right side, bottom-aligned with image */}
             <motion.div
@@ -158,7 +182,17 @@ export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksL
 
             {/* Right: Image area - exactly 50% of viewport */}
             <div className="order-1 md:order-2 w-full md:w-1/2 h-full min-h-[18rem] md:h-full md:pr-8">
-              <div className="flex h-full w-full gap-2 md:gap-3">
+              <div className="h-full w-full md:hidden">
+                <AnimatedWorkImage
+                  src={project.image.src}
+                  alt={project.image.alt}
+                  width={project.image.width}
+                  slug={`${project.slug}-mobile`}
+                  className="h-full w-full"
+                />
+              </div>
+
+              <div className="hidden h-full w-full gap-3 md:flex">
                 {Array.from({ length: imageRepeatCount }).map((_, imageIndex) => (
                   <AnimatedWorkImage
                     key={`${project.slug}-image-${imageIndex}`}

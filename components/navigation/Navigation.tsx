@@ -10,6 +10,7 @@ interface NavigationProps {
   variant?: NavigationVariant;
   isWorksView?: boolean;
   onViewToggle?: () => void;
+  showWorksSecondaryToggle?: boolean;
 }
 
 const navLinks = [
@@ -22,6 +23,7 @@ export function Navigation({
   variant: variantProp,
   isWorksView = true,
   onViewToggle,
+  showWorksSecondaryToggle = true,
 }: NavigationProps) {
   const { colors } = useTheme();
   const pathname = usePathname();
@@ -73,6 +75,20 @@ export function Navigation({
 
             // For WORKS link, show MOODBOARD next to it when in works section
             if (link.href === "/works" && isWorksSection && variant !== "homepage") {
+              if (!showWorksSecondaryToggle) {
+                return (
+                  <button
+                    key={link.href}
+                    onClick={onViewToggle}
+                    data-nav="works"
+                    className="text-xs font-bold hover:opacity-80 transition-opacity leading-none"
+                    style={{ color: colors.textColor }}
+                  >
+                    WORKS
+                  </button>
+                );
+              }
+
               return (
                 <div key={link.href} className="relative flex items-center">
                   <button

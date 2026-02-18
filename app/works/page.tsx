@@ -7,13 +7,16 @@ import { Navigation } from "@/components/navigation/Navigation";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { WorksLayout } from "@/components/works/WorksLayout";
 import { MoodboardLayout } from "@/components/works/MoodboardLayout";
-import { projects } from "@/data/projects";
+import { ProjectSubsectionLayout } from "@/components/works/ProjectSubsectionLayout";
+import { getProjectBySlug, projects } from "@/data/projects";
 import { useTheme } from "@/components/theme-context";
 
 export default function WorksPage() {
   const { colors } = useTheme();
   const [isWorksView, setIsWorksView] = useState(true);
   const [scrollToSlug, setScrollToSlug] = useState<string | null>(null);
+  const [activeProjectSlug, setActiveProjectSlug] = useState<string | null>(null);
+  const activeProject = activeProjectSlug ? getProjectBySlug(activeProjectSlug) ?? null : null;
 
   useEffect(() => {
     const uniqueImageSources = Array.from(new Set(projects.map((project) => project.image.src)));
@@ -55,11 +58,38 @@ export default function WorksPage() {
     };
   }, []);
 
-  const toggleView = () => setIsWorksView((prev) => !prev);
+  const toggleView = () => {
+    if (activeProjectSlug) {
+      setActiveProjectSlug(null);
+      setIsWorksView(true);
+      return;
+    }
+
+    setIsWorksView((prev) => !prev);
+  };
+
+  const handleWorksViewChange = (isWorks: boolean) => {
+    setIsWorksView(isWorks);
+
+    if (activeProjectSlug) {
+      setActiveProjectSlug(null);
+    }
+  };
 
   const handleMoodboardImageClick = (slug: string) => {
+    setActiveProjectSlug(null);
     setScrollToSlug(slug);
     setIsWorksView(true);
+  };
+
+  const handleProjectOpen = (slug: string) => {
+    setScrollToSlug(null);
+    setIsWorksView(true);
+    setActiveProjectSlug(slug);
+  };
+
+  const handleProjectBack = () => {
+    setActiveProjectSlug(null);
   };
 
   const handleScrollComplete = useCallback(() => {
@@ -73,25 +103,43 @@ export default function WorksPage() {
     >
       <MobileTopBar
         isWorksView={isWorksView}
-        onWorksViewChange={setIsWorksView}
+        onWorksViewChange={handleWorksViewChange}
       />
       <Navigation
         variant="subpage"
         isWorksView={isWorksView}
         onViewToggle={toggleView}
+        showWorksSecondaryToggle={!activeProject}
       />
       <main className="pt-4 md:pt-24 pb-8">
         <AnimatePresence mode="wait">
           {isWorksView ? (
-            <motion.div
-              key="works"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <WorksLayout projects={projects} scrollToSlug={scrollToSlug} onScrollComplete={handleScrollComplete} />
-            </motion.div>
+            activeProject ? (
+              <motion.div
+                key={`project-${activeProject.slug}`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 6 }}
+                transition={{ duration: 0.18 }}
+              >
+                <ProjectSubsectionLayout project={activeProject} onBack={handleProjectBack} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="works"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <WorksLayout
+                  projects={projects}
+                  scrollToSlug={scrollToSlug}
+                  onScrollComplete={handleScrollComplete}
+                  onProjectClick={handleProjectOpen}
+                />
+              </motion.div>
+            )
           ) : (
             <motion.div
               key="moodboard"
