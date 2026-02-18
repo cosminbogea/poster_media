@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { MobileTopBar } from "@/components/navigation/MobileTopBar";
 import { Navigation } from "@/components/navigation/Navigation";
@@ -18,40 +18,17 @@ export default function WorksPage() {
   const [scrollToSlug, setScrollToSlug] = useState<string | null>(null);
   const [activeProjectSlug, setActiveProjectSlug] = useState<string | null>(null);
   const worksScrollYRef = useRef(0);
-  const shouldRestoreWorksScrollRef = useRef(false);
+  const pendingScrollActionRef = useRef<"top" | "restore" | null>(null);
   const activeProject = activeProjectSlug ? getProjectBySlug(activeProjectSlug) ?? null : null;
 
-  useEffect(() => {
-    if (!isWorksView || activeProjectSlug || !shouldRestoreWorksScrollRef.current) {
-      return;
+  const handleExitComplete = useCallback(() => {
+    if (pendingScrollActionRef.current === "top") {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    } else if (pendingScrollActionRef.current === "restore") {
+      window.scrollTo({ top: worksScrollYRef.current, left: 0, behavior: "auto" });
     }
-
-    const targetY = worksScrollYRef.current;
-
-    const rafId = window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        window.scrollTo({ top: targetY, left: 0, behavior: "auto" });
-      });
-    });
-
-    const timeoutId = window.setTimeout(() => {
-      window.scrollTo({ top: targetY, left: 0, behavior: "auto" });
-      shouldRestoreWorksScrollRef.current = false;
-    }, 260);
-
-    return () => {
-      window.cancelAnimationFrame(rafId);
-      window.clearTimeout(timeoutId);
-    };
-  }, [activeProjectSlug, isWorksView]);
-
-  useLayoutEffect(() => {
-    if (!activeProjectSlug) {
-      return;
-    }
-
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [activeProjectSlug]);
+    pendingScrollActionRef.current = null;
+  }, []);
 
   useEffect(() => {
     const uniqueImageSources = Array.from(new Set(projects.map((project) => project.image.src)));
@@ -95,7 +72,7 @@ export default function WorksPage() {
 
   const toggleView = () => {
     if (activeProjectSlug) {
-      shouldRestoreWorksScrollRef.current = true;
+      pendingScrollActionRef.current = "restore";
       setActiveProjectSlug(null);
       setIsWorksView(true);
       return;
@@ -108,7 +85,7 @@ export default function WorksPage() {
     setIsWorksView(isWorks);
 
     if (activeProjectSlug) {
-      shouldRestoreWorksScrollRef.current = true;
+      pendingScrollActionRef.current = "restore";
       setActiveProjectSlug(null);
     }
   };
@@ -121,14 +98,14 @@ export default function WorksPage() {
 
   const handleProjectOpen = (slug: string) => {
     worksScrollYRef.current = window.scrollY;
-    shouldRestoreWorksScrollRef.current = false;
+    pendingScrollActionRef.current = "top";
     setScrollToSlug(null);
     setIsWorksView(true);
     setActiveProjectSlug(slug);
   };
 
   const handleProjectBack = () => {
-    shouldRestoreWorksScrollRef.current = true;
+    pendingScrollActionRef.current = "restore";
     setActiveProjectSlug(null);
   };
 
@@ -139,7 +116,7 @@ export default function WorksPage() {
   const pageTransition = shouldReduceMotion
     ? { duration: 0 }
     : {
-        duration: 0.24,
+        duration: 0.35,
         ease: [0.25, 0.1, 0.25, 1] as const,
       };
 
@@ -159,7 +136,7 @@ export default function WorksPage() {
         showWorksSecondaryToggle={!activeProject}
       />
       <main className="pt-4 md:pt-24 pb-8">
-        <AnimatePresence mode="sync" initial={false}>
+        <AnimatePresence mode="wait" initial={false} onExitComplete={handleExitComplete}>
           {isWorksView ? (
             activeProject ? (
               <motion.div
