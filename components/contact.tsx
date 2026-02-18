@@ -38,21 +38,19 @@ function FormField({
     <div
       className="relative"
       style={{
-        backgroundColor: isMobile ? lineColor : desktopFieldBackgroundColor,
+        backgroundColor: desktopFieldBackgroundColor,
       }}
     >
-      {!isMobile ? (
-        <>
-          <div
-            className={`${barStyle} left-0`}
-            style={{ backgroundColor: lineColor }}
-          />
-          <div
-            className={`${barStyle} right-0`}
-            style={{ backgroundColor: lineColor }}
-          />
-        </>
-      ) : null}
+      <>
+        <div
+          className={`${barStyle} left-0`}
+          style={{ backgroundColor: lineColor }}
+        />
+        <div
+          className={`${barStyle} right-0`}
+          style={{ backgroundColor: lineColor }}
+        />
+      </>
 
       {isTextarea ? (
         <textarea
@@ -83,8 +81,7 @@ export function Contact() {
       : theme === "black"
         ? "rgba(255, 255, 255, 0.95)"
         : colors.background;
-  const mobileFieldTextColor = colors.background;
-  const fieldTextColor = isMobile ? mobileFieldTextColor : desktopFieldTextColor;
+  const fieldTextColor = desktopFieldTextColor;
   const placeholderColor = fieldTextColor;
   const desktopFieldBackgroundColor =
     theme === "black" ? colors.lineColor : colors.inactiveNavColor;

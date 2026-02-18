@@ -16,6 +16,20 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "two-image-preview",
+    title: "TWO IMAGE PREVIEW",
+    subtitle: "Layout Check",
+    description:
+      "Progetto inserito per verificare il layout desktop con due immagini affiancate nella sezione works e nella sottosezione progetto.",
+    date: "Febbraio 2026",
+    location: "Milano, Italia",
+    image: {
+      src: "/image_3.jpg",
+      alt: "Two image preview layout",
+      width: "50",
+    },
+  },
+  {
     slug: "rimini-fashion",
     title: "RIMINI FASHION WEEK",
     subtitle: "Summer Collection 2025",

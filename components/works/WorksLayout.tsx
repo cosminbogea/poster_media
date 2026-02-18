@@ -74,16 +74,21 @@ export function WorksLayout({
           handleProjectOpen();
         };
 
+        const interactiveProps = isClickable
+          ? {
+              onClick: handleProjectOpen,
+              onKeyDown: handleProjectKeyDown,
+              role: "button" as const,
+              tabIndex: 0,
+              "aria-label": `Open ${project.title}`,
+            }
+          : {};
+
         return (
           <div
             key={project.slug}
             id={project.slug}
-            className={`grid min-h-[calc(100svh-8rem)] grid-rows-[1fr_auto] gap-3 px-4 md:flex md:min-h-0 md:px-0 md:h-[50vh] md:flex-row ${isClickable ? "cursor-pointer" : ""}`}
-            onClick={isClickable ? handleProjectOpen : undefined}
-            onKeyDown={handleProjectKeyDown}
-            role={isClickable ? "button" : undefined}
-            tabIndex={isClickable ? 0 : undefined}
-            aria-label={isClickable ? `Open ${project.title}` : undefined}
+            className="grid min-h-[calc(100svh-8rem)] grid-rows-[1fr_auto] gap-3 px-4 md:flex md:min-h-0 md:px-0 md:h-[50vh] md:flex-row"
           >
             {/* Left: 50% of viewport, content aligned to right side, bottom-aligned with image */}
             <motion.div
@@ -92,7 +97,10 @@ export function WorksLayout({
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="w-full md:hidden text-left">
+              <div
+                className={`w-full md:hidden text-left ${isClickable ? "cursor-pointer" : ""}`}
+                {...interactiveProps}
+              >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-2 min-w-0">
                     <div
@@ -138,7 +146,10 @@ export function WorksLayout({
               </div>
 
               {/* Text container - auto width based on content, text left-aligned inside */}
-              <div className="hidden md:block text-left">
+              <div
+                className={`hidden md:block text-left ${isClickable ? "cursor-pointer" : ""}`}
+                {...interactiveProps}
+              >
                 {/* Title with vertical accent line */}
                 <div className="relative">
                   {/* Line - positioned to the left of text */}
@@ -178,10 +189,14 @@ export function WorksLayout({
                   <WorkMeta date={project.date} location={project.location} />
                 </div>
               </div>
+
             </motion.div>
 
             {/* Right: Image area - exactly 50% of viewport */}
-            <div className="order-1 md:order-2 w-full md:w-1/2 h-full min-h-[18rem] md:h-full md:pr-8">
+            <div
+              className={`order-1 md:order-2 w-full md:w-1/2 h-full min-h-[18rem] md:h-full md:pr-8 ${isClickable ? "cursor-pointer" : ""}`}
+              {...interactiveProps}
+            >
               <div className="h-full w-full md:hidden">
                 <AnimatedWorkImage
                   src={project.image.src}

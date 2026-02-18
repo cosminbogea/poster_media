@@ -83,6 +83,7 @@ export default function WorksPage() {
   };
 
   const handleProjectOpen = (slug: string) => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     setScrollToSlug(null);
     setIsWorksView(true);
     setActiveProjectSlug(slug);

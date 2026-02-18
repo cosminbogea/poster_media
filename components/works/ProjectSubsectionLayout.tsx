@@ -14,8 +14,8 @@ const imageRepeatCountMap = {
 function buildDetailParagraphs(description: string) {
   return [
     description,
-    "Questo progetto approfondisce il rapporto tra direzione artistica, ritmo narrativo e costruzione visiva, mantenendo un linguaggio coerente in ogni frame.",
-    "La selezione delle immagini, delle superfici e delle inquadrature e pensata per restituire un racconto pulito ma evocativo, con attenzione a dettagli e atmosfera.",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nullam quis risus eget urna mollis ornare vel eu leo.",
+    "Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec sed odio dui. Aenean lacinia bibendum nulla sed consectetur. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.",
   ];
 }
 
@@ -28,6 +28,7 @@ export function ProjectSubsectionLayout({ project, onBack }: ProjectSubsectionLa
   const { colors } = useTheme();
   const imageRepeatCount = imageRepeatCountMap[project.image.width];
   const detailParagraphs = buildDetailParagraphs(project.description);
+  const secondaryDescription = detailParagraphs.slice(1).join(" ");
 
   return (
     <div className="px-4 md:px-8 pb-10 md:pb-14">
@@ -131,15 +132,17 @@ export function ProjectSubsectionLayout({ project, onBack }: ProjectSubsectionLa
           </div>
         </section>
 
-        {detailParagraphs.slice(1).map((paragraph, sectionIndex) => (
+        {detailParagraphs.slice(1).map((_, sectionIndex) => (
           <section key={`${project.slug}-detail-section-${sectionIndex}`} className="flex h-[50vh] flex-row">
-            <div className="w-1/2 pr-20 flex justify-end items-end">
-              <p
-                className="text-[11px] md:text-xs font-bold leading-tight max-w-xs opacity-85"
-                style={{ color: colors.textColor }}
-              >
-                {paragraph}
-              </p>
+            <div className="w-1/2 pr-20 flex justify-end items-start">
+              {sectionIndex === 0 ? (
+                <p
+                  className="text-[11px] md:text-xs font-bold leading-tight max-w-xs opacity-85"
+                  style={{ color: colors.textColor }}
+                >
+                  {secondaryDescription}
+                </p>
+              ) : null}
             </div>
 
             <div className="w-1/2 h-full pr-8">
