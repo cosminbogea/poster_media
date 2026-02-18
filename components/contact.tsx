@@ -6,6 +6,8 @@ import { useTheme } from "@/components/theme-context";
 function FormField({
   placeholder,
   isTextarea,
+  textareaRows,
+  textareaHeightClass,
   fieldTextColor,
   placeholderColor,
   lineColor,
@@ -14,6 +16,8 @@ function FormField({
 }: {
   placeholder: string;
   isTextarea?: boolean;
+  textareaRows?: number;
+  textareaHeightClass?: string;
   fieldTextColor: string;
   placeholderColor: string;
   lineColor: string;
@@ -53,9 +57,9 @@ function FormField({
       {isTextarea ? (
         <textarea
           placeholder={placeholder}
-          rows={1}
-          className={`${inputClasses} py-5 px-6 resize-none`}
-          style={inputStyle}
+          rows={textareaRows ?? 1}
+          className={`${inputClasses} py-5 px-6 resize-none ${textareaHeightClass ?? ""}`}
+          style={{ ...inputStyle, textAlign: "center" }}
         />
       ) : (
         <input
@@ -134,7 +138,7 @@ export function Contact() {
         className="w-full max-w-6xl mx-auto flex flex-col items-center gap-y-8 md:gap-y-24"
       >
         <div className="grid w-full grid-cols-1 place-items-center gap-y-5 md:grid-cols-5 md:gap-y-24">
-          <div className="w-[52vw] max-w-[17rem] md:w-auto md:col-start-1">
+          <div className="w-[52vw] max-w-[17rem] md:w-[17rem] md:col-start-1">
             <FormField
               placeholder="NOME"
               fieldTextColor={fieldTextColor}
@@ -144,7 +148,7 @@ export function Contact() {
               isMobile={isMobile}
             />
           </div>
-          <div className="w-[52vw] max-w-[17rem] md:w-auto md:col-start-3">
+          <div className="w-[52vw] max-w-[17rem] md:w-[17rem] md:col-start-3">
             <FormField
               placeholder="COGNOME"
               fieldTextColor={fieldTextColor}
@@ -154,7 +158,7 @@ export function Contact() {
               isMobile={isMobile}
             />
           </div>
-          <div className="w-[52vw] max-w-[17rem] md:w-auto md:col-start-5">
+          <div className="w-[52vw] max-w-[17rem] md:w-[17rem] md:col-start-5">
             <FormField
               placeholder="EMAIL"
               fieldTextColor={fieldTextColor}
@@ -165,20 +169,12 @@ export function Contact() {
             />
           </div>
 
-          <div className="w-[52vw] max-w-[17rem] md:w-auto md:col-start-2 md:row-start-2">
-            <FormField
-              placeholder="SOGGETTO"
-              fieldTextColor={fieldTextColor}
-              placeholderColor={placeholderColor}
-              lineColor={colors.textColor}
-              desktopFieldBackgroundColor={desktopFieldBackgroundColor}
-              isMobile={isMobile}
-            />
-          </div>
-          <div className="w-[52vw] max-w-[17rem] md:w-auto md:col-start-4 md:row-start-2">
+          <div className="w-[52vw] max-w-[17rem] md:w-[51rem] md:max-w-full md:col-start-2 md:col-span-3 md:row-start-2">
             <FormField
               placeholder="MESSAGGIO"
               isTextarea
+              textareaRows={3}
+              textareaHeightClass="h-[9rem] pt-[3.8rem] pb-0 text-center placeholder:text-center"
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
               lineColor={colors.textColor}

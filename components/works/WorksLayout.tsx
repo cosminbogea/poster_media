@@ -7,10 +7,10 @@ import { AnimatedWorkImage } from "./AnimatedWorkImage";
 import { WorkMeta } from "./WorkMeta";
 import { useTheme } from "@/components/theme-context";
 
-const desktopImageWidthMap = {
-  "30": "md:w-[30%]",
-  "50": "md:w-[50%]",
-  "100": "md:w-full",
+const imageRepeatCountMap = {
+  "30": 3,
+  "50": 2,
+  "100": 1,
 };
 
 interface WorksLayoutProps {
@@ -53,7 +53,7 @@ export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksL
   return (
     <div className="flex flex-col gap-10 md:gap-8">
       {projects.map((project) => {
-        const desktopImageWidthClass = desktopImageWidthMap[project.image.width];
+        const imageRepeatCount = imageRepeatCountMap[project.image.width];
 
         return (
           <div
@@ -158,14 +158,17 @@ export function WorksLayout({ projects, scrollToSlug, onScrollComplete }: WorksL
 
             {/* Right: Image area - exactly 50% of viewport */}
             <div className="order-1 md:order-2 w-full md:w-1/2 h-full min-h-[18rem] md:h-full md:pr-8">
-              <div className={`w-full ${desktopImageWidthClass} h-full`}>
-                <AnimatedWorkImage
-                  src={project.image.src}
-                  alt={project.image.alt}
-                  width={project.image.width}
-                  slug={project.slug}
-                  className="w-full h-full"
-                />
+              <div className="flex h-full w-full gap-2 md:gap-3">
+                {Array.from({ length: imageRepeatCount }).map((_, imageIndex) => (
+                  <AnimatedWorkImage
+                    key={`${project.slug}-image-${imageIndex}`}
+                    src={project.image.src}
+                    alt={project.image.alt}
+                    width={project.image.width}
+                    slug={project.slug}
+                    className="h-full w-full"
+                  />
+                ))}
               </div>
             </div>
           </div>
