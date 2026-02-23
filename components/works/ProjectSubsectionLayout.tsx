@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { type Project } from "@/types/project";
 import { useTheme } from "@/components/theme-context";
 import { AnimatedWorkImage } from "./AnimatedWorkImage";
@@ -10,6 +11,31 @@ import { ProjectVideo } from "./ProjectVideo";
 interface ProjectSubsectionLayoutProps {
   project: Project;
   onBack: () => void;
+}
+
+function AdaptiveMobileStill({
+  src,
+  alt,
+  slug,
+}: {
+  src: string;
+  alt: string;
+  slug: string;
+}) {
+  const [heightClass, setHeightClass] = useState("h-[52svh]");
+  return (
+    <div className={`${heightClass} w-full`}>
+      <AnimatedWorkImage
+        src={src}
+        alt={alt}
+        slug={slug}
+        className="h-full w-full"
+        onLoad={(w, h) => {
+          if (w > h) setHeightClass("h-[30svh]");
+        }}
+      />
+    </div>
+  );
 }
 
 export function ProjectSubsectionLayout({
@@ -70,14 +96,12 @@ export function ProjectSubsectionLayout({
         </div>
 
         {project.stills.flat().map((src, i) => (
-          <div key={`${project.slug}-mobile-still-${i}`} className="h-[52svh] w-full">
-            <AnimatedWorkImage
-              src={src}
-              alt={project.title}
-              slug={`${project.slug}-mobile-still-${i}`}
-              className="h-full w-full"
-            />
-          </div>
+          <AdaptiveMobileStill
+            key={`${project.slug}-mobile-still-${i}`}
+            src={src}
+            alt={project.title}
+            slug={`${project.slug}-mobile-still-${i}`}
+          />
         ))}
 
         {project.video && (

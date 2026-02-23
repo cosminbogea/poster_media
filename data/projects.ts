@@ -18,7 +18,8 @@ export const projects: Project[] = [
     ],
     video: {
       src: "https://res.cloudinary.com/djhods3my/video/upload/v1771848716/output_tft0qd.mp4",
-      poster: "/works/bryan/poster.jpg",
+      poster:
+        "https://res.cloudinary.com/djhods3my/image/upload/v1771881675/locandina0_sapy7q.webp",
       fullFilmUrl: "https://www.youtube.com/watch?v=0b-aA5Mncac",
     },
   },

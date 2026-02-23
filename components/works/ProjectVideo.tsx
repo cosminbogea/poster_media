@@ -11,7 +11,7 @@ export function ProjectVideo({ src, poster }: ProjectVideoProps) {
   return (
     <div className="w-full h-full" style={{ background: colors.background }}>
       <video
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover md:object-center"
         src={src}
         poster={poster}
         controls

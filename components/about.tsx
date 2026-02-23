@@ -24,7 +24,9 @@ export function About() {
   const [isShortMobile, setIsShortMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const mobileContainerRef = useRef<HTMLDivElement>(null);
+  const aboutContentRef = useRef<HTMLDivElement>(null);
   const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [mobileSecondaryTop, setMobileSecondaryTop] = useState<string>("43%");
 
   const lineWidth = isMobile ? 12 : 16;
   const lineCenter = lineWidth / 2;
@@ -169,6 +171,25 @@ export function About() {
       window.removeEventListener("resize", measureMobileLinePositions);
   }, [isMobile]);
 
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const measure = () => {
+      const containerEl = mobileContainerRef.current;
+      const aboutEl = aboutContentRef.current;
+      if (!containerEl || !aboutEl) return;
+
+      const containerRect = containerEl.getBoundingClientRect();
+      const aboutRect = aboutEl.getBoundingClientRect();
+      const bottomOfAbout = aboutRect.bottom - containerRect.top;
+      setMobileSecondaryTop(`${bottomOfAbout + 16}px`); // 16px gap
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [isMobile]);
+
   // Map nav positions to section titles
   const positionMap: Record<string, number> = {
     ABOUT: navPositions?.posterMedia ?? 0,
@@ -180,7 +201,6 @@ export function About() {
   const socialSection = aboutData[1];
   const contactsSection = aboutData[2];
   const mobileBottomInset = "max(1.5rem, env(safe-area-inset-bottom))";
-  const mobileSecondaryLineTop = "43%";
   const mobileTitleClass = isShortMobile
     ? "font-erbaum font-light text-[1.02rem] uppercase leading-none"
     : "font-erbaum font-light text-[1.16rem] uppercase leading-none";
@@ -232,7 +252,7 @@ export function About() {
             }}
           />
 
-          <div className="pt-12">
+          <div className="pt-12" ref={aboutContentRef}>
             <h2
               className={mobileTitleClass}
               style={{ color: colors.textColor }}
@@ -257,7 +277,7 @@ export function About() {
             className="absolute rounded-full"
             style={{
               left: mobileLinePositions.about,
-              top: mobileSecondaryLineTop,
+              top: mobileSecondaryTop,
               bottom: mobileBottomInset,
               width: `${lineWidth}px`,
               backgroundColor: colors.lineColor,
@@ -268,7 +288,7 @@ export function About() {
             className="absolute right-0"
             style={{
               left: `${mobileLinePositions.about + lineTextOffset}px`,
-              top: mobileSecondaryLineTop,
+              top: mobileSecondaryTop,
               bottom: mobileBottomInset,
             }}
           >
