@@ -4,14 +4,16 @@ export const aboutData: AboutData[] = [
   {
     title: "ABOUT",
     text: [
-      `Poster Media è uno studio creativo di videomaking specializzato in sport, velocità e outdoor. Raccontiamo l'azione nel momento esatto in cui accade, trasformando adrenalina, movimento e performance in immagini potenti e cinematiche. Lavoriamo sul campo, a stretto contatto con atleti, brand e team, per catturare storie autentiche fatte di sfida, energia e libertà.`,
-      `Ogni progetto nasce dall'equilibrio tra tecnica, ritmo e storytelling, con un'attenzione maniacale ai dettagli visivi e al sound design. Dalle competizioni motoristiche agli sport estremi, dagli eventi outdoor alle campagne digitali, Poster Media crea contenuti che non si limitano a mostrare, ma fanno vivere l'esperienza. Perché lo sport non è solo velocità: è emozione, identità e visione.`,
+      `Poster Media is a photo and video production company creating visual content for brands, companies, artists and institutions.`,
+      `The studio operates with a strong focus on storytelling and cinematic image quality, delivering productions that range from digital campaigns and corporate content to editorial and documentary projects, as well as work connected to sport, movement and performance.`,
+      `Each project is developed through a concrete and structured approach, where technique, rhythm and visual language work together to create clear, recognisable content aligned with the client's identity. Poster Media collaborates with industrial, technological, sports and creative organisations, overseeing the entire production process from concept to final delivery.`,
+      `Operating without geographical limits, the studio works with clients and partners across national and international contexts, transforming ideas and visions into strong, effective and contemporary imagery.`,
     ],
   },
-  { title: "SOCIAL", text: ["Instagram", "Linkedin", "Vimeo"] },
+  { title: "SOCIAL", text: ["Instagram", "Linkedin"] },
   {
     title: "CONTATTI",
-    text: ["jacopo@poster-media.com", "+39 3311425252"],
+    text: ["info@poster-media.com"],
     bottomTitle: "CREDITS",
     bottomText: ["Graphic design: Alex Giuliano", "Developer: Cosmin Bogea"],
   },

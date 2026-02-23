@@ -23,7 +23,7 @@ export default function WorksPage() {
   const showWorks = isWorksView && !activeProject;
 
   useEffect(() => {
-    const uniqueImageSources = Array.from(new Set(projects.map((project) => project.image.src)));
+    const uniqueImageSources = Array.from(new Set(projects.map((project) => project.stills[0][0])));
     const preloadedImages: HTMLImageElement[] = [];
     let idleCallbackId: number | null = null;
     let timeoutId: number | null = null;

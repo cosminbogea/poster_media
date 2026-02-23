@@ -1,12 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { ImageWidth } from "@/types/project";
 
 interface AnimatedWorkImageProps {
   src: string;
   alt: string;
-  width: ImageWidth;
   slug: string;
   className?: string;
 }
@@ -14,7 +12,6 @@ interface AnimatedWorkImageProps {
 export function AnimatedWorkImage({
   src,
   alt,
-  width,
   className = "",
 }: AnimatedWorkImageProps) {
   return (
@@ -24,13 +21,7 @@ export function AnimatedWorkImage({
         alt={alt}
         fill
         className="object-cover"
-        sizes={
-          width === "100"
-            ? "50vw"
-            : width === "50"
-            ? "25vw"
-            : "15vw"
-        }
+        sizes="50vw"
       />
     </div>
   );

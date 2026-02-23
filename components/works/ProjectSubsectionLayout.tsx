@@ -4,31 +4,22 @@ import { type Project } from "@/types/project";
 import { useTheme } from "@/components/theme-context";
 import { AnimatedWorkImage } from "./AnimatedWorkImage";
 import { WorkMeta } from "./WorkMeta";
+import { ProjectVideo } from "./ProjectVideo";
 
-const imageRepeatCountMap = {
-  "30": 3,
-  "50": 2,
-  "100": 1,
-};
-
-function buildDetailParagraphs(description: string) {
-  return [
-    description,
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nullam quis risus eget urna mollis ornare vel eu leo.",
-    "Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec sed odio dui. Aenean lacinia bibendum nulla sed consectetur. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.",
-  ];
-}
 
 interface ProjectSubsectionLayoutProps {
   project: Project;
   onBack: () => void;
 }
 
-export function ProjectSubsectionLayout({ project, onBack }: ProjectSubsectionLayoutProps) {
-  const { colors } = useTheme();
-  const imageRepeatCount = imageRepeatCountMap[project.image.width];
-  const detailParagraphs = buildDetailParagraphs(project.description);
-  const secondaryDescription = detailParagraphs.slice(1).join(" ");
+export function ProjectSubsectionLayout({
+  project,
+  onBack,
+}: ProjectSubsectionLayoutProps) {
+  const { colors, theme } = useTheme();
+  const arrowSrc = theme === "black" ? "/white-arrow.svg" : "/black-arrow.svg";
+  const detailRows = project.stills;
+  const secondaryDescription = project.secondaryDescription ?? "";
 
   return (
     <div className="px-4 md:px-8 pb-10 md:pb-14">
@@ -37,45 +28,85 @@ export function ProjectSubsectionLayout({ project, onBack }: ProjectSubsectionLa
         className="inline-flex items-center gap-2 text-xs font-bold leading-none transition-opacity hover:opacity-80"
         style={{ color: colors.textColor }}
       >
-        <span aria-hidden="true">&lt;</span>
+        <img src={arrowSrc} alt="" aria-hidden="true" className="w-4 h-4" />
         BACK TO WORKS
       </button>
 
       <div className="mt-6 space-y-8 md:hidden">
-        <div className="h-[52svh] w-full">
-          <AnimatedWorkImage
-            src={project.image.src}
-            alt={project.image.alt}
-            width={project.image.width}
-            slug={`${project.slug}-mobile-hero`}
-            className="h-full w-full"
-          />
-        </div>
-
-        <h2 className="font-erbaum text-lg font-light leading-none" style={{ color: colors.textColor }}>
+        <h2
+          className="font-erbaum text-lg font-light leading-none"
+          style={{ color: colors.textColor }}
+        >
           {project.title}
         </h2>
         {project.subtitle ? (
-          <p className="font-erbaum text-sm font-light leading-none" style={{ color: colors.textColor }}>
+          <p
+            className="font-erbaum text-sm font-light leading-none"
+            style={{ color: colors.textColor }}
+          >
             &quot;{project.subtitle}&quot;
           </p>
         ) : null}
 
         <div className="space-y-4">
-          {detailParagraphs.map((paragraph, index) => (
+          <p
+            className="text-[0.7rem] font-bold leading-tight opacity-85"
+            style={{ color: colors.textColor }}
+          >
+            {project.description}
+          </p>
+          {project.secondaryDescription ? (
             <p
-              key={`${project.slug}-mobile-paragraph-${index}`}
               className="text-[0.7rem] font-bold leading-tight opacity-85"
               style={{ color: colors.textColor }}
             >
-              {paragraph}
+              {project.secondaryDescription}
             </p>
-          ))}
+          ) : null}
         </div>
 
         <div className="pt-2">
           <WorkMeta date={project.date} location={project.location} />
         </div>
+
+        {project.stills.flat().map((src, i) => (
+          <div key={`${project.slug}-mobile-still-${i}`} className="h-[52svh] w-full">
+            <AnimatedWorkImage
+              src={src}
+              alt={project.title}
+              slug={`${project.slug}-mobile-still-${i}`}
+              className="h-full w-full"
+            />
+          </div>
+        ))}
+
+        {project.video && (
+          <>
+            <div className="h-[52svh] w-full">
+              <ProjectVideo
+                src={project.video.src}
+                poster={project.video.poster}
+              />
+            </div>
+            {project.video.fullFilmUrl && (
+              <a
+                href={project.video.fullFilmUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-opacity hover:opacity-80"
+                style={{ color: colors.textColor }}
+              >
+                WATCH THE FULL VIDEO
+                <img
+                  src={arrowSrc}
+                  alt=""
+                  aria-hidden="true"
+                  className="w-3 h-3 rotate-180"
+                />
+              </a>
+            )}
+          </>
+        )}
       </div>
 
       <div className="hidden md:flex md:flex-col md:gap-10">
@@ -107,7 +138,7 @@ export function ProjectSubsectionLayout({ project, onBack }: ProjectSubsectionLa
                 className="text-[11px] md:text-xs font-bold leading-tight max-w-xs mt-14 opacity-85"
                 style={{ color: colors.textColor }}
               >
-                {detailParagraphs[0]}
+                {project.description}
               </p>
 
               <div className="mt-8">
@@ -118,22 +149,28 @@ export function ProjectSubsectionLayout({ project, onBack }: ProjectSubsectionLa
 
           <div className="w-1/2 h-full pr-8">
             <div className="flex h-full w-full gap-3">
-              {Array.from({ length: imageRepeatCount }).map((_, imageIndex) => (
-                <AnimatedWorkImage
-                  key={`${project.slug}-hero-image-${imageIndex}`}
-                  src={project.image.src}
-                  alt={project.image.alt}
-                  width={project.image.width}
-                  slug={`${project.slug}-hero-${imageIndex}`}
-                  className="h-full w-full"
-                />
+              {detailRows[0].map((src, imgIndex) => (
+                <div
+                  key={`${project.slug}-hero-image-${imgIndex}`}
+                  className="flex-1 min-w-0 h-full"
+                >
+                  <AnimatedWorkImage
+                    src={src}
+                    alt={project.title}
+                    slug={`${project.slug}-hero-${imgIndex}`}
+                    className="h-full w-full"
+                  />
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {detailParagraphs.slice(1).map((_, sectionIndex) => (
-          <section key={`${project.slug}-detail-section-${sectionIndex}`} className="flex h-[50vh] flex-row">
+        {detailRows.slice(1).map((row, sectionIndex) => (
+          <section
+            key={`${project.slug}-detail-section-${sectionIndex}`}
+            className="flex h-[50vh] flex-row"
+          >
             <div className="w-1/2 pr-20 flex justify-end items-start">
               {sectionIndex === 0 ? (
                 <p
@@ -147,20 +184,53 @@ export function ProjectSubsectionLayout({ project, onBack }: ProjectSubsectionLa
 
             <div className="w-1/2 h-full pr-8">
               <div className="flex h-full w-full gap-3">
-                {Array.from({ length: imageRepeatCount }).map((_, imageIndex) => (
-                  <AnimatedWorkImage
-                    key={`${project.slug}-detail-${sectionIndex}-image-${imageIndex}`}
-                    src={project.image.src}
-                    alt={project.image.alt}
-                    width={project.image.width}
-                    slug={`${project.slug}-detail-${sectionIndex}-${imageIndex}`}
-                    className="h-full w-full"
-                  />
+                {row.map((src, imgIndex) => (
+                  <div
+                    key={`${project.slug}-detail-${sectionIndex}-image-${imgIndex}`}
+                    className="flex-1 min-w-0 h-full"
+                  >
+                    <AnimatedWorkImage
+                      src={src}
+                      alt={project.title}
+                      slug={`${project.slug}-detail-${sectionIndex}-${imgIndex}`}
+                      className="h-full w-full"
+                    />
+                  </div>
                 ))}
               </div>
             </div>
           </section>
         ))}
+
+        {project.video && (
+          <section className="flex h-[50vh] flex-row">
+            <div className="w-1/2 pr-20 flex justify-end items-end">
+              {project.video.fullFilmUrl && (
+                <a
+                  href={project.video.fullFilmUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider transition-opacity hover:opacity-80"
+                  style={{ color: colors.textColor }}
+                >
+                  WATCH THE FULL VIDEO
+                  <img
+                    src={arrowSrc}
+                    alt=""
+                    aria-hidden="true"
+                    className="w-3 h-3 rotate-180"
+                  />
+                </a>
+              )}
+            </div>
+            <div className="w-1/2 h-full pr-8">
+              <ProjectVideo
+                src={project.video.src}
+                poster={project.video.poster}
+              />
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

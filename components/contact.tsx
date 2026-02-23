@@ -5,6 +5,7 @@ import { useTheme } from "@/components/theme-context";
 
 function FormField({
   placeholder,
+  name,
   isTextarea,
   textareaRows,
   textareaHeightClass,
@@ -15,6 +16,7 @@ function FormField({
   isMobile,
 }: {
   placeholder: string;
+  name: string;
   isTextarea?: boolean;
   textareaRows?: number;
   textareaHeightClass?: string;
@@ -54,15 +56,19 @@ function FormField({
 
       {isTextarea ? (
         <textarea
+          name={name}
           placeholder={placeholder}
           rows={textareaRows ?? 1}
+          required
           className={`${inputClasses} py-5 px-6 resize-none ${textareaHeightClass ?? ""}`}
           style={{ ...inputStyle, textAlign: "center" }}
         />
       ) : (
         <input
+          name={name}
           type={placeholder === "EMAIL" ? "email" : "text"}
           placeholder={placeholder}
+          required
           className={`${inputClasses} py-5 px-6`}
           style={inputStyle}
         />
@@ -75,6 +81,7 @@ export function Contact() {
   const { colors, theme } = useTheme();
   const [isMobile, setIsMobile] = useState(false);
   const [isShortMobile, setIsShortMobile] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const desktopFieldTextColor =
     theme === "white"
       ? "rgba(0, 0, 0, 0.9)"
@@ -106,8 +113,27 @@ export function Contact() {
     ? "text-[0.625rem] font-bold leading-tight"
     : "text-[0.625rem] font-bold leading-tight";
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setStatus("loading");
+    const data = new FormData(e.currentTarget);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nome: data.get("nome"),
+          cognome: data.get("cognome"),
+          email: data.get("email"),
+          messaggio: data.get("messaggio"),
+        }),
+      });
+      if (!res.ok) throw new Error();
+      setStatus("success");
+      (e.target as HTMLFormElement).reset();
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -138,6 +164,7 @@ export function Contact() {
           <div className="w-[52vw] max-w-[17rem] md:w-[17rem] md:col-start-1">
             <FormField
               placeholder="NOME"
+              name="nome"
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
               lineColor={colors.textColor}
@@ -148,6 +175,7 @@ export function Contact() {
           <div className="w-[52vw] max-w-[17rem] md:w-[17rem] md:col-start-3">
             <FormField
               placeholder="COGNOME"
+              name="cognome"
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
               lineColor={colors.textColor}
@@ -158,6 +186,7 @@ export function Contact() {
           <div className="w-[52vw] max-w-[17rem] md:w-[17rem] md:col-start-5">
             <FormField
               placeholder="EMAIL"
+              name="email"
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
               lineColor={colors.textColor}
@@ -169,6 +198,7 @@ export function Contact() {
           <div className="w-[52vw] max-w-[17rem] md:w-[51rem] md:max-w-full md:col-start-2 md:col-span-3 md:row-start-2">
             <FormField
               placeholder="MESSAGGIO"
+              name="messaggio"
               isTextarea
               textareaRows={3}
               textareaHeightClass="h-[9rem] pt-[3.8rem] pb-0 text-center placeholder:text-center"
@@ -182,14 +212,25 @@ export function Contact() {
         </div>
 
         {/* Submit button */}
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center gap-3">
           <button
             type="submit"
-            className="text-md uppercase tracking-wider underline underline-offset-8 decoration-[1px] md:underline-offset-4 bg-transparent border-none cursor-pointer hover:opacity-70 transition-opacity"
+            disabled={status === "loading"}
+            className="text-md uppercase tracking-wider underline underline-offset-8 decoration-[1px] md:underline-offset-4 bg-transparent border-none cursor-pointer hover:opacity-70 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
             style={{ color: colors.textColor }}
           >
-            INVIA MESSAGGIO
+            {status === "loading" ? "INVIO..." : "INVIA MESSAGGIO"}
           </button>
+          {status === "success" && (
+            <p className="text-xs font-bold" style={{ color: colors.textColor }}>
+              Messaggio inviato con successo.
+            </p>
+          )}
+          {status === "error" && (
+            <p className="text-xs font-bold opacity-70" style={{ color: colors.textColor }}>
+              Errore nell&apos;invio. Riprova o scrivi a info@poster-media.com.
+            </p>
+          )}
         </div>
       </form>
     </div>

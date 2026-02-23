@@ -9,16 +9,8 @@ interface WorkDetailProps {
   project: Project;
 }
 
-// Image width as percentage of the right column
-const desktopImageWidthMap = {
-  "30": "md:w-[30%]",
-  "50": "md:w-[50%]",
-  "100": "md:w-full",
-};
-
 export function WorkDetail({ project }: WorkDetailProps) {
   const { colors } = useTheme();
-  const desktopImageWidthClass = desktopImageWidthMap[project.image.width];
 
   return (
     <div className="flex flex-col gap-4 md:h-[50vh] md:flex-row">
@@ -68,11 +60,10 @@ export function WorkDetail({ project }: WorkDetailProps) {
 
       {/* Right: Image area - exactly 50% of viewport, with right padding matching gap */}
       <div className="order-1 md:order-2 w-full md:w-1/2 h-[58vh] md:h-full md:pr-8">
-        <div className={`w-full ${desktopImageWidthClass} h-full`}>
+        <div className="w-full md:w-full h-full">
           <WorkImage
-            src={project.image.src}
-            alt={project.image.alt}
-            width={project.image.width}
+            src={project.stills[0][0]}
+            alt={project.title}
           />
         </div>
       </div>

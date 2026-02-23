@@ -2,115 +2,107 @@ import { Project } from "@/types/project";
 
 export const projects: Project[] = [
   {
-    slug: "puma-san-san-gear",
-    title: "PUMA x SAN SAN GEAR",
-    subtitle: "FULL THROTTLE",
+    slug: "bryan",
+    title: "BRYAN",
+    subtitle: "BRYAN: LA CORSA DI UNA VITA",
     description:
-      "Direzione artistica, progettazione degli oggetti produzione evento, shooting fotografico",
-    date: "Ottobre 2025",
+      "Bryan – The Race of a Lifetime is a documentary by Jacopo Semprini telling the story of Sammarinese former motocross rider Bryan Toccaceli.",
+    secondaryDescription:
+      "The film traces his human and sporting journey: from the birth of his passion for engines to his racing career, through the severe accident that changed his life, the long rehabilitation process, and the construction of a new vision for the future. What emerges is a story of resilience, identity and transformation, rooted in the values of motorsport yet capable of speaking to a wider audience. The narrative is guided by the protagonist's voice, supported by contributions from family and close friends, alongside figures connected to the world of professional motorcycle racing. The film originated as an independent project developed in the Republic of San Marino, with the aim of conveying a message of hope and determination through a true story. The national premiere took place in 2022 at Teatro Concordia in San Marino during the Misano MotoGP weekend, playing to a sold-out audience and attended by institutional representatives and MotoGP riders. From 2022 to 2024 the film was distributed on Sky and is now available on YouTube.",
+    date: "2022",
     location: "San Marino",
-    image: {
-      src: "/image_1.jpg",
-      alt: "Puma x San San Gear - Full Throttle",
-      width: "100",
+    stills: [
+      ["/works/bryan/still-01.webp", "/works/bryan/still-02.webp"],
+      ["/works/bryan/still-03.webp"],
+      ["/works/bryan/still-04.webp"],
+    ],
+    video: {
+      src: "https://res.cloudinary.com/djhods3my/video/upload/v1771848716/output_tft0qd.mp4",
+      poster: "/works/bryan/poster.jpg",
+      fullFilmUrl: "https://www.youtube.com/watch?v=0b-aA5Mncac",
     },
   },
   {
-    slug: "two-image-preview",
-    title: "TWO IMAGE PREVIEW",
-    subtitle: "Layout Check",
+    slug: "q4",
+    title: "Q4",
+    subtitle: "AUDI Q4 E-TRON — VISUAL PRODUCTION",
     description:
-      "Progetto inserito per verificare il layout desktop con due immagini affiancate nella sezione works e nella sottosezione progetto.",
-    date: "Febbraio 2026",
-    location: "Milano, Italia",
-    image: {
-      src: "/image_3.jpg",
-      alt: "Two image preview layout",
-      width: "50",
-    },
+      "Visual study dedicated to the Audi Q4 e-tron, aimed at expressing its character through an essential and contemporary cinematic language.",
+    secondaryDescription:
+      "Set across mountain landscapes and high-altitude roads, the project highlights the vehicle's presence, proportions and technology, working with natural light, depth and its relationship with the surrounding environment. The focus is on product perception, clean lines and the creation of strong, recognisable imagery. The aesthetic draws inspiration from the premium automotive world and the narrative of modern travel, with a visual approach designed to convey autonomy, silence and precision.",
+    date: "2021",
+    location: "Italia",
+    stills: [
+      ["/works/q4/still-01.webp"],
+      ["/works/q4/still-02.webp"],
+      ["/works/q4/still-03.webp"],
+      [
+        "/works/q4/still-06.webp",
+        "/works/q4/still-04.webp",
+        "/works/q4/still-05.webp",
+      ],
+    ],
   },
   {
-    slug: "rimini-fashion",
-    title: "RIMINI FASHION WEEK",
-    subtitle: "Summer Collection 2025",
+    slug: "q3",
+    title: "Q3",
+    subtitle: "AUDI Q3 - VISUAL PRODUCTION",
     description:
-      "Documentazione completa della settimana della moda di Rimini, con focus sulle nuove collezioni estive e i designer emergenti della riviera romagnola.",
-    date: "Giugno 2025",
+      "Visual study dedicated to the new Audi Q3, aimed at exploring its character through a cinematic and contemporary visual language.",
+    secondaryDescription:
+      "Set within a minimal and immersive natural environment, the project highlights the vehicle's lines, technology and identity, working through atmosphere, depth and precise light control. The aesthetic draws inspiration from the premium automotive world, with a narrative approach focused on shaping brand perception.",
+    date: "2025",
+    location: "Italia",
+    stills: [
+      ["/works/q3/still-01.webp"],
+      ["/works/q3/still-02.webp"],
+      ["/works/q3/still-03.webp", "/works/q3/still-04.webp"],
+      [
+        "/works/q3/still-06.webp",
+        "/works/q3/still-07.webp",
+        "/works/q3/still-08.webp",
+      ],
+      [
+        "/works/q3/still-09.webp",
+        "/works/q3/still-05.webp",
+        "/works/q3/still-10.webp",
+      ],
+      [
+        "/works/q3/still-13.webp",
+        "/works/q3/still-11.webp",
+        "/works/q3/still-12.webp",
+      ],
+    ],
+  },
+  {
+    slug: "rbr",
+    title: "RINASCITA BASKET RIMINI",
+    subtitle: "GAME PRODUCTION",
+    description:
+      "Photo and video production dedicated to the visual storytelling of basketball in a live game context, with an approach focused on rhythm, intensity and sporting identity.",
+    secondaryDescription:
+      "The project combines photography and video to build a coherent visual language between action, crowd and arena atmosphere, highlighting the energy, physicality and narrative tension of the game. The focus is on creating dynamic and recognisable imagery capable of conveying the team's character and the live experience of the event. An ongoing production developed for communication, digital content and sports brand promotion, with a contemporary aesthetic designed for media, social platforms and editorial use.",
+    date: "2023/2024",
     location: "Rimini, Italia",
-    image: {
-      src: "/image_2.jpg",
-      alt: "Rimini Fashion Week",
-      width: "30",
-    },
-  },
-  {
-    slug: "luxe-hotels",
-    title: "BRAND IDENTITY",
-    subtitle: "Luxe Hotels Group",
-    description:
-      "Sviluppo completo dell'identità visiva per una catena di hotel di lusso. Dal concept iniziale alla realizzazione di tutti i materiali fotografici per web, stampa e social media.",
-    date: "Marzo 2025",
-    location: "Milano, Italia",
-    image: {
-      src: "/image_3.jpg",
-      alt: "Luxe Hotels Brand Identity",
-      width: "30",
-    },
-  },
-  {
-    slug: "adidas-streetwear",
-    title: "ADIDAS ORIGINALS",
-    subtitle: "Street Culture",
-    description:
-      "Campagna fotografica per il lancio della nuova linea streetwear. Shooting urbano tra le strade di Bologna con modelli e artisti locali.",
-    date: "Settembre 2025",
-    location: "Bologna, Italia",
-    image: {
-      src: "/iamge_4.jpg",
-      alt: "Adidas Originals Street Culture",
-      width: "30",
-    },
-  },
-  {
-    slug: "venice-editorial",
-    title: "VENICE EDITORIAL",
-    subtitle: "Acqua Alta",
-    description:
-      "Servizio editoriale realizzato durante l'acqua alta a Venezia. Un racconto visivo che unisce moda e architettura in uno scenario unico al mondo.",
-    date: "Novembre 2025",
-    location: "Venezia, Italia",
-    image: {
-      src: "/image_5.jpg",
-      alt: "Venice Editorial - Acqua Alta",
-      width: "30",
-    },
-  },
-  {
-    slug: "ferrari-racing",
-    title: "FERRARI CHALLENGE",
-    subtitle: "Monza Circuit",
-    description:
-      "Copertura fotografica completa del Ferrari Challenge al circuito di Monza. Dalle prove libere alla cerimonia di premiazione, catturando la velocità e l'emozione della competizione.",
-    date: "Luglio 2025",
-    location: "Monza, Italia",
-    image: {
-      src: "/image_6.jpg",
-      alt: "Ferrari Challenge Monza",
-      width: "30",
-    },
-  },
-  {
-    slug: "dolce-vita-campaign",
-    title: "LA DOLCE VITA",
-    subtitle: "Resort Collection",
-    description:
-      "Campagna pubblicitaria per una collezione resort ispirata alla dolce vita italiana. Ambientata sulla costiera amalfitana con riprese al tramonto tra Positano e Ravello.",
-    date: "Maggio 2025",
-    location: "Costiera Amalfitana, Italia",
-    image: {
-      src: "/image_7.jpg",
-      alt: "La Dolce Vita Resort Collection",
-      width: "30",
+    stills: [
+      [
+        "/works/rbr/still-01.webp",
+        "/works/rbr/still-02.webp",
+        "/works/rbr/still-03.webp",
+      ],
+      [
+        "/works/rbr/still-04.webp",
+        "/works/rbr/still-05.webp",
+        "/works/rbr/still-06.webp",
+      ],
+      [
+        "/works/rbr/still-07.webp",
+        "/works/rbr/still-08.webp",
+        "/works/rbr/still-09.webp",
+      ],
+    ],
+    video: {
+      src: "https://res.cloudinary.com/djhods3my/video/upload/v1771877626/output_xvhdky.mp4",
     },
   },
 ];

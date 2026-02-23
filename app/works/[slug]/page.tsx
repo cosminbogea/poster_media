@@ -43,7 +43,8 @@ export default function WorkDetailPage() {
           className="inline-flex items-center gap-2 text-xs font-bold mb-8 hover:opacity-80 transition-opacity"
           style={{ color: colors.textColor }}
         >
-          ← BACK TO WORKS
+          <img src="/arrow.svg" alt="Back to Works" className="w-4 h-4" />
+          BACK TO WORKS
         </Link>
         <WorkDetail project={project} />
       </div>

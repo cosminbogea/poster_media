@@ -196,8 +196,8 @@ export function About() {
 
     if (sectionTitle === "SOCIAL") {
       const lowerValue = value.toLowerCase();
-      if (lowerValue === "instagram") return "https://www.instagram.com";
-      if (lowerValue === "linkedin") return "https://www.linkedin.com";
+      if (lowerValue === "instagram") return "https://www.instagram.com/postermedia_?igsh=YXl5NGVpYjJwcWR6&utm_source=qr";
+      if (lowerValue === "linkedin") return "https://www.linkedin.com/company/poster-media-js";
       if (lowerValue === "vimeo") return "https://www.vimeo.com";
     }
 

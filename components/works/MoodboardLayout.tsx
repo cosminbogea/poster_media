@@ -13,8 +13,6 @@ export function MoodboardLayout({ projects, onImageClick }: MoodboardLayoutProps
     <div className="px-4 md:px-8 pb-8">
       <div className="columns-2 gap-2 md:columns-3 lg:columns-4">
         {projects.map((project, index) => {
-          // Derive aspect ratio from image width: "100" = landscape, others = portrait
-          const isLandscape = project.image.width === "100";
           const isHighPriority = index < 6;
 
           return (
@@ -24,10 +22,10 @@ export function MoodboardLayout({ projects, onImageClick }: MoodboardLayoutProps
               onClick={() => onImageClick?.(project.slug)}
             >
               <Image
-                src={project.image.src}
-                alt={project.image.alt}
-                width={isLandscape ? 1976 : 683}
-                height={isLandscape ? 1112 : 1024}
+                src={project.stills[0][0]}
+                alt={project.title}
+                width={1976}
+                height={1112}
                 className="block h-auto w-full"
                 sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 priority={isHighPriority}

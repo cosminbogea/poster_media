@@ -1,16 +1,16 @@
-export type ImageWidth = "30" | "50" | "100";
-
 export interface Project {
   slug: string;
   title: string;
   subtitle?: string;
   description: string;
+  secondaryDescription?: string;
   date: string;
   location: string;
-  image: {
+  stills: string[][];
+  video?: {
     src: string;
-    alt: string;
-    width: ImageWidth;
+    poster?: string;
+    fullFilmUrl?: string;
   };
 }
 

@@ -6,12 +6,6 @@ import { AnimatedWorkImage } from "./AnimatedWorkImage";
 import { WorkMeta } from "./WorkMeta";
 import { useTheme } from "@/components/theme-context";
 
-const imageRepeatCountMap = {
-  "30": 3,
-  "50": 2,
-  "100": 1,
-};
-
 interface WorksLayoutProps {
   projects: Project[];
   scrollToSlug?: string | null;
@@ -31,7 +25,8 @@ export function WorksLayout({
   const [isShortMobile, setIsShortMobile] = useState(false);
 
   useEffect(() => {
-    const updateShortMobileState = () => setIsShortMobile(window.innerHeight <= 760);
+    const updateShortMobileState = () =>
+      setIsShortMobile(window.innerHeight <= 760);
 
     updateShortMobileState();
     window.addEventListener("resize", updateShortMobileState);
@@ -60,7 +55,6 @@ export function WorksLayout({
   return (
     <div className="flex flex-col gap-10 md:gap-8">
       {projects.map((project) => {
-        const imageRepeatCount = imageRepeatCountMap[project.image.width];
         const isClickable = typeof onProjectClick === "function";
 
         const handleProjectOpen = () => {
@@ -92,9 +86,7 @@ export function WorksLayout({
             className="grid min-h-[calc(100svh-8rem)] grid-rows-[1fr_auto] gap-3 px-4 md:flex md:min-h-0 md:px-0 md:h-[50vh] md:flex-row"
           >
             {/* Left: 50% of viewport, content aligned to right side, bottom-aligned with image */}
-            <div
-              className="order-2 md:order-1 md:w-1/2 md:flex md:justify-end md:items-end md:pr-20"
-            >
+            <div className="order-2 md:order-1 md:w-1/2 md:flex md:justify-end md:items-end md:pr-20">
               <div
                 className={`w-full md:hidden text-left ${isClickable ? "cursor-pointer" : ""}`}
                 {...interactiveProps}
@@ -187,7 +179,6 @@ export function WorksLayout({
                   <WorkMeta date={project.date} location={project.location} />
                 </div>
               </div>
-
             </div>
 
             {/* Right: Image area - exactly 50% of viewport */}
@@ -197,24 +188,26 @@ export function WorksLayout({
             >
               <div className="h-full w-full md:hidden">
                 <AnimatedWorkImage
-                  src={project.image.src}
-                  alt={project.image.alt}
-                  width={project.image.width}
+                  src={project.stills[0][0]}
+                  alt={project.title}
                   slug={`${project.slug}-mobile`}
                   className="h-full w-full"
                 />
               </div>
 
               <div className="hidden h-full w-full gap-3 md:flex">
-                {Array.from({ length: imageRepeatCount }).map((_, imageIndex) => (
-                  <AnimatedWorkImage
+                {project.stills[0].map((src, imageIndex) => (
+                  <div
                     key={`${project.slug}-image-${imageIndex}`}
-                    src={project.image.src}
-                    alt={project.image.alt}
-                    width={project.image.width}
-                    slug={project.slug}
-                    className="h-full w-full"
-                  />
+                    className="flex-1 min-w-0 h-full"
+                  >
+                    <AnimatedWorkImage
+                      src={src}
+                      alt={project.title}
+                      slug={`${project.slug}-${imageIndex}`}
+                      className="h-full w-full"
+                    />
+                  </div>
                 ))}
               </div>
             </div>
