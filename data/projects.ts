@@ -4,7 +4,7 @@ export const projects: Project[] = [
   {
     slug: "bryan",
     title: "BRYAN",
-    subtitle: "BRYAN: LA CORSA DI UNA VITA",
+    subtitle: "LA CORSA DI UNA VITA",
     description:
       "Bryan – The Race of a Lifetime is a documentary by Jacopo Semprini telling the story of Sammarinese former motocross rider Bryan Toccaceli.",
     secondaryDescription:
@@ -24,8 +24,8 @@ export const projects: Project[] = [
   },
   {
     slug: "q4",
-    title: "Q4",
-    subtitle: "AUDI Q4 E-TRON — VISUAL PRODUCTION",
+    title: "AUDI Q4 E-TRON",
+    subtitle: "VISUAL PRODUCTION",
     description:
       "Visual study dedicated to the Audi Q4 e-tron, aimed at expressing its character through an essential and contemporary cinematic language.",
     secondaryDescription:
@@ -45,8 +45,8 @@ export const projects: Project[] = [
   },
   {
     slug: "q3",
-    title: "Q3",
-    subtitle: "AUDI Q3 - VISUAL PRODUCTION",
+    title: "AUDI Q3",
+    subtitle: "VISUAL PRODUCTION",
     description:
       "Visual study dedicated to the new Audi Q3, aimed at exploring its character through a cinematic and contemporary visual language.",
     secondaryDescription:
