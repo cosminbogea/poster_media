@@ -5,6 +5,8 @@ export const projects: Project[] = [
     slug: "bryan",
     title: "BRYAN",
     subtitle: "LA CORSA DI UNA VITA",
+    coverMobile: "/works/bryan/still-01.webp",
+    coverDesktop: ["/works/bryan/still-01.webp", "/works/bryan/still-02.webp"],
     description:
       "Bryan – The Race of a Lifetime is a documentary by Jacopo Semprini telling the story of Sammarinese former motocross rider Bryan Toccaceli.",
     secondaryDescription:
@@ -33,6 +35,8 @@ export const projects: Project[] = [
       "Set across mountain landscapes and high-altitude roads, the project highlights the vehicle's presence, proportions and technology, working with natural light, depth and its relationship with the surrounding environment. The focus is on product perception, clean lines and the creation of strong, recognisable imagery. The aesthetic draws inspiration from the premium automotive world and the narrative of modern travel, with a visual approach designed to convey autonomy, silence and precision.",
     date: "2021",
     location: "Italia",
+    coverMobile: "/works/q4/still-04.webp",
+    coverDesktop: ["/works/q4/still-01.webp"],
     stills: [
       ["/works/q4/still-01.webp"],
       ["/works/q4/still-02.webp"],
@@ -54,6 +58,8 @@ export const projects: Project[] = [
       "Set within a minimal and immersive natural environment, the project highlights the vehicle's lines, technology and identity, working through atmosphere, depth and precise light control. The aesthetic draws inspiration from the premium automotive world, with a narrative approach focused on shaping brand perception.",
     date: "2025",
     location: "Italia",
+    coverMobile: "/works/q3/still-07.webp",
+    coverDesktop: ["/works/q3/still-01.webp"],
     stills: [
       ["/works/q3/still-01.webp"],
       ["/works/q3/still-02.webp"],
@@ -85,6 +91,12 @@ export const projects: Project[] = [
       "The project combines photography and video to build a coherent visual language between action, crowd and arena atmosphere, highlighting the energy, physicality and narrative tension of the game. The focus is on creating dynamic and recognisable imagery capable of conveying the team's character and the live experience of the event. An ongoing production developed for communication, digital content and sports brand promotion, with a contemporary aesthetic designed for media, social platforms and editorial use.",
     date: "2023/2024",
     location: "Rimini, Italia",
+    coverMobile: "/works/rbr/still-09.webp",
+    coverDesktop: [
+      "/works/rbr/still-01.webp",
+      "/works/rbr/still-02.webp",
+      "/works/rbr/still-03.webp",
+    ],
     stills: [
       [
         "/works/rbr/still-01.webp",

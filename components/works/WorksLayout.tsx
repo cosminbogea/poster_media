@@ -188,7 +188,7 @@ export function WorksLayout({
             >
               <div className="h-full w-full md:hidden">
                 <AnimatedWorkImage
-                  src={project.stills[0][0]}
+                  src={project.coverMobile ?? project.stills[0][0]}
                   alt={project.title}
                   slug={`${project.slug}-mobile`}
                   className="h-full w-full"
@@ -196,7 +196,7 @@ export function WorksLayout({
               </div>
 
               <div className="hidden h-full w-full gap-3 md:flex">
-                {project.stills[0].map((src, imageIndex) => (
+                {(project.coverDesktop ?? project.stills[0]).map((src, imageIndex) => (
                   <div
                     key={`${project.slug}-image-${imageIndex}`}
                     className="flex-1 min-w-0 h-full"

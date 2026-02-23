@@ -7,6 +7,8 @@ export interface Project {
   date: string;
   location: string;
   stills: string[][];
+  coverMobile?: string;
+  coverDesktop?: string[];
   video?: {
     src: string;
     poster?: string;
