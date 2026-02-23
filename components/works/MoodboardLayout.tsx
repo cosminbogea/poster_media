@@ -9,21 +9,25 @@ interface MoodboardLayoutProps {
 }
 
 export function MoodboardLayout({ projects, onImageClick }: MoodboardLayoutProps) {
+  const allStills = projects.flatMap((project) =>
+    project.stills.flat().map((src) => ({ src, slug: project.slug, title: project.title }))
+  );
+
   return (
     <div className="px-4 md:px-8 pb-8">
       <div className="columns-2 gap-2 md:columns-3 lg:columns-4">
-        {projects.map((project, index) => {
+        {allStills.map(({ src, slug, title }, index) => {
           const isHighPriority = index < 6;
 
           return (
             <div
-              key={project.slug}
+              key={src}
               className="mb-2 inline-block w-full break-inside-avoid align-top cursor-pointer overflow-hidden"
-              onClick={() => onImageClick?.(project.slug)}
+              onClick={() => onImageClick?.(slug)}
             >
               <Image
-                src={project.stills[0][0]}
-                alt={project.title}
+                src={src}
+                alt={title}
                 width={1976}
                 height={1112}
                 className="block h-auto w-full"
