@@ -57,6 +57,8 @@ const erbaum = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.poester-media.com"),
+
   title: "POSTER MEDIA",
   description:
     "Photo and video production for brands, companies and creative projects.",
@@ -67,13 +69,13 @@ export const metadata: Metadata = {
     title: "POSTER MEDIA",
     description:
       "Photo and video production for brands, companies and creative projects.",
-    url: "https://poster-media.com",
+    url: "/",
     siteName: "POSTER MEDIA",
     images: [
       {
-        url: "/favicon.ico",
-        width: 144,
-        height: 144,
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
         alt: "POSTER MEDIA",
       },
     ],
