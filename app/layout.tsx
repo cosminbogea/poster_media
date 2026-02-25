@@ -57,13 +57,9 @@ const erbaum = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "POSTER Photography",
+  title: "POSTER MEDIA",
   description:
     "Professional photography services - Capturing moments that tell stories",
-  generator: "v0.app",
-  icons: {
-    icon: "/favicon.png",
-  },
 };
 
 export default function RootLayout({
