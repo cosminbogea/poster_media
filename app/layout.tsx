@@ -59,7 +59,7 @@ const erbaum = localFont({
 export const metadata: Metadata = {
   title: "POSTER MEDIA",
   description:
-    "Professional photography services - Capturing moments that tell stories",
+    "Photo and video production for brands, companies and creative projects.",
 };
 
 export default function RootLayout({
