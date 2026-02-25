@@ -60,6 +60,9 @@ export const metadata: Metadata = {
   title: "POSTER MEDIA",
   description:
     "Photo and video production for brands, companies and creative projects.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
