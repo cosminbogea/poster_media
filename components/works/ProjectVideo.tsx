@@ -10,7 +10,7 @@ export function ProjectVideo({ src }: ProjectVideoProps) {
   return (
     <div className="w-full h-full" style={{ background: colors.background }}>
       <video
-        className="w-full h-full object-cover object-top md:object-top"
+        className="w-full h-full object-cover "
         src={src}
         autoPlay
         loop

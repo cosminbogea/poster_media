@@ -189,7 +189,7 @@ export function ProjectSubsectionLayout({
 
         {project.video && (
           <>
-            <div className="w-full aspect-video">
+            <div className="w-full aspect-[4/5] sm:aspect-[3/4]">
               <ProjectVideo
                 src={project.video.src}
               />
