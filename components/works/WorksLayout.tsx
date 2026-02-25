@@ -83,7 +83,7 @@ export function WorksLayout({
           <div
             key={project.slug}
             id={project.slug}
-            className="grid min-h-[calc(100svh-8rem)] grid-rows-[1fr_auto] gap-3 px-4 md:flex md:min-h-0 md:px-0 md:h-[50vh] md:flex-row"
+            className="flex flex-col gap-3 px-4 md:flex md:min-h-0 md:px-0 md:h-[70vh] md:flex-row"
           >
             {/* Left: 50% of viewport, content aligned to right side, bottom-aligned with image */}
             <div className="order-2 md:order-1 md:w-1/2 md:flex md:justify-end md:items-end md:pr-20">
@@ -183,7 +183,7 @@ export function WorksLayout({
 
             {/* Right: Image area - exactly 50% of viewport */}
             <div
-              className={`order-1 md:order-2 w-full md:w-1/2 h-full min-h-[18rem] md:h-full md:pr-8 ${isClickable ? "cursor-pointer" : ""}`}
+              className={`order-1 md:order-2 w-full h-[70svh] md:w-1/2 md:h-full md:pr-8 ${isClickable ? "cursor-pointer" : ""}`}
               {...interactiveProps}
             >
               <div className="h-full w-full md:hidden">

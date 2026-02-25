@@ -88,13 +88,14 @@ export default function WorksPage() {
   const handleProjectOpen = (slug: string) => {
     worksScrollYRef.current = window.scrollY;
     setScrollToSlug(null);
+    window.history.pushState({ worksProjectOpen: true, projectSlug: slug }, "", window.location.href);
     setActiveProjectSlug(slug);
     requestAnimationFrame(() => {
       window.scrollTo(0, 0);
     });
   };
 
-  const handleProjectBack = () => {
+  const closeActiveProject = useCallback(() => {
     const savedY = worksScrollYRef.current;
     setActiveProjectSlug(null);
     // Double rAF: first frame lets layout reflow after works becomes position:relative again,
@@ -104,7 +105,30 @@ export default function WorksPage() {
         window.scrollTo(0, savedY);
       });
     });
+  }, []);
+
+  const handleProjectBack = () => {
+    if (window.history.state?.worksProjectOpen) {
+      window.history.back();
+      return;
+    }
+
+    closeActiveProject();
   };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      if (activeProjectSlug) {
+        closeActiveProject();
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [activeProjectSlug, closeActiveProject]);
 
   const handleScrollComplete = useCallback(() => {
     setScrollToSlug(null);

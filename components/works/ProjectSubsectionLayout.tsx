@@ -17,24 +17,79 @@ function AdaptiveMobileStill({
   src,
   alt,
   slug,
+  sharedRatio,
+  onRatioReady,
 }: {
   src: string;
   alt: string;
   slug: string;
+  sharedRatio?: number;
+  onRatioReady?: (ratio: number) => void;
 }) {
-  const [heightClass, setHeightClass] = useState("h-[52svh]");
+  const [ratio, setRatio] = useState("16/9");
+  const aspectRatio = sharedRatio ? String(sharedRatio) : ratio;
+
   return (
-    <div className={`${heightClass} w-full`}>
+    <div className="relative w-full" style={{ aspectRatio }}>
       <AnimatedWorkImage
         src={src}
         alt={alt}
         slug={slug}
         className="h-full w-full"
         onLoad={(w, h) => {
-          if (w > h) setHeightClass("h-[30svh]");
+          const nextRatio = w / h;
+          onRatioReady?.(nextRatio);
+          if (!sharedRatio) {
+            setRatio(`${w}/${h}`);
+          }
         }}
       />
     </div>
+  );
+}
+
+function AdaptiveMobilePair({
+  leftSrc,
+  rightSrc,
+  alt,
+  leftSlug,
+  rightSlug,
+}: {
+  leftSrc: string;
+  rightSrc: string;
+  alt: string;
+  leftSlug: string;
+  rightSlug: string;
+}) {
+  const [leftRatio, setLeftRatio] = useState<number | null>(null);
+  const [rightRatio, setRightRatio] = useState<number | null>(null);
+
+  const sharedRatio =
+    leftRatio && rightRatio
+      ? Math.sqrt(leftRatio * rightRatio)
+      : leftRatio || rightRatio || 1;
+
+  return (
+    <>
+      <div>
+        <AdaptiveMobileStill
+          src={leftSrc}
+          alt={alt}
+          slug={leftSlug}
+          sharedRatio={sharedRatio}
+          onRatioReady={setLeftRatio}
+        />
+      </div>
+      <div>
+        <AdaptiveMobileStill
+          src={rightSrc}
+          alt={alt}
+          slug={rightSlug}
+          sharedRatio={sharedRatio}
+          onRatioReady={setRightRatio}
+        />
+      </div>
+    </>
   );
 }
 
@@ -95,21 +150,48 @@ export function ProjectSubsectionLayout({
           <WorkMeta date={project.date} location={project.location} />
         </div>
 
-        {project.stills.flat().map((src, i) => (
-          <AdaptiveMobileStill
-            key={`${project.slug}-mobile-still-${i}`}
-            src={src}
-            alt={project.title}
-            slug={`${project.slug}-mobile-still-${i}`}
-          />
-        ))}
+        <div className="grid grid-cols-2 gap-2">
+          {project.stills.map((row, rowIndex) => (
+            <div key={`${project.slug}-mobile-row-${rowIndex}`} className="contents">
+              {row.length >= 2 ? (
+                <AdaptiveMobilePair
+                  leftSrc={row[0]}
+                  rightSrc={row[1]}
+                  alt={project.title}
+                  leftSlug={`${project.slug}-mobile-${rowIndex}-0`}
+                  rightSlug={`${project.slug}-mobile-${rowIndex}-1`}
+                />
+              ) : row.length === 1 ? (
+                <div className="col-span-2">
+                  <AdaptiveMobileStill
+                    src={row[0]}
+                    alt={project.title}
+                    slug={`${project.slug}-mobile-${rowIndex}-0`}
+                  />
+                </div>
+              ) : null}
+
+              {row.slice(2).map((src, imgIndex) => (
+                <div
+                  key={`${project.slug}-mobile-${rowIndex}-extra-${imgIndex}`}
+                  className="col-span-2"
+                >
+                  <AdaptiveMobileStill
+                    src={src}
+                    alt={project.title}
+                    slug={`${project.slug}-mobile-${rowIndex}-extra-${imgIndex}`}
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
 
         {project.video && (
           <>
-            <div className="h-[52svh] w-full">
+            <div className="w-full aspect-video">
               <ProjectVideo
                 src={project.video.src}
-                poster={project.video.poster}
               />
             </div>
             {project.video.fullFilmUrl && (
@@ -134,7 +216,7 @@ export function ProjectSubsectionLayout({
       </div>
 
       <div className="hidden md:flex md:flex-col md:gap-10">
-        <section className="flex h-[50vh] flex-row">
+        <section className="flex h-[70vh] flex-row">
           <div className="w-1/2 pr-20 flex justify-end items-end">
             <div className="text-left">
               <div className="relative">
@@ -193,7 +275,7 @@ export function ProjectSubsectionLayout({
         {detailRows.slice(1).map((row, sectionIndex) => (
           <section
             key={`${project.slug}-detail-section-${sectionIndex}`}
-            className="flex h-[50vh] flex-row"
+            className="flex h-[70vh] flex-row"
           >
             <div className="w-1/2 pr-20 flex justify-end items-start">
               {sectionIndex === 0 ? (
@@ -227,7 +309,7 @@ export function ProjectSubsectionLayout({
         ))}
 
         {project.video && (
-          <section className="flex h-[50vh] flex-row">
+          <section className="flex h-[70vh] flex-row">
             <div className="w-1/2 pr-20 flex justify-end items-end">
               {project.video.fullFilmUrl && (
                 <a
@@ -250,7 +332,6 @@ export function ProjectSubsectionLayout({
             <div className="w-1/2 h-full pr-8">
               <ProjectVideo
                 src={project.video.src}
-                poster={project.video.poster}
               />
             </div>
           </section>

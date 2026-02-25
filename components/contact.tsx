@@ -150,9 +150,9 @@ export function Contact() {
           className={`mt-3 max-w-lg text-center ${mobileSubtitleClass} md:text-[0.95rem] md:leading-normal md:font-normal lg:text-base 2xl:text-md`}
           style={{ color: colors.textColor }}
         >
-          Hai una domanda, una proposta o vuoi conoscerci meglio?
+          Have a question, a proposal, or want to get to know us better?
           <br />
-          Usa il form qui sotto e facci sapere cosa vuoi raccontarci.
+          Use the form below and let us know what you&apos;d like to tell us.
         </p>
       </div>
 
@@ -163,7 +163,7 @@ export function Contact() {
         <div className="grid w-full grid-cols-1 place-items-center gap-y-5 md:grid-cols-5 md:gap-y-24">
           <div className="w-[52vw] max-w-[17rem] md:w-[17rem] md:col-start-1">
             <FormField
-              placeholder="NOME"
+              placeholder="FIRST NAME"
               name="nome"
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
@@ -174,7 +174,7 @@ export function Contact() {
           </div>
           <div className="w-[52vw] max-w-[17rem] md:w-[17rem] md:col-start-3">
             <FormField
-              placeholder="COGNOME"
+              placeholder="LAST NAME"
               name="cognome"
               fieldTextColor={fieldTextColor}
               placeholderColor={placeholderColor}
@@ -197,7 +197,7 @@ export function Contact() {
 
           <div className="w-[52vw] max-w-[17rem] md:w-[51rem] md:max-w-full md:col-start-2 md:col-span-3 md:row-start-2">
             <FormField
-              placeholder="MESSAGGIO"
+              placeholder="MESSAGE"
               name="messaggio"
               isTextarea
               textareaRows={3}
@@ -219,16 +219,16 @@ export function Contact() {
             className="text-md uppercase tracking-wider underline underline-offset-8 decoration-[1px] md:underline-offset-4 bg-transparent border-none cursor-pointer hover:opacity-70 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
             style={{ color: colors.textColor }}
           >
-            {status === "loading" ? "INVIO..." : "INVIA MESSAGGIO"}
+            {status === "loading" ? "SENDING..." : "SEND MESSAGE"}
           </button>
           {status === "success" && (
             <p className="text-xs font-bold" style={{ color: colors.textColor }}>
-              Messaggio inviato con successo.
+              Message sent successfully.
             </p>
           )}
           {status === "error" && (
             <p className="text-xs font-bold opacity-70" style={{ color: colors.textColor }}>
-              Errore nell&apos;invio. Riprova o scrivi a info@poster-media.com.
+              Error sending. Please try again or write to info@poster-media.com.
             </p>
           )}
         </div>

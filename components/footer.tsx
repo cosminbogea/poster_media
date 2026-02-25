@@ -18,13 +18,9 @@ export function Footer() {
             className="max-w-[520px] text-[7px] md:text-[8px] lg:text-[9px] leading-tight text-left font-bold self-end"
             style={{ color: colors.textColor }}
           >
-            Tutti i contenuti del sito (testi, immagini, logo, grafica e opere)
-            sono di proprieta di Poster Media
+            All website content (texts, images, logo, graphics, and works) is the property of Poster Media and is protected by copyright and intellectual property laws.
             <br />
-            e protetti dal diritto d&apos;autore e proprieta intellettuale. E
-            vietato copiare, riprodurre, redistribuire
-            <br />o pubblicare qualsiasi materiale senza autorizzazione
-            esplicita dell&apos;autore.
+            It is prohibited to copy, reproduce, redistribute, or publish any material without the explicit authorization of the author.
           </p>
           {/* Element 2: Copyright */}
           <span

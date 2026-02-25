@@ -22,9 +22,17 @@ export function AnimatedWorkImage({
         src={src}
         alt={alt}
         fill
-        className="object-cover"
+        className="object-cover  md:object-top"
         sizes="50vw"
-        onLoad={onLoad ? (e) => onLoad(e.currentTarget.naturalWidth, e.currentTarget.naturalHeight) : undefined}
+        onLoad={
+          onLoad
+            ? (e) =>
+                onLoad(
+                  e.currentTarget.naturalWidth,
+                  e.currentTarget.naturalHeight,
+                )
+            : undefined
+        }
       />
     </div>
   );

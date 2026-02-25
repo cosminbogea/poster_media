@@ -56,11 +56,8 @@ export default function Home() {
           className="text-[7px] leading-tight font-bold"
           style={{ color: colors.textColor }}
         >
-          Tutti i contenuti del sito (testi, immagini, logo, grafica e opere)
-          sono di proprieta di Poster Media e protetti dal diritto d&apos;autore
-          e proprieta intellettuale. E vietato copiare, riprodurre,
-          redistribuire o pubblicare qualsiasi materiale senza autorizzazione
-          esplicita dell&apos;autore.
+          All website content (texts, images, logo, graphics, and works) is the property of Poster Media and is protected by copyright and intellectual property laws.
+          It is prohibited to copy, reproduce, redistribute, or publish any material without the explicit authorization of the author.
         </p>
       </div>
 

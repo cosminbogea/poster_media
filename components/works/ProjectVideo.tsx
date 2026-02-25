@@ -3,20 +3,20 @@ import { useTheme } from "@/components/theme-context";
 
 interface ProjectVideoProps {
   src: string;
-  poster?: string;
 }
 
-export function ProjectVideo({ src, poster }: ProjectVideoProps) {
+export function ProjectVideo({ src }: ProjectVideoProps) {
   const { colors } = useTheme();
   return (
     <div className="w-full h-full" style={{ background: colors.background }}>
       <video
         className="w-full h-full object-cover object-top md:object-top"
         src={src}
-        poster={poster}
-        controls
-        preload="metadata"
+        autoPlay
+        loop
+        muted
         playsInline
+        preload="auto"
       />
     </div>
   );

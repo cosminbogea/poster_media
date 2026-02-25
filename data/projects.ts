@@ -5,8 +5,8 @@ export const projects: Project[] = [
     slug: "bryan",
     title: "BRYAN",
     subtitle: "LA CORSA DI UNA VITA",
-    coverMobile: "/works/bryan/still-01.webp",
-    coverDesktop: ["/works/bryan/still-01.webp", "/works/bryan/still-02.webp"],
+    coverMobile: "/works/bryan/still-05.webp",
+    coverDesktop: ["/works/bryan/still-05.webp", "/works/bryan/still-02.webp"],
     description:
       "Bryan – The Race of a Lifetime is a documentary by Jacopo Semprini telling the story of Sammarinese former motocross rider Bryan Toccaceli.",
     secondaryDescription:
@@ -14,7 +14,7 @@ export const projects: Project[] = [
     date: "2022",
     location: "San Marino",
     stills: [
-      ["/works/bryan/still-01.webp", "/works/bryan/still-02.webp"],
+      ["/works/bryan/still-05.webp", "/works/bryan/still-02.webp"],
       ["/works/bryan/still-03.webp"],
       ["/works/bryan/still-04.webp"],
     ],
@@ -24,6 +24,43 @@ export const projects: Project[] = [
         "https://res.cloudinary.com/djhods3my/image/upload/v1771881675/locandina0_sapy7q.webp",
       fullFilmUrl: "https://www.youtube.com/watch?v=0b-aA5Mncac",
     },
+  },
+  {
+    slug: "q3",
+    title: "AUDI Q3",
+    subtitle: "VISUAL PRODUCTION",
+    description:
+      "Visual study dedicated to the new Audi Q3, aimed at exploring its character through a cinematic and contemporary visual language.",
+    secondaryDescription:
+      "Set within a minimal and immersive natural environment, the project highlights the vehicle's lines, technology and identity, working through atmosphere, depth and precise light control. The aesthetic draws inspiration from the premium automotive world, with a narrative approach focused on shaping brand perception.",
+    date: "2025",
+    location: "Italia",
+    coverMobile: "/works/q3/still-07.webp",
+    coverDesktop: [
+      "/works/q3/still-05.webp",
+      "/works/q3/still-06.webp",
+      "/works/q3/still-12.webp",
+    ],
+    stills: [
+      ["/works/q3/still-01.webp"],
+      ["/works/q3/still-02.webp"],
+      ["/works/q3/still-03.webp", "/works/q3/still-04.webp"],
+      [
+        "/works/q3/still-06.webp",
+        "/works/q3/still-07.webp",
+        "/works/q3/still-08.webp",
+      ],
+      [
+        "/works/q3/still-09.webp",
+        "/works/q3/still-05.webp",
+        "/works/q3/still-10.webp",
+      ],
+      [
+        "/works/q3/still-13.webp",
+        "/works/q3/still-11.webp",
+        "/works/q3/still-12.webp",
+      ],
+    ],
   },
   {
     slug: "q4",
@@ -49,39 +86,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "q3",
-    title: "AUDI Q3",
-    subtitle: "VISUAL PRODUCTION",
-    description:
-      "Visual study dedicated to the new Audi Q3, aimed at exploring its character through a cinematic and contemporary visual language.",
-    secondaryDescription:
-      "Set within a minimal and immersive natural environment, the project highlights the vehicle's lines, technology and identity, working through atmosphere, depth and precise light control. The aesthetic draws inspiration from the premium automotive world, with a narrative approach focused on shaping brand perception.",
-    date: "2025",
-    location: "Italia",
-    coverMobile: "/works/q3/still-07.webp",
-    coverDesktop: ["/works/q3/still-01.webp"],
-    stills: [
-      ["/works/q3/still-01.webp"],
-      ["/works/q3/still-02.webp"],
-      ["/works/q3/still-03.webp", "/works/q3/still-04.webp"],
-      [
-        "/works/q3/still-06.webp",
-        "/works/q3/still-07.webp",
-        "/works/q3/still-08.webp",
-      ],
-      [
-        "/works/q3/still-09.webp",
-        "/works/q3/still-05.webp",
-        "/works/q3/still-10.webp",
-      ],
-      [
-        "/works/q3/still-13.webp",
-        "/works/q3/still-11.webp",
-        "/works/q3/still-12.webp",
-      ],
-    ],
-  },
-  {
     slug: "rbr",
     title: "RINASCITA BASKET RIMINI",
     subtitle: "GAME PRODUCTION",
@@ -91,9 +95,9 @@ export const projects: Project[] = [
       "The project combines photography and video to build a coherent visual language between action, crowd and arena atmosphere, highlighting the energy, physicality and narrative tension of the game. The focus is on creating dynamic and recognisable imagery capable of conveying the team's character and the live experience of the event. An ongoing production developed for communication, digital content and sports brand promotion, with a contemporary aesthetic designed for media, social platforms and editorial use.",
     date: "2023/2024",
     location: "Rimini, Italia",
-    coverMobile: "/works/rbr/still-09.webp",
+    coverMobile: "/works/rbr/still-07.webp",
     coverDesktop: [
-      "/works/rbr/still-01.webp",
+      "/works/rbr/still-04.webp",
       "/works/rbr/still-02.webp",
       "/works/rbr/still-03.webp",
     ],
