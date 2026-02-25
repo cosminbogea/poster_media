@@ -63,6 +63,22 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  openGraph: {
+    title: "POSTER MEDIA",
+    description:
+      "Photo and video production for brands, companies and creative projects.",
+    url: "https://poster-media.com",
+    siteName: "POSTER MEDIA",
+    images: [
+      {
+        url: "/favicon.png",
+        width: 1200,
+        height: 630,
+        alt: "POSTER MEDIA",
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({
