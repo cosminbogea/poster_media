@@ -71,9 +71,9 @@ export const metadata: Metadata = {
     siteName: "POSTER MEDIA",
     images: [
       {
-        url: "/favicon.png",
-        width: 1200,
-        height: 630,
+        url: "/favicon.ico",
+        width: 144,
+        height: 144,
         alt: "POSTER MEDIA",
       },
     ],
