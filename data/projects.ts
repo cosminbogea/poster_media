@@ -38,8 +38,8 @@ export const projects: Project[] = [
     coverMobile: "/works/q3/still-07.webp",
     coverDesktop: [
       "/works/q3/still-05.webp",
-      "/works/q3/still-06.webp",
       "/works/q3/still-12.webp",
+      "/works/q3/still-06.webp",
     ],
     stills: [
       ["/works/q3/still-01.webp"],
