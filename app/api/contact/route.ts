@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     from: "Poster Media <info@poster-media.com>",
     to: "info@poster-media.com",
     replyTo: email,
-    subject: `Message from ${nome} ${cognome}`,
+    subject: `New collaboration request — ${nome} ${cognome}`,
     html: `
       <p><strong>Nome:</strong> ${nome} ${cognome}</p>
       <p><strong>Email:</strong> ${email}</p>
