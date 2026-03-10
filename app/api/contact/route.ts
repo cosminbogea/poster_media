@@ -7,10 +7,10 @@ export async function POST(request: NextRequest) {
   const { nome, cognome, email, messaggio } = await request.json();
 
   const { error } = await resend.emails.send({
-    from: "Poster Media <onboarding@resend.dev>",
-    to: "jacopo@poster-media.com",
+    from: "Poster Media <info@poster-media.com>",
+    to: "info@poster-media.com",
     replyTo: email,
-    subject: `Nuovo messaggio da ${nome} ${cognome}`,
+    subject: `Message from ${nome} ${cognome}`,
     html: `
       <p><strong>Nome:</strong> ${nome} ${cognome}</p>
       <p><strong>Email:</strong> ${email}</p>
