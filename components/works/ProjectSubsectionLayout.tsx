@@ -4,6 +4,7 @@ import { useState } from "react";
 import { type Project } from "@/types/project";
 import { useTheme } from "@/components/theme-context";
 import { AnimatedWorkImage } from "./AnimatedWorkImage";
+import { ImageLightbox } from "./ImageLightbox";
 import { WorkMeta } from "./WorkMeta";
 import { ProjectVideo } from "./ProjectVideo";
 
@@ -101,6 +102,13 @@ export function ProjectSubsectionLayout({
   const arrowSrc = theme === "black" ? "/white-arrow.svg" : "/black-arrow.svg";
   const detailRows = project.stills;
   const secondaryDescription = project.secondaryDescription ?? "";
+  const allImages = project.stills.flat();
+  const [lightbox, setLightbox] = useState<{ images: string[]; index: number } | null>(null);
+
+  function openLightbox(src: string) {
+    const index = allImages.indexOf(src);
+    setLightbox({ images: allImages, index: index >= 0 ? index : 0 });
+  }
 
   return (
     <div className="px-4 md:px-8 pb-10 md:pb-14">
@@ -154,34 +162,44 @@ export function ProjectSubsectionLayout({
           {project.stills.map((row, rowIndex) => (
             <div key={`${project.slug}-mobile-row-${rowIndex}`} className="contents">
               {row.length >= 2 ? (
-                <AdaptiveMobilePair
-                  leftSrc={row[0]}
-                  rightSrc={row[1]}
-                  alt={project.title}
-                  leftSlug={`${project.slug}-mobile-${rowIndex}-0`}
-                  rightSlug={`${project.slug}-mobile-${rowIndex}-1`}
-                />
+                <>
+                  <button className="cursor-pointer" onClick={() => openLightbox(row[0])}>
+                    <AdaptiveMobileStill
+                      src={row[0]}
+                      alt={project.title}
+                      slug={`${project.slug}-mobile-${rowIndex}-0`}
+                    />
+                  </button>
+                  <button className="cursor-pointer" onClick={() => openLightbox(row[1])}>
+                    <AdaptiveMobileStill
+                      src={row[1]}
+                      alt={project.title}
+                      slug={`${project.slug}-mobile-${rowIndex}-1`}
+                    />
+                  </button>
+                </>
               ) : row.length === 1 ? (
-                <div className="col-span-2">
+                <button className="col-span-2 cursor-pointer" onClick={() => openLightbox(row[0])}>
                   <AdaptiveMobileStill
                     src={row[0]}
                     alt={project.title}
                     slug={`${project.slug}-mobile-${rowIndex}-0`}
                   />
-                </div>
+                </button>
               ) : null}
 
               {row.slice(2).map((src, imgIndex) => (
-                <div
+                <button
                   key={`${project.slug}-mobile-${rowIndex}-extra-${imgIndex}`}
-                  className="col-span-2"
+                  className="col-span-2 cursor-pointer"
+                  onClick={() => openLightbox(src)}
                 >
                   <AdaptiveMobileStill
                     src={src}
                     alt={project.title}
                     slug={`${project.slug}-mobile-${rowIndex}-extra-${imgIndex}`}
                   />
-                </div>
+                </button>
               ))}
             </div>
           ))}
@@ -256,9 +274,10 @@ export function ProjectSubsectionLayout({
           <div className="w-1/2 h-full pr-8">
             <div className="flex h-full w-full gap-3">
               {detailRows[0].map((src, imgIndex) => (
-                <div
+                <button
                   key={`${project.slug}-hero-image-${imgIndex}`}
-                  className="flex-1 min-w-0 h-full"
+                  className="flex-1 min-w-0 h-full cursor-pointer"
+                  onClick={() => openLightbox(src)}
                 >
                   <AnimatedWorkImage
                     src={src}
@@ -266,7 +285,7 @@ export function ProjectSubsectionLayout({
                     slug={`${project.slug}-hero-${imgIndex}`}
                     className="h-full w-full"
                   />
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -291,9 +310,10 @@ export function ProjectSubsectionLayout({
             <div className="w-1/2 h-full pr-8">
               <div className="flex h-full w-full gap-3">
                 {row.map((src, imgIndex) => (
-                  <div
+                  <button
                     key={`${project.slug}-detail-${sectionIndex}-image-${imgIndex}`}
-                    className="flex-1 min-w-0 h-full"
+                    className="flex-1 min-w-0 h-full cursor-pointer"
+                    onClick={() => openLightbox(src)}
                   >
                     <AnimatedWorkImage
                       src={src}
@@ -301,7 +321,7 @@ export function ProjectSubsectionLayout({
                       slug={`${project.slug}-detail-${sectionIndex}-${imgIndex}`}
                       className="h-full w-full"
                     />
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -337,6 +357,15 @@ export function ProjectSubsectionLayout({
           </section>
         )}
       </div>
+
+      {lightbox && (
+        <ImageLightbox
+          images={lightbox.images}
+          initialIndex={lightbox.index}
+          alt={project.title}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </div>
   );
 }
