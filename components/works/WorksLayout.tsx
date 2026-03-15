@@ -54,7 +54,8 @@ export function WorksLayout({
 
   return (
     <div className="flex flex-col gap-10 md:gap-8">
-      {projects.map((project) => {
+      {projects.map((project, projectIndex) => {
+        const isFirstProject = projectIndex === 0;
         const isClickable = typeof onProjectClick === "function";
 
         const handleProjectOpen = () => {
@@ -192,23 +193,31 @@ export function WorksLayout({
                   alt={project.title}
                   slug={`${project.slug}-mobile`}
                   className="h-full w-full"
+                  priority={isFirstProject}
+                  sizes="100vw"
                 />
               </div>
 
               <div className="hidden h-full w-full gap-3 md:flex">
-                {(project.coverDesktop ?? project.stills[0]).map((src, imageIndex) => (
-                  <div
-                    key={`${project.slug}-image-${imageIndex}`}
-                    className="flex-1 min-w-0 h-full"
-                  >
-                    <AnimatedWorkImage
-                      src={src}
-                      alt={project.title}
-                      slug={`${project.slug}-${imageIndex}`}
-                      className="h-full w-full"
-                    />
-                  </div>
-                ))}
+                {(project.coverDesktop ?? project.stills[0]).map((src, imageIndex) => {
+                  const count = (project.coverDesktop ?? project.stills[0]).length;
+                  const desktopVw = Math.round(50 / count);
+                  return (
+                    <div
+                      key={`${project.slug}-image-${imageIndex}`}
+                      className="flex-1 min-w-0 h-full"
+                    >
+                      <AnimatedWorkImage
+                        src={src}
+                        alt={project.title}
+                        slug={`${project.slug}-${imageIndex}`}
+                        className="h-full w-full"
+                        priority={isFirstProject}
+                        sizes={`(max-width: 768px) 100vw, ${desktopVw}vw`}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

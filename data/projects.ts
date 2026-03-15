@@ -1,12 +1,57 @@
 import { Project } from "@/types/project";
 
+const BRYAN = {
+  s1: "https://res.cloudinary.com/djhods3my/image/upload/v1773572266/still-01_nnsudo.webp",
+  s2: "https://res.cloudinary.com/djhods3my/image/upload/v1773572266/still-02_btkf5y.webp",
+  s3: "https://res.cloudinary.com/djhods3my/image/upload/v1773572267/still-03_tddbhv.webp",
+  s4: "https://res.cloudinary.com/djhods3my/image/upload/v1773572267/still-04_pecgig.webp",
+  s5: "https://res.cloudinary.com/djhods3my/image/upload/v1773572268/still-05_ac2j18.webp",
+};
+
+const Q3 = {
+  s1: "https://res.cloudinary.com/djhods3my/image/upload/v1773573317/still-01_rareue.webp",
+  s2: "https://res.cloudinary.com/djhods3my/image/upload/v1773573317/still-02_hvlteh.webp",
+  s3: "https://res.cloudinary.com/djhods3my/image/upload/v1773573318/still-03_b803lq.webp",
+  s4: "https://res.cloudinary.com/djhods3my/image/upload/v1773573318/still-04_zfe8rc.webp",
+  s5: "https://res.cloudinary.com/djhods3my/image/upload/v1773573318/still-05_dgogfb.webp",
+  s6: "https://res.cloudinary.com/djhods3my/image/upload/v1773573320/still-06_tddbpa.webp",
+  s7: "https://res.cloudinary.com/djhods3my/image/upload/v1773573321/still-07_ksotbd.webp",
+  s8: "https://res.cloudinary.com/djhods3my/image/upload/v1773573321/still-08_nrmzud.webp",
+  s9: "https://res.cloudinary.com/djhods3my/image/upload/v1773573322/still-09_txtazy.webp",
+  s10: "https://res.cloudinary.com/djhods3my/image/upload/v1773573323/still-10_ekyuq2.webp",
+  s11: "https://res.cloudinary.com/djhods3my/image/upload/v1773573324/still-11_ckvs1d.webp",
+  s12: "https://res.cloudinary.com/djhods3my/image/upload/v1773573325/still-12_fdqarg.webp",
+  s13: "https://res.cloudinary.com/djhods3my/image/upload/v1773573326/still-13_dnjzft.webp",
+};
+
+const Q4 = {
+  s1: "https://res.cloudinary.com/djhods3my/image/upload/v1773573341/still-01_trskoh.webp",
+  s2: "https://res.cloudinary.com/djhods3my/image/upload/v1773573341/still-02_elzo6z.webp",
+  s3: "https://res.cloudinary.com/djhods3my/image/upload/v1773573342/still-03_craqn0.webp",
+  s4: "https://res.cloudinary.com/djhods3my/image/upload/v1773573343/still-04_jeu83w.webp",
+  s5: "https://res.cloudinary.com/djhods3my/image/upload/v1773573344/still-05_ybuf0f.webp",
+  s6: "https://res.cloudinary.com/djhods3my/image/upload/v1773573345/still-06_czhey3.webp",
+};
+
+const RBR = {
+  s1: "https://res.cloudinary.com/djhods3my/image/upload/v1773573362/still-01_dxt0s0.webp",
+  s2: "https://res.cloudinary.com/djhods3my/image/upload/v1773573363/still-02_gamwln.webp",
+  s3: "https://res.cloudinary.com/djhods3my/image/upload/v1773573364/still-03_lg1bho.webp",
+  s4: "https://res.cloudinary.com/djhods3my/image/upload/v1773573366/still-04_uumsdo.webp",
+  s5: "https://res.cloudinary.com/djhods3my/image/upload/v1773573367/still-05_etnc0n.webp",
+  s6: "https://res.cloudinary.com/djhods3my/image/upload/v1773573368/still-06_m7lnps.webp",
+  s7: "https://res.cloudinary.com/djhods3my/image/upload/v1773573369/still-07_codipn.webp",
+  s8: "https://res.cloudinary.com/djhods3my/image/upload/v1773573370/still-08_ozpz9j.webp",
+  s9: "https://res.cloudinary.com/djhods3my/image/upload/v1773573371/still-09_zof9iy.webp",
+};
+
 export const projects: Project[] = [
   {
     slug: "bryan",
     title: "BRYAN",
     subtitle: "LA CORSA DI UNA VITA",
-    coverMobile: "/works/bryan/still-05.webp",
-    coverDesktop: ["/works/bryan/still-05.webp", "/works/bryan/still-02.webp"],
+    coverMobile: BRYAN.s5,
+    coverDesktop: [BRYAN.s5, BRYAN.s2],
     description:
       "Bryan – The Race of a Lifetime is a documentary by Jacopo Semprini telling the story of Sammarinese former motocross rider Bryan Toccaceli.",
     secondaryDescription:
@@ -14,9 +59,9 @@ export const projects: Project[] = [
     date: "2022",
     location: "San Marino",
     stills: [
-      ["/works/bryan/still-05.webp", "/works/bryan/still-02.webp"],
-      ["/works/bryan/still-03.webp"],
-      ["/works/bryan/still-04.webp"],
+      [BRYAN.s5, BRYAN.s2],
+      [BRYAN.s3],
+      [BRYAN.s4],
     ],
     video: {
       src: "https://res.cloudinary.com/djhods3my/video/upload/v1771848716/output_tft0qd.mp4",
@@ -35,31 +80,15 @@ export const projects: Project[] = [
       "Set within a minimal and immersive natural environment, the project highlights the vehicle's lines, technology and identity, working through atmosphere, depth and precise light control. The aesthetic draws inspiration from the premium automotive world, with a narrative approach focused on shaping brand perception.",
     date: "2025",
     location: "Italia",
-    coverMobile: "/works/q3/still-07.webp",
-    coverDesktop: [
-      "/works/q3/still-05.webp",
-      "/works/q3/still-12.webp",
-      "/works/q3/still-06.webp",
-    ],
+    coverMobile: Q3.s7,
+    coverDesktop: [Q3.s5, Q3.s12, Q3.s6],
     stills: [
-      ["/works/q3/still-01.webp"],
-      ["/works/q3/still-02.webp"],
-      ["/works/q3/still-03.webp", "/works/q3/still-04.webp"],
-      [
-        "/works/q3/still-06.webp",
-        "/works/q3/still-07.webp",
-        "/works/q3/still-08.webp",
-      ],
-      [
-        "/works/q3/still-09.webp",
-        "/works/q3/still-05.webp",
-        "/works/q3/still-10.webp",
-      ],
-      [
-        "/works/q3/still-13.webp",
-        "/works/q3/still-11.webp",
-        "/works/q3/still-12.webp",
-      ],
+      [Q3.s1],
+      [Q3.s2],
+      [Q3.s3, Q3.s4],
+      [Q3.s6, Q3.s7, Q3.s8],
+      [Q3.s9, Q3.s5, Q3.s10],
+      [Q3.s13, Q3.s11, Q3.s12],
     ],
   },
   {
@@ -72,17 +101,13 @@ export const projects: Project[] = [
       "Set across mountain landscapes and high-altitude roads, the project highlights the vehicle's presence, proportions and technology, working with natural light, depth and its relationship with the surrounding environment. The focus is on product perception, clean lines and the creation of strong, recognisable imagery. The aesthetic draws inspiration from the premium automotive world and the narrative of modern travel, with a visual approach designed to convey autonomy, silence and precision.",
     date: "2021",
     location: "Italia",
-    coverMobile: "/works/q4/still-04.webp",
-    coverDesktop: ["/works/q4/still-01.webp"],
+    coverMobile: Q4.s4,
+    coverDesktop: [Q4.s1],
     stills: [
-      ["/works/q4/still-01.webp"],
-      ["/works/q4/still-02.webp"],
-      ["/works/q4/still-03.webp"],
-      [
-        "/works/q4/still-06.webp",
-        "/works/q4/still-04.webp",
-        "/works/q4/still-05.webp",
-      ],
+      [Q4.s1],
+      [Q4.s2],
+      [Q4.s3],
+      [Q4.s6, Q4.s4, Q4.s5],
     ],
   },
   {
@@ -95,28 +120,12 @@ export const projects: Project[] = [
       "The project combines photography and video to build a coherent visual language between action, crowd and arena atmosphere, highlighting the energy, physicality and narrative tension of the game. The focus is on creating dynamic and recognisable imagery capable of conveying the team's character and the live experience of the event. An ongoing production developed for communication, digital content and sports brand promotion, with a contemporary aesthetic designed for media, social platforms and editorial use.",
     date: "2023/2024",
     location: "Rimini, Italia",
-    coverMobile: "/works/rbr/still-07.webp",
-    coverDesktop: [
-      "/works/rbr/still-04.webp",
-      "/works/rbr/still-02.webp",
-      "/works/rbr/still-03.webp",
-    ],
+    coverMobile: RBR.s7,
+    coverDesktop: [RBR.s4, RBR.s2, RBR.s3],
     stills: [
-      [
-        "/works/rbr/still-01.webp",
-        "/works/rbr/still-02.webp",
-        "/works/rbr/still-03.webp",
-      ],
-      [
-        "/works/rbr/still-04.webp",
-        "/works/rbr/still-05.webp",
-        "/works/rbr/still-06.webp",
-      ],
-      [
-        "/works/rbr/still-07.webp",
-        "/works/rbr/still-08.webp",
-        "/works/rbr/still-09.webp",
-      ],
+      [RBR.s1, RBR.s2, RBR.s3],
+      [RBR.s4, RBR.s5, RBR.s6],
+      [RBR.s7, RBR.s8, RBR.s9],
     ],
     video: {
       src: "https://res.cloudinary.com/djhods3my/video/upload/v1771877626/output_xvhdky.mp4",

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Project } from "@/types/project";
+import { cloudinaryLoader } from "@/lib/cloudinaryLoader";
 
 interface MoodboardLayoutProps {
   projects: Project[];
@@ -54,6 +55,7 @@ export function MoodboardLayout({ projects, onImageClick }: MoodboardLayoutProps
               onClick={() => onImageClick?.(slug)}
             >
               <Image
+                loader={cloudinaryLoader}
                 src={src}
                 alt={title}
                 width={1976}
