@@ -55,12 +55,16 @@ function AdaptiveMobilePair({
   alt,
   leftSlug,
   rightSlug,
+  onClickLeft,
+  onClickRight,
 }: {
   leftSrc: string;
   rightSrc: string;
   alt: string;
   leftSlug: string;
   rightSlug: string;
+  onClickLeft?: () => void;
+  onClickRight?: () => void;
 }) {
   const [leftRatio, setLeftRatio] = useState<number | null>(null);
   const [rightRatio, setRightRatio] = useState<number | null>(null);
@@ -72,7 +76,7 @@ function AdaptiveMobilePair({
 
   return (
     <>
-      <div>
+      <button className="cursor-pointer" onClick={onClickLeft}>
         <AdaptiveMobileStill
           src={leftSrc}
           alt={alt}
@@ -80,8 +84,8 @@ function AdaptiveMobilePair({
           sharedRatio={sharedRatio}
           onRatioReady={setLeftRatio}
         />
-      </div>
-      <div>
+      </button>
+      <button className="cursor-pointer" onClick={onClickRight}>
         <AdaptiveMobileStill
           src={rightSrc}
           alt={alt}
@@ -89,7 +93,7 @@ function AdaptiveMobilePair({
           sharedRatio={sharedRatio}
           onRatioReady={setRightRatio}
         />
-      </div>
+      </button>
     </>
   );
 }
@@ -162,22 +166,15 @@ export function ProjectSubsectionLayout({
           {project.stills.map((row, rowIndex) => (
             <div key={`${project.slug}-mobile-row-${rowIndex}`} className="contents">
               {row.length >= 2 ? (
-                <>
-                  <button className="cursor-pointer" onClick={() => openLightbox(row[0])}>
-                    <AdaptiveMobileStill
-                      src={row[0]}
-                      alt={project.title}
-                      slug={`${project.slug}-mobile-${rowIndex}-0`}
-                    />
-                  </button>
-                  <button className="cursor-pointer" onClick={() => openLightbox(row[1])}>
-                    <AdaptiveMobileStill
-                      src={row[1]}
-                      alt={project.title}
-                      slug={`${project.slug}-mobile-${rowIndex}-1`}
-                    />
-                  </button>
-                </>
+                <AdaptiveMobilePair
+                  leftSrc={row[0]}
+                  rightSrc={row[1]}
+                  alt={project.title}
+                  leftSlug={`${project.slug}-mobile-${rowIndex}-0`}
+                  rightSlug={`${project.slug}-mobile-${rowIndex}-1`}
+                  onClickLeft={() => openLightbox(row[0])}
+                  onClickRight={() => openLightbox(row[1])}
+                />
               ) : row.length === 1 ? (
                 <button className="col-span-2 cursor-pointer" onClick={() => openLightbox(row[0])}>
                   <AdaptiveMobileStill
