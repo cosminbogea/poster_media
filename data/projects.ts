@@ -1,5 +1,29 @@
 import { Project } from "@/types/project";
 
+const JUSTIN = {
+  s1: "https://res.cloudinary.com/djhods3my/image/upload/v1774705725/still-01_ves5rj.jpg",
+  s2: "https://res.cloudinary.com/djhods3my/image/upload/v1774705725/still-02_hlywsw.jpg",
+  s3: "https://res.cloudinary.com/djhods3my/image/upload/v1774705725/still-03_cbhq3y.jpg",
+  s4: "https://res.cloudinary.com/djhods3my/image/upload/v1774705726/still-04_fdjnix.jpg",
+  s5: "https://res.cloudinary.com/djhods3my/image/upload/v1774705726/still-05_jiqvud.jpg",
+  s6: "https://res.cloudinary.com/djhods3my/image/upload/v1774705726/still-06_qiabqx.jpg",
+  s7: "https://res.cloudinary.com/djhods3my/image/upload/v1774705726/still-07_zgmyjh.jpg",
+  s8: "https://res.cloudinary.com/djhods3my/image/upload/v1774705727/still-08_asfcks.jpg",
+  s9: "https://res.cloudinary.com/djhods3my/image/upload/v1774705727/still-09_himzxb.jpg",
+  s10: "https://res.cloudinary.com/djhods3my/image/upload/v1774705727/still-10_ew3vxc.jpg",
+  s11: "https://res.cloudinary.com/djhods3my/image/upload/v1774705727/still-11_b3uvyb.jpg",
+  s12: "https://res.cloudinary.com/djhods3my/image/upload/v1774705727/still-12_pq5ldz.jpg",
+  s13: "https://res.cloudinary.com/djhods3my/image/upload/v1774705728/still-13_juchmd.jpg",
+  s14: "https://res.cloudinary.com/djhods3my/image/upload/v1774705729/still-14_cyyqgs.jpg",
+  s15: "https://res.cloudinary.com/djhods3my/image/upload/v1774705731/still-15_nk6yqr.jpg",
+  s16: "https://res.cloudinary.com/djhods3my/image/upload/v1774705731/still-16_aksdgn.jpg",
+  s17: "https://res.cloudinary.com/djhods3my/image/upload/v1774705731/still-17_yparti.jpg",
+  s18: "https://res.cloudinary.com/djhods3my/image/upload/v1774705732/still-18_ddkk2a.jpg",
+  s19: "https://res.cloudinary.com/djhods3my/image/upload/v1774705731/still-19_mxe1rd.jpg",
+  s20: "https://res.cloudinary.com/djhods3my/image/upload/v1774705731/still-20_anfwtr.jpg",
+  s21: "https://res.cloudinary.com/djhods3my/image/upload/v1774705733/still-21_rlzjap.jpg",
+};
+
 const BRYAN = {
   s1: "https://res.cloudinary.com/djhods3my/image/upload/v1773572266/still-01_nnsudo.webp",
   s2: "https://res.cloudinary.com/djhods3my/image/upload/v1773572266/still-02_btkf5y.webp",
@@ -47,6 +71,70 @@ const RBR = {
 
 export const projects: Project[] = [
   {
+    slug: "justin-johnson",
+    title: "JUSTIN JOHNSON'S HOMECOMING",
+    subtitle: "PHOTO PRODUCTION",
+    description:
+      "Visual study of Justin Johnson during a Serie A2 game between Verona and Rimini, capturing the intensity of play and the emotional weight of facing a former team.",
+    secondaryDescription:
+      "Visual study dedicated to Justin Johnson, captured during a Serie A2 matchup between Scaligera Basket Verona and Dole Basket Rimini.\n\nThe project revolves around a return, Johnson stepping back onto the court against his former team, in front of a crowd that once supported him. This underlying narrative shaped the visual direction of the entire shoot.\n\nThe work focuses on contrast: intensity and control, physicality and awareness. Through careful attention to color, composition, and the interplay of light and shadow, the goal was to translate the energy of the game into a cinematic and contemporary visual language.\n\nBeyond performance, the images aim to capture a more nuanced layer — the connection with a former audience, the emotional tension of the moment, and the balance between competitiveness and respect.",
+    date: "2026",
+    location: "Rimini",
+    coverMobile: JUSTIN.s7,
+    coverDesktop: [JUSTIN.s12, JUSTIN.s21, JUSTIN.s7],
+    stills: [
+      [JUSTIN.s1, JUSTIN.s2, JUSTIN.s3],
+      [JUSTIN.s4, JUSTIN.s5, JUSTIN.s6],
+      [JUSTIN.s7, JUSTIN.s8, JUSTIN.s9],
+      [JUSTIN.s10, JUSTIN.s11, JUSTIN.s12],
+      [JUSTIN.s13, JUSTIN.s14, JUSTIN.s15],
+      [JUSTIN.s16, JUSTIN.s17, JUSTIN.s18],
+      [JUSTIN.s19, JUSTIN.s20, JUSTIN.s21],
+    ],
+  },
+  {
+    slug: "q3",
+    title: "AUDI Q3",
+    subtitle: "VISUAL PRODUCTION",
+    description:
+      "Visual study dedicated to the new Audi Q3, aimed at exploring its character through a cinematic and contemporary visual language.",
+    secondaryDescription:
+      "Set within a minimal and immersive natural environment, the project highlights the vehicle's lines, technology and identity, working through atmosphere, depth and precise light control. The aesthetic draws inspiration from the premium automotive world, with a narrative approach focused on shaping brand perception.",
+    date: "2025",
+    location: "Italia",
+    coverMobile: Q3.s7,
+    coverDesktop: [Q3.s5, Q3.s12, Q3.s6],
+    stills: [
+      [Q3.s1],
+      [Q3.s2],
+      [Q3.s3, Q3.s4],
+      [Q3.s6, Q3.s7, Q3.s8],
+      [Q3.s9, Q3.s5, Q3.s10],
+      [Q3.s13, Q3.s11, Q3.s12],
+    ],
+  },
+  {
+    slug: "rbr",
+    title: "RINASCITA BASKET RIMINI",
+    subtitle: "GAME PRODUCTION",
+    description:
+      "Photo and video production dedicated to the visual storytelling of basketball in a live game context, with an approach focused on rhythm, intensity and sporting identity.",
+    secondaryDescription:
+      "The project combines photography and video to build a coherent visual language between action, crowd and arena atmosphere, highlighting the energy, physicality and narrative tension of the game. The focus is on creating dynamic and recognisable imagery capable of conveying the team's character and the live experience of the event. An ongoing production developed for communication, digital content and sports brand promotion, with a contemporary aesthetic designed for media, social platforms and editorial use.",
+    date: "2023/2024",
+    location: "Rimini, Italia",
+    coverMobile: RBR.s7,
+    coverDesktop: [RBR.s4, RBR.s2, RBR.s3],
+    stills: [
+      [RBR.s1, RBR.s2, RBR.s3],
+      [RBR.s4, RBR.s5, RBR.s6],
+      [RBR.s7, RBR.s8, RBR.s9],
+    ],
+    video: {
+      src: "https://res.cloudinary.com/djhods3my/video/upload/v1771877626/output_xvhdky.mp4",
+    },
+  },
+  {
     slug: "bryan",
     title: "BRYAN",
     subtitle: "LA CORSA DI UNA VITA",
@@ -71,27 +159,6 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: "q3",
-    title: "AUDI Q3",
-    subtitle: "VISUAL PRODUCTION",
-    description:
-      "Visual study dedicated to the new Audi Q3, aimed at exploring its character through a cinematic and contemporary visual language.",
-    secondaryDescription:
-      "Set within a minimal and immersive natural environment, the project highlights the vehicle's lines, technology and identity, working through atmosphere, depth and precise light control. The aesthetic draws inspiration from the premium automotive world, with a narrative approach focused on shaping brand perception.",
-    date: "2025",
-    location: "Italia",
-    coverMobile: Q3.s7,
-    coverDesktop: [Q3.s5, Q3.s12, Q3.s6],
-    stills: [
-      [Q3.s1],
-      [Q3.s2],
-      [Q3.s3, Q3.s4],
-      [Q3.s6, Q3.s7, Q3.s8],
-      [Q3.s9, Q3.s5, Q3.s10],
-      [Q3.s13, Q3.s11, Q3.s12],
-    ],
-  },
-  {
     slug: "q4",
     title: "AUDI Q4 E-TRON",
     subtitle: "VISUAL PRODUCTION",
@@ -109,27 +176,6 @@ export const projects: Project[] = [
       [Q4.s3],
       [Q4.s6, Q4.s4, Q4.s5],
     ],
-  },
-  {
-    slug: "rbr",
-    title: "RINASCITA BASKET RIMINI",
-    subtitle: "GAME PRODUCTION",
-    description:
-      "Photo and video production dedicated to the visual storytelling of basketball in a live game context, with an approach focused on rhythm, intensity and sporting identity.",
-    secondaryDescription:
-      "The project combines photography and video to build a coherent visual language between action, crowd and arena atmosphere, highlighting the energy, physicality and narrative tension of the game. The focus is on creating dynamic and recognisable imagery capable of conveying the team's character and the live experience of the event. An ongoing production developed for communication, digital content and sports brand promotion, with a contemporary aesthetic designed for media, social platforms and editorial use.",
-    date: "2023/2024",
-    location: "Rimini, Italia",
-    coverMobile: RBR.s7,
-    coverDesktop: [RBR.s4, RBR.s2, RBR.s3],
-    stills: [
-      [RBR.s1, RBR.s2, RBR.s3],
-      [RBR.s4, RBR.s5, RBR.s6],
-      [RBR.s7, RBR.s8, RBR.s9],
-    ],
-    video: {
-      src: "https://res.cloudinary.com/djhods3my/video/upload/v1771877626/output_xvhdky.mp4",
-    },
   },
 ];
 

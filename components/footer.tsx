@@ -18,9 +18,11 @@ export function Footer() {
             className="max-w-[520px] text-[7px] md:text-[8px] lg:text-[9px] leading-tight text-left font-bold self-end"
             style={{ color: colors.textColor }}
           >
-            All website content (texts, images, logo, graphics, and works) is the property of Poster Media and is protected by copyright and intellectual property laws.
+            All website content (texts, images, logo, graphics, and works) is the property of Poster Media
             <br />
-            It is prohibited to copy, reproduce, redistribute, or publish any material without the explicit authorization of the author.
+            and is protected by copyright and intellectual property laws. It is prohibited to copy, reproduce,
+            <br />
+            redistribute, or publish any material without the explicit authorization of the author.
           </p>
           {/* Element 2: Copyright */}
           <span

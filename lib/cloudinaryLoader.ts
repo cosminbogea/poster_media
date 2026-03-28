@@ -8,6 +8,6 @@ import type { ImageLoaderProps } from "next/image";
  * Cloudinary handles f_auto (AVIF/WebP negotiation), quality, and resizing.
  */
 export function cloudinaryLoader({ src, width, quality }: ImageLoaderProps): string {
-  const transforms = `f_auto,q_${quality ?? 75},w_${width}`;
+  const transforms = `f_auto,q_auto,w_${width}`;
   return src.replace("/image/upload/", `/image/upload/${transforms}/`);
 }
