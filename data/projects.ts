@@ -146,11 +146,7 @@ export const projects: Project[] = [
       "The film traces his human and sporting journey: from the birth of his passion for engines to his racing career, through the severe accident that changed his life, the long rehabilitation process, and the construction of a new vision for the future. What emerges is a story of resilience, identity and transformation, rooted in the values of motorsport yet capable of speaking to a wider audience. The narrative is guided by the protagonist's voice, supported by contributions from family and close friends, alongside figures connected to the world of professional motorcycle racing. The film originated as an independent project developed in the Republic of San Marino, with the aim of conveying a message of hope and determination through a true story. The national premiere took place in 2022 at Teatro Concordia in San Marino during the Misano MotoGP weekend, playing to a sold-out audience and attended by institutional representatives and MotoGP riders. From 2022 to 2024 the film was distributed on Sky and is now available on YouTube.",
     date: "2022",
     location: "San Marino",
-    stills: [
-      [BRYAN.s5, BRYAN.s2],
-      [BRYAN.s3],
-      [BRYAN.s4],
-    ],
+    stills: [[BRYAN.s5, BRYAN.s2], [BRYAN.s3], [BRYAN.s4]],
     video: {
       src: "https://res.cloudinary.com/djhods3my/video/upload/v1771848716/output_tft0qd.mp4",
       poster:
@@ -169,13 +165,8 @@ export const projects: Project[] = [
     date: "2021",
     location: "Italia",
     coverMobile: Q4.s4,
-    coverDesktop: [Q4.s1],
-    stills: [
-      [Q4.s1],
-      [Q4.s2],
-      [Q4.s3],
-      [Q4.s6, Q4.s4, Q4.s5],
-    ],
+    coverDesktop: [Q4.s6, Q4.s4, Q4.s5],
+    stills: [[Q4.s1], [Q4.s2], [Q4.s3], [Q4.s6, Q4.s4, Q4.s5]],
   },
 ];
 
