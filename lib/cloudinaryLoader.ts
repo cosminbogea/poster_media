@@ -11,3 +11,11 @@ export function cloudinaryLoader({ src, width, quality }: ImageLoaderProps): str
   const transforms = `f_auto,q_auto,w_${width}`;
   return src.replace("/image/upload/", `/image/upload/${transforms}/`);
 }
+
+export function cloudinaryVideoSrc(src: string): string {
+  return src.replace("/video/upload/", "/video/upload/f_auto,q_auto/");
+}
+
+export function cloudinaryPosterSrc(src: string): string {
+  return src.replace("/image/upload/", "/image/upload/f_auto,q_auto,w_1200/");
+}

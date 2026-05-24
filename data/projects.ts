@@ -69,7 +69,76 @@ const RBR = {
   s9: "https://res.cloudinary.com/djhods3my/image/upload/v1773573371/still-09_zof9iy.webp",
 };
 
+const RBRDOCS = {
+  c1: "https://res.cloudinary.com/djhods3my/image/upload/v1779638665/IMG_9387_wiuuor.jpg",
+  c2: "https://res.cloudinary.com/djhods3my/image/upload/v1779638665/IMG_9429_wsoktv.jpg",
+  c3: "https://res.cloudinary.com/djhods3my/image/upload/v1779638667/IMG_9763_qldjpm.jpg",
+  v1: "https://res.cloudinary.com/djhods3my/video/upload/v1779638707/output2_q0ckwt.mp4",
+  v2: "https://res.cloudinary.com/djhods3my/video/upload/v1779639271/output1_sne4aa.mp4",
+  v3: "https://res.cloudinary.com/djhods3my/video/upload/v1779638703/output_jjjivr.mp4",
+};
+
+const SMADONNATA = {
+  auds1:
+    "https://res.cloudinary.com/djhods3my/image/upload/v1779637385/JSP04273_cckkms.jpg",
+  auds2:
+    "https://res.cloudinary.com/djhods3my/image/upload/v1779637386/JSP04284_feovyc.jpg",
+  auds3:
+    "https://res.cloudinary.com/djhods3my/image/upload/v1779637387/JSP04301_vq6jln.jpg",
+  audv: "https://res.cloudinary.com/djhods3my/video/upload/v1779638131/output_d3omcp.mp4",
+  sks1: "https://res.cloudinary.com/djhods3my/image/upload/v1779638203/JSP04343_ol38rb.jpg",
+  sks2: "https://res.cloudinary.com/djhods3my/image/upload/v1779638204/JSP04358_elvyjv.jpg",
+  sks3: "https://res.cloudinary.com/djhods3my/image/upload/v1779638229/JSP04383_pnjole.jpg",
+  skv: "https://res.cloudinary.com/djhods3my/video/upload/v1779638233/output_yg1anb.mp4",
+  vws1: "https://res.cloudinary.com/djhods3my/image/upload/v1779638297/JSP04395_ublgh5.jpg",
+  vws2: "https://res.cloudinary.com/djhods3my/image/upload/v1779638298/JSP04401_jxcbln.jpg",
+  vws3: "https://res.cloudinary.com/djhods3my/image/upload/v1779638299/JSP04421_iig5zq.jpg",
+  vwv: "https://res.cloudinary.com/djhods3my/video/upload/v1779638303/output_gaghtv.mp4",
+};
+
 export const projects: Project[] = [
+  {
+    slug: "smadonnata",
+    title: "AUDI, VOLKSWAGEN & ŠKODA",
+    subtitle: "social media production",
+    description:
+      "Social-first photo and video production for Audi, Volkswagen and Škoda during Smadonnata 2026",
+    secondaryDescription:
+      "Photo and video production for the social media channels of Audi, Volkswagen and Škoda during Smadonnata 2026 in Madonna di Campiglio (TN)\n\nThe work included the production of social-first visual content and the development of communication concepts, captions and storytelling tailored to each brand identity, with a strong focus on highlighting the vehicles, their features and the overall positioning of the brands across digital platforms.",
+    date: "2026",
+    location: "Madonna di Campiglio, Italia",
+    coverMobile: SMADONNATA.auds3,
+    coverDesktop: [SMADONNATA.auds3, SMADONNATA.sks3, SMADONNATA.vws1],
+    stills: [
+      [SMADONNATA.auds1, SMADONNATA.auds2, SMADONNATA.auds3],
+      [SMADONNATA.sks1, SMADONNATA.sks2, SMADONNATA.sks3],
+      [SMADONNATA.vws1, SMADONNATA.vws2, SMADONNATA.vws3],
+    ],
+    videos: [
+      { src: SMADONNATA.audv, afterRow: 0, interactive: true },
+      { src: SMADONNATA.skv, afterRow: 1, interactive: true },
+      { src: SMADONNATA.vwv, afterRow: 2, interactive: true },
+    ],
+  },
+  {
+    slug: "rbr-documentary-series",
+    title: "RINASCITA BASKET RIMINI",
+    subtitle: "Documentary Series",
+    description:
+      "A cinematic social-first documentary series exploring the human side of basketball through the voices, stories and passion surrounding Rinascita Basket Rimini.",
+    secondaryDescription:
+      "A documentary series created by Poster Media in collaboration with Rinascita Basket Rimini and Dole Italia to tell the story of basketball through the voices of the people who truly live it. From team leaders and rising young talents to lifelong supporters, each episode explores the human side of the sport: passion, sacrifice, identity and belonging. A cinematic social-first format designed to go beyond the court and capture the deep connection between Rimini, its basketball culture and its fans. Directed by Jacopo Semprini.",
+    date: "2026",
+    location: "Rimini, Italia",
+    coverMobile: RBRDOCS.c1,
+    coverDesktop: [RBRDOCS.c1, RBRDOCS.c2, RBRDOCS.c3],
+    stills: [[RBRDOCS.c1, RBRDOCS.c2, RBRDOCS.c3]],
+    videos: [
+      { src: RBRDOCS.v1, afterRow: 0, interactive: true, poster: RBRDOCS.c1 },
+      { src: RBRDOCS.v2, afterRow: 0, interactive: true, poster: RBRDOCS.c2 },
+      { src: RBRDOCS.v3, afterRow: 0, interactive: true, poster: RBRDOCS.c3 },
+    ],
+  },
   {
     slug: "justin-johnson",
     title: "JUSTIN JOHNSON'S HOMECOMING",

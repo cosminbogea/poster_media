@@ -14,6 +14,13 @@ export interface Project {
     poster?: string;
     fullFilmUrl?: string;
   };
+  videos?: Array<{
+    src: string;
+    afterRow: number;
+    interactive?: boolean;
+    poster?: string;
+    fullFilmUrl?: string;
+  }>;
 }
 
 export interface AboutData {

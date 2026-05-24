@@ -1,5 +1,6 @@
 "use client";
 import { useTheme } from "@/components/theme-context";
+import { cloudinaryVideoSrc } from "@/lib/cloudinaryLoader";
 
 interface ProjectVideoProps {
   src: string;
@@ -11,7 +12,7 @@ export function ProjectVideo({ src }: ProjectVideoProps) {
     <div className="w-full h-full" style={{ background: colors.background }}>
       <video
         className="w-full h-full object-cover "
-        src={src}
+        src={cloudinaryVideoSrc(src)}
         autoPlay
         loop
         muted

@@ -7,6 +7,7 @@ import { AnimatedWorkImage } from "./AnimatedWorkImage";
 import { ImageLightbox } from "./ImageLightbox";
 import { WorkMeta } from "./WorkMeta";
 import { ProjectVideo } from "./ProjectVideo";
+import { ProjectVideoPlayer } from "./ProjectVideoPlayer";
 
 
 interface ProjectSubsectionLayoutProps {
@@ -109,6 +110,10 @@ export function ProjectSubsectionLayout({
   const allImages = project.stills.flat();
   const [lightbox, setLightbox] = useState<{ images: string[]; index: number } | null>(null);
 
+  function videosAfterRow(rowIndex: number) {
+    return (project.videos ?? []).filter((v) => v.afterRow === rowIndex);
+  }
+
   function openLightbox(src: string) {
     const index = allImages.indexOf(src);
     setLightbox({ images: allImages, index: index >= 0 ? index : 0 });
@@ -197,6 +202,16 @@ export function ProjectSubsectionLayout({
                     slug={`${project.slug}-mobile-${rowIndex}-extra-${imgIndex}`}
                   />
                 </button>
+              ))}
+
+              {videosAfterRow(rowIndex).map((v) => (
+                <div key={`mobile-video-after-${rowIndex}-${v.src}`} className={`col-span-2 w-full ${v.interactive ? "aspect-[9/16]" : "aspect-[4/5] sm:aspect-[3/4]"}`}>
+                  {v.interactive ? (
+                    <ProjectVideoPlayer src={v.src} poster={v.poster} />
+                  ) : (
+                    <ProjectVideo src={v.src} />
+                  )}
+                </div>
               ))}
             </div>
           ))}
@@ -288,41 +303,69 @@ export function ProjectSubsectionLayout({
           </div>
         </section>
 
-        {detailRows.slice(1).map((row, sectionIndex) => (
-          <section
-            key={`${project.slug}-detail-section-${sectionIndex}`}
-            className="flex h-[70vh] flex-row"
-          >
-            <div className="w-1/2 pr-20 flex justify-end items-start">
-              {sectionIndex === 0 ? (
-                <p
-                  className="text-[11px] md:text-xs font-bold leading-tight max-w-xs opacity-85"
-                  style={{ color: colors.textColor }}
-                >
-                  {secondaryDescription}
-                </p>
-              ) : null}
-            </div>
-
+        {videosAfterRow(0).map((v) => (
+          <section key={`desktop-video-after-0-${v.src}`} className={`flex flex-row ${v.interactive ? "h-[90vh]" : "h-[70vh]"}`}>
+            <div className="w-1/2 pr-20 flex justify-end items-end" />
             <div className="w-1/2 h-full pr-8">
-              <div className="flex h-full w-full gap-3">
-                {row.map((src, imgIndex) => (
-                  <button
-                    key={`${project.slug}-detail-${sectionIndex}-image-${imgIndex}`}
-                    className="flex-1 min-w-0 h-full cursor-pointer"
-                    onClick={() => openLightbox(src)}
-                  >
-                    <AnimatedWorkImage
-                      src={src}
-                      alt={project.title}
-                      slug={`${project.slug}-detail-${sectionIndex}-${imgIndex}`}
-                      className="h-full w-full"
-                    />
-                  </button>
-                ))}
-              </div>
+              {v.interactive ? (
+                <ProjectVideoPlayer src={v.src} />
+              ) : (
+                <ProjectVideo src={v.src} />
+              )}
             </div>
           </section>
+        ))}
+
+        {detailRows.slice(1).map((row, sectionIndex) => (
+          <div key={`${project.slug}-detail-group-${sectionIndex}`} className="contents">
+            <section
+              key={`${project.slug}-detail-section-${sectionIndex}`}
+              className="flex h-[70vh] flex-row"
+            >
+              <div className="w-1/2 pr-20 flex justify-end items-start">
+                {sectionIndex === 0 ? (
+                  <p
+                    className="text-[11px] md:text-xs font-bold leading-tight max-w-xs opacity-85"
+                    style={{ color: colors.textColor }}
+                  >
+                    {secondaryDescription}
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="w-1/2 h-full pr-8">
+                <div className="flex h-full w-full gap-3">
+                  {row.map((src, imgIndex) => (
+                    <button
+                      key={`${project.slug}-detail-${sectionIndex}-image-${imgIndex}`}
+                      className="flex-1 min-w-0 h-full cursor-pointer"
+                      onClick={() => openLightbox(src)}
+                    >
+                      <AnimatedWorkImage
+                        src={src}
+                        alt={project.title}
+                        slug={`${project.slug}-detail-${sectionIndex}-${imgIndex}`}
+                        className="h-full w-full"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {videosAfterRow(sectionIndex + 1).map((v) => (
+              <section key={`desktop-video-after-${sectionIndex + 1}-${v.src}`} className={`flex flex-row ${v.interactive ? "h-[90vh]" : "h-[70vh]"}`}>
+                <div className="w-1/2 pr-20 flex justify-end items-end" />
+                <div className="w-1/2 h-full pr-8">
+                  {v.interactive ? (
+                    <ProjectVideoPlayer src={v.src} poster={v.poster} />
+                  ) : (
+                    <ProjectVideo src={v.src} />
+                  )}
+                </div>
+              </section>
+            ))}
+          </div>
         ))}
 
         {project.video && (
