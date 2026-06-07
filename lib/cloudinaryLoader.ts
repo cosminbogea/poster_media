@@ -13,9 +13,26 @@ export function cloudinaryLoader({ src, width, quality }: ImageLoaderProps): str
 }
 
 export function cloudinaryVideoSrc(src: string): string {
-  return src.replace("/video/upload/", "/video/upload/f_auto,q_auto/");
+  return src.replace("/video/upload/", "/video/upload/f_auto,q_auto,w_1280/");
+}
+
+// Returns the original uploaded file — no re-encoding, served directly from CDN.
+// Only works correctly when the source was encoded with -movflags +faststart.
+export function cloudinaryVideoSrcHD(src: string): string {
+  return src;
+}
+
+// Derives a poster thumbnail from a Cloudinary video URL (first frame, JPEG)
+export function cloudinaryVideoPosterSrc(src: string): string {
+  return src
+    .replace("/video/upload/", "/video/upload/f_auto,q_auto,w_1280,so_0/")
+    .replace(/\.[^.]+$/, ".jpg");
 }
 
 export function cloudinaryPosterSrc(src: string): string {
   return src.replace("/image/upload/", "/image/upload/f_auto,q_auto,w_1200/");
+}
+
+export function cloudinaryImageSrc(src: string, width = 1920): string {
+  return src.replace("/image/upload/", `/image/upload/f_auto,q_auto,w_${width}/`);
 }

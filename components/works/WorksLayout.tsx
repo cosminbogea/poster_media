@@ -200,6 +200,8 @@ export function WorksLayout({
 
               <div className="hidden h-full w-full gap-3 md:flex">
                 {(project.coverDesktop ?? project.stills[0]).map((src, imageIndex) => {
+                  const n = (project.coverDesktop ?? project.stills[0]).length;
+                  const vw = Math.round(50 / n);
                   return (
                     <div
                       key={`${project.slug}-image-${imageIndex}`}
@@ -211,7 +213,7 @@ export function WorksLayout({
                         slug={`${project.slug}-${imageIndex}`}
                         className="h-full w-full"
                         priority={isFirstProject}
-                        sizes="(max-width: 768px) 100vw, 50vw"
+                        sizes={`(max-width: 768px) 100vw, ${vw}vw`}
                       />
                     </div>
                   );

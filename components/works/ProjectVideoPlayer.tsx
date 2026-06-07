@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useId } from "react";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useTheme } from "@/components/theme-context";
-import { cloudinaryVideoSrc } from "@/lib/cloudinaryLoader";
+import { cloudinaryVideoSrc, cloudinaryVideoPosterSrc } from "@/lib/cloudinaryLoader";
 
 interface ProjectVideoPlayerProps {
   src: string;
@@ -12,10 +12,28 @@ interface ProjectVideoPlayerProps {
 
 export function ProjectVideoPlayer({ src, poster }: ProjectVideoPlayerProps) {
   const { colors } = useTheme();
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
+  const [isNearViewport, setIsNearViewport] = useState(false);
   const id = useId();
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsNearViewport(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     function onOtherVideoPlaying(e: Event) {
@@ -52,8 +70,11 @@ export function ProjectVideoPlayer({ src, poster }: ProjectVideoPlayerProps) {
     setMuted(video.muted);
   }
 
+  const resolvedPoster = poster ?? cloudinaryVideoPosterSrc(src);
+
   return (
     <div
+      ref={containerRef}
       className="relative w-full h-full overflow-hidden"
       style={{ background: colors.background }}
     >
@@ -61,9 +82,9 @@ export function ProjectVideoPlayer({ src, poster }: ProjectVideoPlayerProps) {
         ref={videoRef}
         className="w-full h-full object-cover cursor-pointer"
         src={cloudinaryVideoSrc(src)}
-        poster={poster}
+        poster={resolvedPoster}
         playsInline
-        preload="metadata"
+        preload={isNearViewport ? "metadata" : "none"}
         onClick={togglePlay}
         onEnded={() => setPlaying(false)}
       />

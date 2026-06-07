@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { cloudinaryImageSrc } from "@/lib/cloudinaryLoader";
 
 interface ImageLightboxProps {
   images: string[];
@@ -44,6 +45,18 @@ export function ImageLightbox({
     return () => window.removeEventListener("keydown", handleKey);
   });
 
+  // Preload adjacent images so navigation feels instant
+  useEffect(() => {
+    const indices = [
+      (currentIndex + 1) % images.length,
+      (currentIndex - 1 + images.length) % images.length,
+    ];
+    indices.forEach((i) => {
+      const img = new window.Image();
+      img.src = cloudinaryImageSrc(images[i]);
+    });
+  }, [currentIndex, images]);
+
   function navigate(dir: number) {
     setDirection(dir);
     setCurrentIndex((prev) => (prev + dir + images.length) % images.length);
@@ -79,7 +92,7 @@ export function ImageLightbox({
         <AnimatePresence mode="wait" custom={direction}>
           <motion.img
             key={currentIndex}
-            src={images[currentIndex]}
+            src={cloudinaryImageSrc(images[currentIndex])}
             alt={alt}
             custom={direction}
             initial={{ opacity: 0, scale: 0.96, x: direction * 40 }}

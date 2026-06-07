@@ -7,7 +7,7 @@ import { AnimatedWorkImage } from "./AnimatedWorkImage";
 import { ImageLightbox } from "./ImageLightbox";
 import { WorkMeta } from "./WorkMeta";
 import { ProjectVideo } from "./ProjectVideo";
-import { ProjectVideoPlayer } from "./ProjectVideoPlayer";
+import { ProjectVideoShowcase } from "./ProjectVideoShowcase";
 
 
 interface ProjectSubsectionLayoutProps {
@@ -207,7 +207,7 @@ export function ProjectSubsectionLayout({
               {videosAfterRow(rowIndex).map((v) => (
                 <div key={`mobile-video-after-${rowIndex}-${v.src}`} className={`col-span-2 w-full ${v.interactive ? "aspect-[9/16]" : "aspect-[4/5] sm:aspect-[3/4]"}`}>
                   {v.interactive ? (
-                    <ProjectVideoPlayer src={v.src} poster={v.poster} />
+                    <ProjectVideoShowcase src={v.src} poster={v.poster} />
                   ) : (
                     <ProjectVideo src={v.src} />
                   )}
@@ -285,7 +285,9 @@ export function ProjectSubsectionLayout({
 
           <div className="w-1/2 h-full pr-8">
             <div className="flex h-full w-full gap-3">
-              {detailRows[0].map((src, imgIndex) => (
+              {detailRows[0].map((src, imgIndex) => {
+                const vw = Math.round(50 / detailRows[0].length);
+                return (
                 <button
                   key={`${project.slug}-hero-image-${imgIndex}`}
                   className="flex-1 min-w-0 h-full cursor-pointer"
@@ -296,9 +298,12 @@ export function ProjectSubsectionLayout({
                     alt={project.title}
                     slug={`${project.slug}-hero-${imgIndex}`}
                     className="h-full w-full"
+                    priority={true}
+                    sizes={`(max-width: 768px) 50vw, ${vw}vw`}
                   />
                 </button>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -308,7 +313,7 @@ export function ProjectSubsectionLayout({
             <div className="w-1/2 pr-20 flex justify-end items-end" />
             <div className="w-1/2 h-full pr-8">
               {v.interactive ? (
-                <ProjectVideoPlayer src={v.src} />
+                <ProjectVideoShowcase src={v.src} />
               ) : (
                 <ProjectVideo src={v.src} />
               )}
@@ -335,7 +340,10 @@ export function ProjectSubsectionLayout({
 
               <div className="w-1/2 h-full pr-8">
                 <div className="flex h-full w-full gap-3">
-                  {row.map((src, imgIndex) => (
+                  {row.map((src, imgIndex) => {
+                    const vw = Math.round(50 / row.length);
+                    const mobilevw = row.length === 1 ? 100 : 50;
+                    return (
                     <button
                       key={`${project.slug}-detail-${sectionIndex}-image-${imgIndex}`}
                       className="flex-1 min-w-0 h-full cursor-pointer"
@@ -346,9 +354,11 @@ export function ProjectSubsectionLayout({
                         alt={project.title}
                         slug={`${project.slug}-detail-${sectionIndex}-${imgIndex}`}
                         className="h-full w-full"
+                        sizes={`(max-width: 768px) ${mobilevw}vw, ${vw}vw`}
                       />
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </section>
@@ -358,7 +368,7 @@ export function ProjectSubsectionLayout({
                 <div className="w-1/2 pr-20 flex justify-end items-end" />
                 <div className="w-1/2 h-full pr-8">
                   {v.interactive ? (
-                    <ProjectVideoPlayer src={v.src} poster={v.poster} />
+                    <ProjectVideoShowcase src={v.src} poster={v.poster} />
                   ) : (
                     <ProjectVideo src={v.src} />
                   )}
