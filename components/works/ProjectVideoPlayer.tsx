@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useId } from "react";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useTheme } from "@/components/theme-context";
 import { cloudinaryVideoSrc } from "@/lib/cloudinaryLoader";
@@ -15,11 +15,28 @@ export function ProjectVideoPlayer({ src, poster }: ProjectVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
+  const id = useId();
+
+  useEffect(() => {
+    function onOtherVideoPlaying(e: Event) {
+      const { id: activeId } = (e as CustomEvent<{ id: string }>).detail;
+      if (activeId !== id) {
+        const video = videoRef.current;
+        if (video && !video.paused) {
+          video.pause();
+          setPlaying(false);
+        }
+      }
+    }
+    window.addEventListener("videoplay", onOtherVideoPlaying);
+    return () => window.removeEventListener("videoplay", onOtherVideoPlaying);
+  }, [id]);
 
   function togglePlay() {
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
+      window.dispatchEvent(new CustomEvent("videoplay", { detail: { id } }));
       video.play();
       setPlaying(true);
     } else {

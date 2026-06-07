@@ -98,6 +98,25 @@ const SMADONNATA = {
 
 export const projects: Project[] = [
   {
+    slug: "rbr-documentary-series",
+    title: "RINASCITA BASKET RIMINI",
+    subtitle: "Documentary Series",
+    description:
+      "A cinematic social-first documentary series exploring the human side of basketball through the voices, stories and passion surrounding Rinascita Basket Rimini.",
+    secondaryDescription:
+      "A documentary series created by Poster Media in collaboration with Rinascita Basket Rimini and Dole Italia to tell the story of basketball through the voices of the people who truly live it. From team leaders and rising young talents to lifelong supporters, each episode explores the human side of the sport: passion, sacrifice, identity and belonging. A cinematic social-first format designed to go beyond the court and capture the deep connection between Rimini, its basketball culture and its fans. Directed by Jacopo Semprini.",
+    date: "2026",
+    location: "Rimini, Italia",
+    coverMobile: RBRDOCS.c1,
+    coverDesktop: [RBRDOCS.c1, RBRDOCS.c2, RBRDOCS.c3],
+    stills: [[RBRDOCS.c1, RBRDOCS.c2, RBRDOCS.c3]],
+    videos: [
+      { src: RBRDOCS.v1, afterRow: 0, interactive: true, poster: RBRDOCS.c1 },
+      { src: RBRDOCS.v2, afterRow: 0, interactive: true, poster: RBRDOCS.c2 },
+      { src: RBRDOCS.v3, afterRow: 0, interactive: true, poster: RBRDOCS.c3 },
+    ],
+  },
+  {
     slug: "smadonnata",
     title: "AUDI, VOLKSWAGEN & ŠKODA",
     subtitle: "social media production",
@@ -118,25 +137,6 @@ export const projects: Project[] = [
       { src: SMADONNATA.audv, afterRow: 0, interactive: true },
       { src: SMADONNATA.skv, afterRow: 1, interactive: true },
       { src: SMADONNATA.vwv, afterRow: 2, interactive: true },
-    ],
-  },
-  {
-    slug: "rbr-documentary-series",
-    title: "RINASCITA BASKET RIMINI",
-    subtitle: "Documentary Series",
-    description:
-      "A cinematic social-first documentary series exploring the human side of basketball through the voices, stories and passion surrounding Rinascita Basket Rimini.",
-    secondaryDescription:
-      "A documentary series created by Poster Media in collaboration with Rinascita Basket Rimini and Dole Italia to tell the story of basketball through the voices of the people who truly live it. From team leaders and rising young talents to lifelong supporters, each episode explores the human side of the sport: passion, sacrifice, identity and belonging. A cinematic social-first format designed to go beyond the court and capture the deep connection between Rimini, its basketball culture and its fans. Directed by Jacopo Semprini.",
-    date: "2026",
-    location: "Rimini, Italia",
-    coverMobile: RBRDOCS.c1,
-    coverDesktop: [RBRDOCS.c1, RBRDOCS.c2, RBRDOCS.c3],
-    stills: [[RBRDOCS.c1, RBRDOCS.c2, RBRDOCS.c3]],
-    videos: [
-      { src: RBRDOCS.v1, afterRow: 0, interactive: true, poster: RBRDOCS.c1 },
-      { src: RBRDOCS.v2, afterRow: 0, interactive: true, poster: RBRDOCS.c2 },
-      { src: RBRDOCS.v3, afterRow: 0, interactive: true, poster: RBRDOCS.c3 },
     ],
   },
   {
