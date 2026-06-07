@@ -309,7 +309,7 @@ export function ProjectSubsectionLayout({
         </section>
 
         {videosAfterRow(0).map((v) => (
-          <section key={`desktop-video-after-0-${v.src}`} className={`flex flex-row ${v.interactive ? "h-[90vh]" : "h-[70vh]"}`}>
+          <section key={`desktop-video-after-0-${v.src}`} className={`flex flex-row ${v.interactive ? "h-[81vh]" : "h-[70vh]"}`}>
             <div className="w-1/2 pr-20 flex justify-end items-end" />
             <div className="w-1/2 h-full pr-8">
               {v.interactive ? (
@@ -364,7 +364,7 @@ export function ProjectSubsectionLayout({
             </section>
 
             {videosAfterRow(sectionIndex + 1).map((v) => (
-              <section key={`desktop-video-after-${sectionIndex + 1}-${v.src}`} className={`flex flex-row ${v.interactive ? "h-[90vh]" : "h-[70vh]"}`}>
+              <section key={`desktop-video-after-${sectionIndex + 1}-${v.src}`} className={`flex flex-row ${v.interactive ? "h-[81vh]" : "h-[70vh]"}`}>
                 <div className="w-1/2 pr-20 flex justify-end items-end" />
                 <div className="w-1/2 h-full pr-8">
                   {v.interactive ? (
