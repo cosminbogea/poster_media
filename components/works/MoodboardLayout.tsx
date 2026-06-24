@@ -61,7 +61,7 @@ export function MoodboardLayout({ projects, onImageClick }: MoodboardLayoutProps
                 width={1976}
                 height={1112}
                 className="block h-auto w-full"
-                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                sizes="(max-width: 768px) 50vw, 50vw"
                 priority={isHighPriority}
                 loading={isHighPriority ? "eager" : "lazy"}
                 fetchPriority={isHighPriority ? "high" : "auto"}

@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { Play, X } from "lucide-react";
-import { cloudinaryVideoSrc, cloudinaryVideoSrcHD, cloudinaryVideoPosterSrc } from "@/lib/cloudinaryLoader";
+import { cloudinaryVideoSrc, cloudinaryVideoSrcHD, cloudinaryVideoPosterSrc, cloudinaryPosterSrc } from "@/lib/cloudinaryLoader";
 import { ProjectVideoPlayer } from "./ProjectVideoPlayer";
 
 interface ProjectVideoShowcaseProps {
@@ -72,7 +72,7 @@ export function ProjectVideoShowcase({ src, poster }: ProjectVideoShowcaseProps)
     setModalOpen(false);
   }
 
-  const resolvedPoster = poster ?? cloudinaryVideoPosterSrc(src);
+  const resolvedPoster = poster ? cloudinaryPosterSrc(poster) : cloudinaryVideoPosterSrc(src);
 
   return (
     <>

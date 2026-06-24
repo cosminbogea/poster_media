@@ -21,6 +21,7 @@ export interface Project {
     poster?: string;
     fullFilmUrl?: string;
   }>;
+  videosOnly?: boolean;
 }
 
 export interface AboutData {

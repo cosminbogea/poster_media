@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useId } from "react";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useTheme } from "@/components/theme-context";
-import { cloudinaryVideoSrc, cloudinaryVideoPosterSrc } from "@/lib/cloudinaryLoader";
+import { cloudinaryVideoSrc, cloudinaryVideoPosterSrc, cloudinaryPosterSrc } from "@/lib/cloudinaryLoader";
 
 interface ProjectVideoPlayerProps {
   src: string;
@@ -70,7 +70,7 @@ export function ProjectVideoPlayer({ src, poster }: ProjectVideoPlayerProps) {
     setMuted(video.muted);
   }
 
-  const resolvedPoster = poster ?? cloudinaryVideoPosterSrc(src);
+  const resolvedPoster = poster ? cloudinaryPosterSrc(poster) : cloudinaryVideoPosterSrc(src);
 
   return (
     <div

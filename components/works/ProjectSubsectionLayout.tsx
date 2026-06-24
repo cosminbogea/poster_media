@@ -167,55 +167,69 @@ export function ProjectSubsectionLayout({
           <WorkMeta date={project.date} location={project.location} />
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
-          {project.stills.map((row, rowIndex) => (
-            <div key={`${project.slug}-mobile-row-${rowIndex}`} className="contents">
-              {row.length >= 2 ? (
-                <AdaptiveMobilePair
-                  leftSrc={row[0]}
-                  rightSrc={row[1]}
-                  alt={project.title}
-                  leftSlug={`${project.slug}-mobile-${rowIndex}-0`}
-                  rightSlug={`${project.slug}-mobile-${rowIndex}-1`}
-                  onClickLeft={() => openLightbox(row[0])}
-                  onClickRight={() => openLightbox(row[1])}
-                />
-              ) : row.length === 1 ? (
-                <button className="col-span-2 cursor-pointer" onClick={() => openLightbox(row[0])}>
-                  <AdaptiveMobileStill
-                    src={row[0]}
+        {project.videosOnly ? (
+          <div className="space-y-4">
+            {(project.videos ?? []).map((v) => (
+              <div key={v.src} className={`w-full ${v.interactive ? "aspect-[9/16]" : "aspect-[4/5] sm:aspect-[3/4]"}`}>
+                {v.interactive ? (
+                  <ProjectVideoShowcase src={v.src} poster={v.poster} />
+                ) : (
+                  <ProjectVideo src={v.src} />
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-2">
+            {project.stills.map((row, rowIndex) => (
+              <div key={`${project.slug}-mobile-row-${rowIndex}`} className="contents">
+                {row.length >= 2 ? (
+                  <AdaptiveMobilePair
+                    leftSrc={row[0]}
+                    rightSrc={row[1]}
                     alt={project.title}
-                    slug={`${project.slug}-mobile-${rowIndex}-0`}
+                    leftSlug={`${project.slug}-mobile-${rowIndex}-0`}
+                    rightSlug={`${project.slug}-mobile-${rowIndex}-1`}
+                    onClickLeft={() => openLightbox(row[0])}
+                    onClickRight={() => openLightbox(row[1])}
                   />
-                </button>
-              ) : null}
+                ) : row.length === 1 ? (
+                  <button className="col-span-2 cursor-pointer" onClick={() => openLightbox(row[0])}>
+                    <AdaptiveMobileStill
+                      src={row[0]}
+                      alt={project.title}
+                      slug={`${project.slug}-mobile-${rowIndex}-0`}
+                    />
+                  </button>
+                ) : null}
 
-              {row.slice(2).map((src, imgIndex) => (
-                <button
-                  key={`${project.slug}-mobile-${rowIndex}-extra-${imgIndex}`}
-                  className="col-span-2 cursor-pointer"
-                  onClick={() => openLightbox(src)}
-                >
-                  <AdaptiveMobileStill
-                    src={src}
-                    alt={project.title}
-                    slug={`${project.slug}-mobile-${rowIndex}-extra-${imgIndex}`}
-                  />
-                </button>
-              ))}
+                {row.slice(2).map((src, imgIndex) => (
+                  <button
+                    key={`${project.slug}-mobile-${rowIndex}-extra-${imgIndex}`}
+                    className="col-span-2 cursor-pointer"
+                    onClick={() => openLightbox(src)}
+                  >
+                    <AdaptiveMobileStill
+                      src={src}
+                      alt={project.title}
+                      slug={`${project.slug}-mobile-${rowIndex}-extra-${imgIndex}`}
+                    />
+                  </button>
+                ))}
 
-              {videosAfterRow(rowIndex).map((v) => (
-                <div key={`mobile-video-after-${rowIndex}-${v.src}`} className={`col-span-2 w-full ${v.interactive ? "aspect-[9/16]" : "aspect-[4/5] sm:aspect-[3/4]"}`}>
-                  {v.interactive ? (
-                    <ProjectVideoShowcase src={v.src} poster={v.poster} />
-                  ) : (
-                    <ProjectVideo src={v.src} />
-                  )}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+                {videosAfterRow(rowIndex).map((v) => (
+                  <div key={`mobile-video-after-${rowIndex}-${v.src}`} className={`col-span-2 w-full ${v.interactive ? "aspect-[9/16]" : "aspect-[4/5] sm:aspect-[3/4]"}`}>
+                    {v.interactive ? (
+                      <ProjectVideoShowcase src={v.src} poster={v.poster} />
+                    ) : (
+                      <ProjectVideo src={v.src} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
 
         {project.video && (
           <>
@@ -283,29 +297,30 @@ export function ProjectSubsectionLayout({
             </div>
           </div>
 
-          <div className="w-1/2 h-full pr-8">
-            <div className="flex h-full w-full gap-3">
-              {detailRows[0].map((src, imgIndex) => {
-                const vw = Math.round(50 / detailRows[0].length);
-                return (
-                <button
-                  key={`${project.slug}-hero-image-${imgIndex}`}
-                  className="flex-1 min-w-0 h-full cursor-pointer"
-                  onClick={() => openLightbox(src)}
-                >
-                  <AnimatedWorkImage
-                    src={src}
-                    alt={project.title}
-                    slug={`${project.slug}-hero-${imgIndex}`}
-                    className="h-full w-full"
-                    priority={true}
-                    sizes={`(max-width: 768px) 50vw, ${vw}vw`}
-                  />
-                </button>
-                );
-              })}
+          {detailRows[0]?.length > 0 && (
+            <div className="w-1/2 h-full pr-8">
+              <div className="flex h-full w-full gap-3">
+                {detailRows[0].map((src, imgIndex) => {
+                  return (
+                  <button
+                    key={`${project.slug}-hero-image-${imgIndex}`}
+                    className="flex-1 min-w-0 h-full cursor-pointer"
+                    onClick={() => openLightbox(src)}
+                  >
+                    <AnimatedWorkImage
+                      src={src}
+                      alt={project.title}
+                      slug={`${project.slug}-hero-${imgIndex}`}
+                      className="h-full w-full"
+                      priority={true}
+                      sizes="(max-width: 768px) 50vw, 100vw"
+                    />
+                  </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </section>
 
         {videosAfterRow(0).map((v) => (
@@ -321,7 +336,7 @@ export function ProjectSubsectionLayout({
           </section>
         ))}
 
-        {detailRows.slice(1).map((row, sectionIndex) => (
+        {!project.videosOnly && detailRows.slice(1).map((row, sectionIndex) => (
           <div key={`${project.slug}-detail-group-${sectionIndex}`} className="contents">
             <section
               key={`${project.slug}-detail-section-${sectionIndex}`}
@@ -341,7 +356,6 @@ export function ProjectSubsectionLayout({
               <div className="w-1/2 h-full pr-8">
                 <div className="flex h-full w-full gap-3">
                   {row.map((src, imgIndex) => {
-                    const vw = Math.round(50 / row.length);
                     const mobilevw = row.length === 1 ? 100 : 50;
                     return (
                     <button
@@ -354,7 +368,7 @@ export function ProjectSubsectionLayout({
                         alt={project.title}
                         slug={`${project.slug}-detail-${sectionIndex}-${imgIndex}`}
                         className="h-full w-full"
-                        sizes={`(max-width: 768px) ${mobilevw}vw, ${vw}vw`}
+                        sizes={`(max-width: 768px) ${mobilevw}vw, 100vw`}
                       />
                     </button>
                     );

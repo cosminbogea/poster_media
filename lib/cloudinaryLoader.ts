@@ -1,38 +1,35 @@
 import type { ImageLoaderProps } from "next/image";
 
-/**
- * Custom Next.js image loader that injects Cloudinary transformation params
- * directly into the URL, bypassing the Next.js image optimization proxy.
- *
- * Result: browser fetches from Cloudinary CDN edge directly (1 hop instead of 2).
- * Cloudinary handles f_auto (AVIF/WebP negotiation), quality, and resizing.
- */
-export function cloudinaryLoader({ src, width, quality }: ImageLoaderProps): string {
-  const transforms = `f_auto,q_auto,w_${width}`;
-  return src.replace("/image/upload/", `/image/upload/${transforms}/`);
+// Snaps to the nearest pre-generated variant width.
+// Next.js deviceSizes includes 750, 2048, 3840 which we didn't generate —
+// snapping avoids 404s and always serves the best available variant.
+const WIDTHS = [640, 828, 1080, 1200, 1920];
+
+export function cloudinaryLoader({ src, width }: ImageLoaderProps): string {
+  const w = WIDTHS.find((w) => w >= width) ?? 1920;
+  return `${src}-${w}.webp`;
 }
 
+// Videos are served as-is from R2 (MP4).
 export function cloudinaryVideoSrc(src: string): string {
-  return src.replace("/video/upload/", "/video/upload/q_auto,w_1280/");
+  return src;
 }
 
-// Returns the original uploaded file — no re-encoding, served directly from CDN.
-// Only works correctly when the source was encoded with -movflags +faststart.
 export function cloudinaryVideoSrcHD(src: string): string {
   return src;
 }
 
-// Derives a poster thumbnail from a Cloudinary video URL (first frame, JPEG)
+// Derives a poster from a video URL: video-01.mp4 → video-01-poster.jpg
 export function cloudinaryVideoPosterSrc(src: string): string {
-  return src
-    .replace("/video/upload/", "/video/upload/q_auto,w_1280,so_0/")
-    .replace(/\.[^.]+$/, ".jpg");
+  return src.replace(/\.mp4$/i, "-poster.jpg");
 }
 
+// Constructs a 1200px WebP from an image base URL (used for video poster= attr).
 export function cloudinaryPosterSrc(src: string): string {
-  return src.replace("/image/upload/", "/image/upload/f_auto,q_auto,w_1200/");
+  return `${src}-1200.webp`;
 }
 
+// Full-res image for lightbox — defaults to 1920px.
 export function cloudinaryImageSrc(src: string, width = 1920): string {
-  return src.replace("/image/upload/", `/image/upload/f_auto,q_auto,w_${width}/`);
+  return `${src}-${width}.webp`;
 }

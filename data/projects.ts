@@ -1,106 +1,106 @@
 import { Project } from "@/types/project";
 
+const R2 = "https://pub-a7b3ff1651a3482b9a2e460b704d5b87.r2.dev";
+
 const JUSTIN = {
-  s1: "https://res.cloudinary.com/djhods3my/image/upload/v1774705725/still-01_ves5rj.jpg",
-  s2: "https://res.cloudinary.com/djhods3my/image/upload/v1774705725/still-02_hlywsw.jpg",
-  s3: "https://res.cloudinary.com/djhods3my/image/upload/v1774705725/still-03_cbhq3y.jpg",
-  s4: "https://res.cloudinary.com/djhods3my/image/upload/v1774705726/still-04_fdjnix.jpg",
-  s5: "https://res.cloudinary.com/djhods3my/image/upload/v1774705726/still-05_jiqvud.jpg",
-  s6: "https://res.cloudinary.com/djhods3my/image/upload/v1774705726/still-06_qiabqx.jpg",
-  s7: "https://res.cloudinary.com/djhods3my/image/upload/v1774705726/still-07_zgmyjh.jpg",
-  s8: "https://res.cloudinary.com/djhods3my/image/upload/v1774705727/still-08_asfcks.jpg",
-  s9: "https://res.cloudinary.com/djhods3my/image/upload/v1774705727/still-09_himzxb.jpg",
-  s10: "https://res.cloudinary.com/djhods3my/image/upload/v1774705727/still-10_ew3vxc.jpg",
-  s11: "https://res.cloudinary.com/djhods3my/image/upload/v1774705727/still-11_b3uvyb.jpg",
-  s12: "https://res.cloudinary.com/djhods3my/image/upload/v1774705727/still-12_pq5ldz.jpg",
-  s13: "https://res.cloudinary.com/djhods3my/image/upload/v1774705728/still-13_juchmd.jpg",
-  s14: "https://res.cloudinary.com/djhods3my/image/upload/v1774705729/still-14_cyyqgs.jpg",
-  s15: "https://res.cloudinary.com/djhods3my/image/upload/v1774705731/still-15_nk6yqr.jpg",
-  s16: "https://res.cloudinary.com/djhods3my/image/upload/v1774705731/still-16_aksdgn.jpg",
-  s17: "https://res.cloudinary.com/djhods3my/image/upload/v1774705731/still-17_yparti.jpg",
-  s18: "https://res.cloudinary.com/djhods3my/image/upload/v1774705732/still-18_ddkk2a.jpg",
-  s19: "https://res.cloudinary.com/djhods3my/image/upload/v1774705731/still-19_mxe1rd.jpg",
-  s20: "https://res.cloudinary.com/djhods3my/image/upload/v1774705731/still-20_anfwtr.jpg",
-  s21: "https://res.cloudinary.com/djhods3my/image/upload/v1774705733/still-21_rlzjap.jpg",
+  s1: `${R2}/justin/still-01`,
+  s2: `${R2}/justin/still-02`,
+  s3: `${R2}/justin/still-03`,
+  s4: `${R2}/justin/still-04`,
+  s5: `${R2}/justin/still-05`,
+  s6: `${R2}/justin/still-06`,
+  s7: `${R2}/justin/still-07`,
+  s8: `${R2}/justin/still-08`,
+  s9: `${R2}/justin/still-09`,
+  s10: `${R2}/justin/still-10`,
+  s11: `${R2}/justin/still-11`,
+  s12: `${R2}/justin/still-12`,
+  s13: `${R2}/justin/still-13`,
+  s14: `${R2}/justin/still-14`,
+  s15: `${R2}/justin/still-15`,
+  s16: `${R2}/justin/still-16`,
+  s17: `${R2}/justin/still-17`,
+  s18: `${R2}/justin/still-18`,
+  s19: `${R2}/justin/still-19`,
+  s20: `${R2}/justin/still-20`,
+  s21: `${R2}/justin/still-21`,
 };
 
 const BRYAN = {
-  s1: "https://res.cloudinary.com/djhods3my/image/upload/v1773572266/still-01_nnsudo.webp",
-  s2: "https://res.cloudinary.com/djhods3my/image/upload/v1773572266/still-02_btkf5y.webp",
-  s3: "https://res.cloudinary.com/djhods3my/image/upload/v1773572267/still-03_tddbhv.webp",
-  s4: "https://res.cloudinary.com/djhods3my/image/upload/v1773572267/still-04_pecgig.webp",
-  s5: "https://res.cloudinary.com/djhods3my/image/upload/v1773572268/still-05_ac2j18.webp",
+  s1: `${R2}/bryan/still-01`,
+  s2: `${R2}/bryan/still-02`,
+  s3: `${R2}/bryan/still-03`,
+  s4: `${R2}/bryan/still-04`,
+  s5: `${R2}/bryan/still-05`,
+  v1: `${R2}/bryan/video-01.mp4`,
 };
 
 const Q3 = {
-  s1: "https://res.cloudinary.com/djhods3my/image/upload/v1773573317/still-01_rareue.webp",
-  s2: "https://res.cloudinary.com/djhods3my/image/upload/v1773573317/still-02_hvlteh.webp",
-  s3: "https://res.cloudinary.com/djhods3my/image/upload/v1773573318/still-03_b803lq.webp",
-  s4: "https://res.cloudinary.com/djhods3my/image/upload/v1773573318/still-04_zfe8rc.webp",
-  s5: "https://res.cloudinary.com/djhods3my/image/upload/v1773573318/still-05_dgogfb.webp",
-  s6: "https://res.cloudinary.com/djhods3my/image/upload/v1773573320/still-06_tddbpa.webp",
-  s7: "https://res.cloudinary.com/djhods3my/image/upload/v1773573321/still-07_ksotbd.webp",
-  s8: "https://res.cloudinary.com/djhods3my/image/upload/v1773573321/still-08_nrmzud.webp",
-  s9: "https://res.cloudinary.com/djhods3my/image/upload/v1773573322/still-09_txtazy.webp",
-  s10: "https://res.cloudinary.com/djhods3my/image/upload/v1773573323/still-10_ekyuq2.webp",
-  s11: "https://res.cloudinary.com/djhods3my/image/upload/v1773573324/still-11_ckvs1d.webp",
-  s12: "https://res.cloudinary.com/djhods3my/image/upload/v1773573325/still-12_fdqarg.webp",
-  s13: "https://res.cloudinary.com/djhods3my/image/upload/v1773573326/still-13_dnjzft.webp",
+  s1: `${R2}/q3/still-01`,
+  s2: `${R2}/q3/still-02`,
+  s3: `${R2}/q3/still-03`,
+  s4: `${R2}/q3/still-04`,
+  s5: `${R2}/q3/still-05`,
+  s6: `${R2}/q3/still-06`,
+  s7: `${R2}/q3/still-07`,
+  s8: `${R2}/q3/still-08`,
+  s9: `${R2}/q3/still-09`,
+  s10: `${R2}/q3/still-10`,
+  s11: `${R2}/q3/still-11`,
+  s12: `${R2}/q3/still-12`,
+  s13: `${R2}/q3/still-13`,
 };
 
 const Q4 = {
-  s1: "https://res.cloudinary.com/djhods3my/image/upload/v1773573341/still-01_trskoh.webp",
-  s2: "https://res.cloudinary.com/djhods3my/image/upload/v1773573341/still-02_elzo6z.webp",
-  s3: "https://res.cloudinary.com/djhods3my/image/upload/v1773573342/still-03_craqn0.webp",
-  s4: "https://res.cloudinary.com/djhods3my/image/upload/v1773573343/still-04_jeu83w.webp",
-  s5: "https://res.cloudinary.com/djhods3my/image/upload/v1773573344/still-05_ybuf0f.webp",
-  s6: "https://res.cloudinary.com/djhods3my/image/upload/v1773573345/still-06_czhey3.webp",
+  s1: `${R2}/q4/still-01`,
+  s2: `${R2}/q4/still-02`,
+  s3: `${R2}/q4/still-03`,
+  s4: `${R2}/q4/still-04`,
+  s5: `${R2}/q4/still-05`,
+  s6: `${R2}/q4/still-06`,
 };
 
 const RBR = {
-  s1: "https://res.cloudinary.com/djhods3my/image/upload/v1773573362/still-01_dxt0s0.webp",
-  s2: "https://res.cloudinary.com/djhods3my/image/upload/v1773573363/still-02_gamwln.webp",
-  s3: "https://res.cloudinary.com/djhods3my/image/upload/v1773573364/still-03_lg1bho.webp",
-  s4: "https://res.cloudinary.com/djhods3my/image/upload/v1773573366/still-04_uumsdo.webp",
-  s5: "https://res.cloudinary.com/djhods3my/image/upload/v1773573367/still-05_etnc0n.webp",
-  s6: "https://res.cloudinary.com/djhods3my/image/upload/v1773573368/still-06_m7lnps.webp",
-  s7: "https://res.cloudinary.com/djhods3my/image/upload/v1773573369/still-07_codipn.webp",
-  s8: "https://res.cloudinary.com/djhods3my/image/upload/v1773573370/still-08_ozpz9j.webp",
-  s9: "https://res.cloudinary.com/djhods3my/image/upload/v1773573371/still-09_zof9iy.webp",
+  s1: `${R2}/rbr/still-01`,
+  s2: `${R2}/rbr/still-02`,
+  s3: `${R2}/rbr/still-03`,
+  s4: `${R2}/rbr/still-04`,
+  s5: `${R2}/rbr/still-05`,
+  s6: `${R2}/rbr/still-06`,
+  s7: `${R2}/rbr/still-07`,
+  s8: `${R2}/rbr/still-08`,
+  s9: `${R2}/rbr/still-09`,
+  v1: `${R2}/rbr/video-01.mp4`,
 };
 
 const RBRDOCS = {
-  c1: "https://res.cloudinary.com/djhods3my/image/upload/v1779638665/IMG_9387_wiuuor.jpg",
-  c2: "https://res.cloudinary.com/djhods3my/image/upload/v1779638665/IMG_9429_wsoktv.jpg",
-  c3: "https://res.cloudinary.com/djhods3my/image/upload/v1779638667/IMG_9763_qldjpm.jpg",
-  v1: "https://res.cloudinary.com/djhods3my/video/upload/v1779638707/output2_q0ckwt.mp4",
-  v2: "https://res.cloudinary.com/djhods3my/video/upload/v1779639271/output1_sne4aa.mp4",
-  v3: "https://res.cloudinary.com/djhods3my/video/upload/v1779638703/output_jjjivr.mp4",
+  c1: `${R2}/rbrdocs/cover-01`,
+  c2: `${R2}/rbrdocs/cover-02`,
+  c3: `${R2}/rbrdocs/cover-03`,
+  v1: `${R2}/rbrdocs/video-01.mp4`,
+  v2: `${R2}/rbrdocs/video-02.mp4`,
+  v3: `${R2}/rbrdocs/video-03.mp4`,
 };
 
 const SMADONNATA = {
-  auds1:
-    "https://res.cloudinary.com/djhods3my/image/upload/v1779637385/JSP04273_cckkms.jpg",
-  auds2:
-    "https://res.cloudinary.com/djhods3my/image/upload/v1779637386/JSP04284_feovyc.jpg",
-  auds3:
-    "https://res.cloudinary.com/djhods3my/image/upload/v1779637387/JSP04301_vq6jln.jpg",
-  audv: "https://res.cloudinary.com/djhods3my/video/upload/v1779638131/output_d3omcp.mp4",
-  sks1: "https://res.cloudinary.com/djhods3my/image/upload/v1779638203/JSP04343_ol38rb.jpg",
-  sks2: "https://res.cloudinary.com/djhods3my/image/upload/v1779638204/JSP04358_elvyjv.jpg",
-  sks3: "https://res.cloudinary.com/djhods3my/image/upload/v1779638229/JSP04383_pnjole.jpg",
-  skv: "https://res.cloudinary.com/djhods3my/video/upload/v1779638233/output_yg1anb.mp4",
-  vws1: "https://res.cloudinary.com/djhods3my/image/upload/v1779638297/JSP04395_ublgh5.jpg",
-  vws2: "https://res.cloudinary.com/djhods3my/image/upload/v1779638298/JSP04401_jxcbln.jpg",
-  vws3: "https://res.cloudinary.com/djhods3my/image/upload/v1779638299/JSP04421_iig5zq.jpg",
-  vwv: "https://res.cloudinary.com/djhods3my/video/upload/v1779638303/output_gaghtv.mp4",
+  auds1: `${R2}/smadonnata/audi-still-01`,
+  auds2: `${R2}/smadonnata/audi-still-02`,
+  auds3: `${R2}/smadonnata/audi-still-03`,
+  audv: `${R2}/smadonnata/audi-video.mp4`,
+  sks1: `${R2}/smadonnata/skoda-still-01`,
+  sks2: `${R2}/smadonnata/skoda-still-02`,
+  sks3: `${R2}/smadonnata/skoda-still-03`,
+  skv: `${R2}/smadonnata/skoda-video.mp4`,
+  vws1: `${R2}/smadonnata/vw-still-01`,
+  vws2: `${R2}/smadonnata/vw-still-02`,
+  vws3: `${R2}/smadonnata/vw-still-03`,
+  vwv: `${R2}/smadonnata/vw-video.mp4`,
 };
 
 export const projects: Project[] = [
   {
     slug: "rbr-documentary-series",
     title: "RINASCITA BASKET RIMINI",
-    subtitle: "Documentary Series",
     description:
       "A cinematic social-first documentary series exploring the human side of basketball through the voices, stories and passion surrounding Rinascita Basket Rimini.",
     secondaryDescription:
@@ -110,6 +110,7 @@ export const projects: Project[] = [
     coverMobile: RBRDOCS.c1,
     coverDesktop: [RBRDOCS.c1, RBRDOCS.c2, RBRDOCS.c3],
     stills: [[RBRDOCS.c1, RBRDOCS.c2, RBRDOCS.c3]],
+    videosOnly: true,
     videos: [
       { src: RBRDOCS.v1, afterRow: 0, interactive: true, poster: RBRDOCS.c1 },
       { src: RBRDOCS.v2, afterRow: 0, interactive: true, poster: RBRDOCS.c2 },
@@ -200,7 +201,7 @@ export const projects: Project[] = [
       [RBR.s7, RBR.s8, RBR.s9],
     ],
     video: {
-      src: "https://res.cloudinary.com/djhods3my/video/upload/v1771877626/output_xvhdky.mp4",
+      src: RBR.v1,
     },
   },
   {
@@ -217,9 +218,8 @@ export const projects: Project[] = [
     location: "San Marino",
     stills: [[BRYAN.s5, BRYAN.s2], [BRYAN.s3], [BRYAN.s4]],
     video: {
-      src: "https://res.cloudinary.com/djhods3my/video/upload/v1771848716/output_tft0qd.mp4",
-      poster:
-        "https://res.cloudinary.com/djhods3my/image/upload/v1771881675/locandina0_sapy7q.webp",
+      src: BRYAN.v1,
+      poster: BRYAN.s5,
       fullFilmUrl: "https://www.youtube.com/watch?v=0b-aA5Mncac",
     },
   },
@@ -234,8 +234,8 @@ export const projects: Project[] = [
     date: "2021",
     location: "Italia",
     coverMobile: Q4.s4,
-    coverDesktop: [Q4.s6, Q4.s4, Q4.s5],
-    stills: [[Q4.s1], [Q4.s2], [Q4.s3], [Q4.s6, Q4.s4, Q4.s5]],
+    coverDesktop: [Q4.s6, Q4.s2, Q4.s5],
+    stills: [[Q4.s1], [Q4.s4], [Q4.s3], [Q4.s6, Q4.s2, Q4.s5]],
   },
 ];
 
